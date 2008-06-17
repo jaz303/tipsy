@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+    <title>
+      Tipsy              - Facebook-style tooltip plugin for jQuery          </title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <script type='text/javascript' src='jquery-1.2.3.min.js'></script>
+          <script type='text/javascript' src='jquery.tipsy.js'></script>
+        <link rel="stylesheet" href="zero.css" type="text/css" />
+    <link rel="stylesheet" href="project-page.css" type="text/css" />
+          <link rel="stylesheet" href="tipsy.css" type="text/css" />
+          <link rel="stylesheet" href="tipsy-docs.css" type="text/css" />
+      </head>
+  <body>
+    <div id='container'>
+    
+      <h1>
+        Tipsy                  <span class='subtitle'> - Facebook-style tooltip plugin for jQuery</span>
+              </h1>
+      
+      <div id='sidebar'>
+      
+                  <ul id='project-nav'>
+                          <li><a href='index.html#overview'>Overview</a></li>
+                          <li><a href='index.html#examples'>Examples & Usage</a></li>
+                          <li><a href='index.html#download'>Download</a></li>
+                          <li><a href='index.html#todo'>TODO</a></li>
+                      </ul>
+                
+        <ul id='ohoa-nav'>
+          <li><a href='http://onehackoranother.com/projects/'>Back to projects &raquo;</a></li>
+          <li><a href='http://onehackoranother.com/'>Back to onehackoranother.com &raquo;</a></li>
+        </ul>
+      
+      </div>
+      
+      <div id='main'>
+        
+
+<script type='text/javascript'>
+  $(function() {
+    
+    $('#example-1').tipsy();
+    
+    $('#north').tipsy({gravity: 'n'});
+    $('#south').tipsy({gravity: 's'});
+    $('#east').tipsy({gravity: 'e'});
+    $('#west').tipsy({gravity: 'w'});
+    
+    $('#example-fade').tipsy({fade: true});
+    
+  });
+</script>
+
+<h2 class='first' id='overview'>Overview</h2>
+
+<p>Tipsy is a jQuery for creating a Facebook-like tooltips effect based on
+an anchor tag's title attribute.</p>
+
+<h2 id='examples'>Examples &amp; Usage</h2>
+  
+<h3>Basic</h3>
+
+<p>By default, tooltips will appear centred underneath their anchor:</p>
+
+<p>
+	<a id='example-1' href='index.html#' title='Hello World'>Hover over me</a>
+</p>
+
+<div class='caption'>Basic example:</div>
+<pre class='code'>$('#example-1').tipsy();</pre>
+
+<h3>Gravities</h3>
+
+<p>Using the gravity parameter, it's possible to control the positioning of the tooltip relative to the pointee:</p>
+
+<table id='gravity' cellspacing='5'>
+  <tr>
+    <td>
+      <a id='north' href='index.html#' title='This is an example of north gravity'>North</a>
+    </td>
+    <td>
+      <a id='south' href='index.html#' title='This is an example of south gravity'>South</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a id='east' href='index.html#' title='This is an example of east gravity'>East</a>
+    </td>
+    <td>
+      <a id='west' href='index.html#' title='This is an example of west gravity'>West</a>
+    </td>
+  </tr>
+</table>
+
+<div class='caption'>Gravity example:</div>
+<pre class='code'>$('#foo').tipsy({gravity: 'n'}); // n | s | e | w</pre>
+
+<h3>Fading</h3>
+
+<p>For full Wob2.0 compliance, you must fade these badboys in:</p>
+
+<p>
+	<a id='example-fade' href='index.html#' title='Hello World'>Hover over me</a>
+</p>
+
+<div class='caption'>Fade example:</div>
+<pre class='code'>$('#example-fade').tipsy({fade: true});</pre>
+
+<h3>Bonus Feature</h3>
+
+<p>You can EVEN COMBINE FADE AND GRAVITY! (exercise for reader)</p>
+
+<h2 id='download'>Download</h2>
+
+<h3>Package</h3>
+
+<p>
+	You can either
+	<a href='http://onehackoranother.com/projects/releases/tipsy/latest.tgz'>download the latest release</a>
+	or <a href='http://onehackoranother.com/projects/releases/tipsy/'>browse all releases</a>.
+</p>
+
+<h3>github</h3>
+<pre class='shell'><span class='green'>jason@donut</span> <span class='blue'>~ $</span> git clone git@github.com:jaz303/tipsy.git</pre>
+
+<h2 id='todo'>TODO</h2>
+<ul class='todo'>
+  <li>Automatically select gravity based on position of pointee in viewport</li>
+</ul>
+
+      
+      </div>
+    </div>
+  </body>
+</html>
