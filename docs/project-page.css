@@ -8,7 +8,7 @@ h3 { font-size: 115%; font-weight: bold; margin: 1em 0 0.3em 0; color: black; }
 
 p { margin: 0.7em 0 }
   
-a { color: #505050; text-decoration: none; }
+a { color: #101010; text-decoration: none }
   a:hover { background-color: #505050; color: white; }
   
 ul, ol { margin: 0.7em 0 0.7em 2em; }
