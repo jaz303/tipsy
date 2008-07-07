@@ -6,12 +6,12 @@
 
         this.hover(function() {
             
-            cancelHide = true;
+            $.data(this, 'cancel.tipsy', true);
 
             var tip = $.data(this, 'active.tipsy');
             if (!tip) {
                 tip = $('<div class="tipsy"><div class="tipsy-inner">' + $(this).attr('title') + '</div></div>');
-                tip.css({position: 'absolute'});
+                tip.css({position: 'absolute', zIndex: 100000});
                 $(this).attr('title', '');
                 $.data(this, 'active.tipsy', tip);
             }
@@ -42,10 +42,10 @@
             }
 
         }, function() {
-            cancelHide = false;
+            $.data(this, 'cancel.tipsy', false);
             var self = this;
             setTimeout(function() {
-                if (cancelHide) return;
+                if ($.data(this, 'cancel.tipsy')) return;
                 var tip = $.data(self, 'active.tipsy');
                 if (opts.fade) {
                     tip.stop().fadeOut(function() { $(this).remove(); });
