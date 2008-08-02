@@ -3,47 +3,45 @@
 
 <html>
   <head>
-    <title>
-      tipsy              - Facebook-style tooltip plugin for jQuery          </title>
+    <title>tipsy - Facebook-style tooltip plugin for jQuery</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <script type='text/javascript' src='jquery-1.2.3.min.js'></script>
-	      <script type='text/javascript' src='jquery.tipsy.js'></script>
-        <link rel="stylesheet" href="zero.css" type="text/css" />
-    <link rel="stylesheet" href="project-page.css" type="text/css" />
-          <link rel="stylesheet" href="tipsy.css" type="text/css" />
-          <link rel="stylesheet" href="tipsy-docs.css" type="text/css" />
-          </head>
+    <script type='text/javascript' src='assets/jquery.js'></script>
+    <link rel="stylesheet" href="assets/project-page.css" type="text/css" />
+    
+    <!-- per Project stuff -->
+      <script type='text/javascript' src='javascripts/jquery.tipsy.js'></script>
+      <link rel="stylesheet" href="stylesheets/tipsy.css" type="text/css" />
+    <!-- END per project stuff -->
+    
+    <link rel="stylesheet" href="tipsy-docs.css" type="text/css" />
+  </head>
   <body>
     <div id='container'>
     
       <h1>
-        tipsy                  <span class='subtitle'> - Facebook-style tooltip plugin for jQuery</span>
-              </h1>
+        tipsy
+        <span class='subtitle'> - Facebook-style tooltip plugin for jQuery</span>
+      </h1>
       
       <div id='sidebar'>
-      
-                  <ul id='project-nav'>
-                          <li><a href='index.html#overview'>Overview</a></li>
-                          <li><a href='index.html#examples'>Examples & Usage</a></li>
-                          <li><a href='index.html#download'>Download</a></li>
-                          <li><a href='index.html#todo'>TODO</a></li>
-                      </ul>
-                
+        <ul id='project-nav'>
+          <li><a href='#overview'>Overview</a></li>
+          <li><a href='#examples'>Examples &amp; Usage</a></li>
+          <li><a href='#download'>Download</a></li>
+          <li><a href='#todo'>TODO</a></li>
+        </ul>
         <ul id='ohoa-nav'>
-                    <li><a href='http://onehackoranother.com/projects/'>Back to projects &raquo;</a></li>
+          <li><a href='http://onehackoranother.com/projects/'>Back to projects &raquo;</a></li>
           <li><a href='http://onehackoranother.com/'>Back to onehackoranother.com &raquo;</a></li>
         </ul>
-      
-		<a href='http://thepixeltrap.com' id='pixel-trap' title='The Pixel Trap: New Directory for Web Professionals'>
-		  <img src='pixel-16.png' alt='' /> The Pixel Trap - A New Directory for Web Professionals
-		</a>
-        
-        	
+        <a href='http://thepixeltrap.com' id='pixel-trap' title='The Pixel Trap: New Directory for Web Professionals'>
+		      <img src='http://onehackoranother.com/images/pixel-16.png' alt='' /> The Pixel Trap - A New Directory for Web Professionals
+		    </a>
       </div>
+      
       <div id='main'>
         
-
 <script type='text/javascript'>
   $(function() {
     
@@ -71,7 +69,7 @@ an anchor tag's title attribute.</p>
 <p>By default, tooltips will appear centred underneath their anchor:</p>
 
 <p>
-	<a id='example-1' href='index.html#' title='Hello World'>Hover over me</a>
+	<a id='example-1' href='#' title='Hello World'>Hover over me</a>
 </p>
 
 <div class='caption'>Basic example:</div>
@@ -84,18 +82,18 @@ an anchor tag's title attribute.</p>
 <table id='gravity' cellspacing='5'>
   <tr>
     <td>
-      <a id='north' href='index.html#' title='This is an example of north gravity'>North</a>
+      <a id='north' href='#' title='This is an example of north gravity'>North</a>
     </td>
     <td>
-      <a id='south' href='index.html#' title='This is an example of south gravity'>South</a>
+      <a id='south' href='#' title='This is an example of south gravity'>South</a>
     </td>
   </tr>
   <tr>
     <td>
-      <a id='east' href='index.html#' title='This is an example of east gravity'>East</a>
+      <a id='east' href='#' title='This is an example of east gravity'>East</a>
     </td>
     <td>
-      <a id='west' href='index.html#' title='This is an example of west gravity'>West</a>
+      <a id='west' href='#' title='This is an example of west gravity'>West</a>
     </td>
   </tr>
 </table>
@@ -108,7 +106,7 @@ an anchor tag's title attribute.</p>
 <p>For full Wob2.0 compliance, you must fade these badboys in:</p>
 
 <p>
-	<a id='example-fade' href='index.html#' title='Hello World'>Hover over me</a>
+	<a id='example-fade' href='#' title='Hello World'>Hover over me</a>
 </p>
 
 <div class='caption'>Fade example:</div>
