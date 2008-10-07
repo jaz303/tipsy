@@ -104,6 +104,8 @@ table {}
 
   ul#ohoa-nav { font-size: 90%; }
     ul#ohoa-nav a { display: block; padding: 2px 4px; }
+    #subscribe { background-image: url(rss-orange.png); background-repeat: no-repeat; background-position: 4px center; padding-left: 20px !important ; }
+      #subscribe:hover { background-image: url(rss-grey.png); }
 
 #main { margin-right: 200px; }
 
