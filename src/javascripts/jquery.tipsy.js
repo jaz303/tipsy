@@ -10,18 +10,19 @@
 
             var tip = $.data(this, 'active.tipsy');
             if (!tip) {
-	
-								var title = '';
-								if (typeof opts.title == 'string') {
-										title = $(this).attr(opts.title);
-								}
-								
-								if (!title) title = opts.fallback;
-	
+    
+                var title = '';
+                if (typeof opts.title == 'string') {
+                        title = $(this).attr(opts.title);
+                }
+                                
+                if (!title) title = opts.fallback;
+    
                 tip = $('<div class="tipsy"><div class="tipsy-inner">' + title + '</div></div>');
                 tip.css({position: 'absolute', zIndex: 100000});
-                $(this).attr('title', '');
+                $(this).attr('original-title', $(this).attr('title')).attr('title', '');
                 $.data(this, 'active.tipsy', tip);
+
             }
             
             var pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
