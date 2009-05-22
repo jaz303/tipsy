@@ -31,6 +31,7 @@
         <ul id='project-nav'>
           <li><a href='#overview'>Overview</a></li>
           <li><a href='#examples'>Examples &amp; Usage</a></li>
+          <li><a href='#notes'>Notes</a></li>
           <li><a href='#download'>Download</a></li>
           <li><a href='#todo'>TODO</a></li>
         </ul>
@@ -57,6 +58,10 @@
     $('#west').tipsy({gravity: 'w'});
     
     $('#example-fade').tipsy({fade: true});
+    
+    $('#example-custom-attribute').tipsy({title: 'id'});
+    $('#example-callback').tipsy({title: function() { return this.getAttribute('title').toUpperCase(); } });
+    $('#example-fallback').tipsy({fallback: "Where's my tooltip yo'?" });
     
   });
 </script>
@@ -119,6 +124,43 @@ an anchor tag's title attribute.</p>
 <h3>Bonus Feature</h3>
 
 <p>You can EVEN COMBINE FADE AND GRAVITY! (exercise for reader)</p>
+
+<h3>Slightly Advanced Usage</h3>
+
+<p>Tooltip text can be set based on any attribute, not just <code>title</code>:</p>
+
+<p>
+	<a id='example-custom-attribute' href='#' title='Hello World'>Hover over me</a>
+</p>
+
+<div class='caption'>Custom attribute example:</div>
+<pre class='code'>$('#example-custom-attribute').tipsy({title: 'id'});</pre>
+
+<p>If any attribute isn't good enough, you may pass a callback function instead. It should
+  return the tooltip text for <code>this</code> element:</p>
+
+<p>
+	<a id='example-callback' href='#' title='Hello World'>Hover over me</a>
+</p>
+
+<div class='caption'>Callback example:</div>
+<pre class='code'>$('#example-callback').tipsy({title: function() { return this.getAttribute('title').toUpperCase(); } });</pre>
+
+<p>Finally, it is possible to specify a fallback tooltip for any element which does not
+  have any tooltip text:</p>
+
+<p>
+	<a id='example-fallback' href='#'>Hover over me</a>
+</p>
+
+<div class='caption'>Fallback example:</div>
+<pre class='code'>$('#example-fallback').tipsy({fallback: "Where's my tooltip yo'?" });</pre>
+
+<h2 id='notes'>Notes</h2>
+
+<p>Tipsy needs to erase any existing value for an element's <code>title</code> attribute in
+  order to suppress the browser's native tooltips. It is stashed in the element's
+  <code>original-title</code> attribute in case you need to retrieve it later.</p>
 
 <h2 id='download'>Download</h2>
 
