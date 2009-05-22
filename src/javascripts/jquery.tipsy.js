@@ -17,12 +17,13 @@
                 } else if (typeof opts.title == 'function') {
                     title = opts.title.call(this);
                 }
-                                
+                
                 if (!title) title = opts.fallback;
-    
-                tip = $('<div class="tipsy"><div class="tipsy-inner">' + title + '</div></div>');
+                
+                tip = $('<div class="tipsy"><div class="tipsy-inner"/></div>');
+                tip.find('.tipsy-inner').text(title)
                 tip.css({position: 'absolute', zIndex: 100000});
-                $(this).attr('original-title', $(this).attr('title')).attr('title', '');
+                $(this).attr('original-title', $(this).attr('title') || '').attr('title', '');
                 $.data(this, 'active.tipsy', tip);
 
             }
