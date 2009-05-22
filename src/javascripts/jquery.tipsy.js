@@ -1,7 +1,7 @@
 (function($) {
     $.fn.tipsy = function(opts) {
 
-        opts = $.extend({fade: false, gravity: 'n'}, opts || {});
+        opts = $.extend({fade: false, gravity: 'n', title: 'title', fallback: ''}, opts || {});
         var tip = null;
 
         this.hover(function() {
@@ -10,7 +10,15 @@
 
             var tip = $.data(this, 'active.tipsy');
             if (!tip) {
-                tip = $('<div class="tipsy"><div class="tipsy-inner">' + $(this).attr('title') + '</div></div>');
+	
+								var title = '';
+								if (typeof opts.title == 'string') {
+										title = $(this).attr(opts.title);
+								}
+								
+								if (!title) title = opts.fallback;
+	
+                tip = $('<div class="tipsy"><div class="tipsy-inner">' + title + '</div></div>');
                 tip.css({position: 'absolute', zIndex: 100000});
                 $(this).attr('title', '');
                 $.data(this, 'active.tipsy', tip);
