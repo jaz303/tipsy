@@ -13,7 +13,9 @@
     
                 var title = '';
                 if (typeof opts.title == 'string') {
-                        title = $(this).attr(opts.title);
+                    title = $(this).attr(opts.title);
+                } else if (typeof opts.title == 'function') {
+                    title = opts.title.call(this);
                 }
                                 
                 if (!title) title = opts.fallback;
