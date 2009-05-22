@@ -2,7 +2,7 @@
     $.fn.tipsy = function(opts) {
 
         opts = $.extend({fade: false, gravity: 'n'}, opts || {});
-        var tip = null, cancelHide = false;
+        var tip = null;
 
         this.hover(function() {
             
