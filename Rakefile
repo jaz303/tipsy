@@ -1,18 +1,26 @@
-PROJECT_VERSION="0.1.2"
+PROJECT_NAME='tipsy'
+PROJECT_VERSION='0.1.2'
+MANIFEST=%w(src LICENSE README)
+
+def project_tag
+  "#{PROJECT_NAME}-#{PROJECT_VERSION}"
+end
+
+def target
+  File.join('pkg', project_tag)
+end
 
 task :clean do
   `rm -rf pkg`
 end
 
-task :package => :clean do
-  `mkdir pkg`
-  `cd docs && project-kit build src build`
-  `mv docs/build pkg/docs`
-  `cp -R src pkg/www`
-  `cp LICENSE README pkg`
+task :build => :clean do
+  `mkdir -p #{target}`
+  `cd docs && project-kit --target=archive build src build`
+  `mv docs/build #{target}/docs`
+  MANIFEST.each { |e| `cp -R #{e} #{target}/` }
 end
 
-task :copy_assets do
-  `rm -rf docs/{images,javascripts,stylesheets}`
-  `cp -R src/* docs`
+task :package => :build do
+  `cd pkg && zip -ro ../#{project_tag}.zip #{project_tag}`
 end
