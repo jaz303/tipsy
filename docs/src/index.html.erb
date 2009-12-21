@@ -9,6 +9,8 @@
     $('#east').tipsy({gravity: 'e'});
     $('#west').tipsy({gravity: 'w'});
     
+    $('#auto-gravity').tipsy({gravity: $.fn.tipsy.autoNS});
+    
     $('#example-fade').tipsy({fade: true});
     
     $('#example-custom-attribute').tipsy({title: 'id'});
@@ -61,6 +63,15 @@ an anchor tag's title attribute.</p>
 
 <div class='caption'>Gravity example:</div>
 <pre class='code'>$('#foo').tipsy({gravity: 'n'}); // n | s | e | w</pre>
+
+<p>As of version 0.1.3, it's possible to use a callback function to set the gravity dynamically at hover-time. Within the callback, <code>this</code> refers to the active element, and the function should return the calculated gravity as a string. One demo callback is supplied - <code>$.fn.tipsy.autoNS</code> - which selects north or south gravity based on the element's location in the viewport.</p>
+
+<p>Here's an example (scroll the page to see the effect):</p>
+
+<a id='auto-gravity' href='#' title='This as an example of dynamic gravity'>Dynamic Gravity</a>
+
+<div class='caption'>Dynamic gravity example:</div>
+<pre class='code'>$('#foo').tipsy({gravity: $.fn.tipsy.autoNS});</pre>
 
 <h3>Fading</h3>
 
@@ -126,7 +137,3 @@ an anchor tag's title attribute.</p>
 <h3>github</h3>
 <pre class='shell'><span class='green'>jason@donut</span> <span class='blue'>~ $</span> git clone git://github.com/jaz303/tipsy.git</pre>
 
-<h2 id='todo'>TODO</h2>
-<ul class='todo'>
-  <li>Automatically select gravity based on position of pointee in viewport</li>
-</ul>

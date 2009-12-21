@@ -29,10 +29,12 @@
             }
             
             var pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
+            tip.get(0).className = 'tipsy'; // reset classname in case of dynamic gravity
             tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).appendTo(document.body);
             var actualWidth = tip[0].offsetWidth, actualHeight = tip[0].offsetHeight;
+            var gravity = (typeof opts.gravity == 'function') ? opts.gravity.call(this) : opts.gravity;
             
-            switch (opts.gravity.charAt(0)) {
+            switch (gravity.charAt(0)) {
                 case 'n':
                     tip.css({top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}).addClass('tipsy-north');
                     break;
@@ -69,4 +71,9 @@
         });
 
     };
+    
+    $.fn.tipsy.autoNS = function() {
+        return $(this).offset().top > ($(document).scrollTop() + $(window).height() / 2) ? 's' : 'n';
+    };
+    
 })(jQuery);
