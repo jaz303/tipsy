@@ -10,23 +10,25 @@
 
             var tip = $.data(this, 'active.tipsy');
             if (!tip) {
-    
-                var title = '';
-                if (typeof opts.title == 'string') {
-                    title = $(this).attr(opts.title);
-                } else if (typeof opts.title == 'function') {
-                    title = opts.title.call(this);
-                }
-                
-                if (!title) title = opts.fallback;
-                
                 tip = $('<div class="tipsy"><div class="tipsy-inner"/></div>');
-                tip.find('.tipsy-inner').text(title)
                 tip.css({position: 'absolute', zIndex: 100000});
-                $(this).attr('original-title', $(this).attr('title') || '').attr('title', '');
                 $.data(this, 'active.tipsy', tip);
-
             }
+            
+            var title;
+            if (typeof opts.title == 'string') {
+                if (opts.title == 'title') {
+                    title = $(this).attr(this.hasAttribute('title') ? 'title' : 'original-title');
+                } else {
+                    title = $(this).attr(opts.title);
+                }
+                $(this).attr('original-title', $(this).attr('title') || '').removeAttr('title');
+            } else if (typeof opts.title == 'function') {
+                title = opts.title.call(this);
+            }
+            
+            if (!title) title = opts.fallback;
+            tip.find('.tipsy-inner').text(title);
             
             var pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
             tip.get(0).className = 'tipsy'; // reset classname in case of dynamic gravity
