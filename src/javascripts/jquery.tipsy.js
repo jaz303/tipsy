@@ -15,20 +15,18 @@
                 $.data(this, 'active.tipsy', tip);
             }
             
+            if (this.hasAttribute('title') || !this.hasAttribute('original-title')) {
+                $(this).attr('original-title', $(this).attr('title') || '').removeAttr('title');
+            }
+            
             var title;
             if (typeof opts.title == 'string') {
-                if (opts.title == 'title') {
-                    title = $(this).attr(this.hasAttribute('title') ? 'title' : 'original-title');
-                } else {
-                    title = $(this).attr(opts.title);
-                }
-                $(this).attr('original-title', $(this).attr('title') || '').removeAttr('title');
+                title = $(this).attr(opts.title == 'title' ? 'original-title' : opts.title);
             } else if (typeof opts.title == 'function') {
                 title = opts.title.call(this);
             }
             
-            if (!title) title = opts.fallback;
-            tip.find('.tipsy-inner').text(title);
+            tip.find('.tipsy-inner').text(title || opts.fallback);
             
             var pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
             tip.get(0).className = 'tipsy'; // reset classname in case of dynamic gravity
