@@ -1,7 +1,7 @@
 (function($) {
     $.fn.tipsy = function(opts) {
 
-        opts = $.extend({fade: false, gravity: 'n', title: 'title', fallback: ''}, opts || {});
+        opts = $.extend({fade: false, gravity: 'n', title: 'title', fallback: '', html: false}, opts || {});
         var tip = null;
 
         this.hover(function() {
@@ -26,7 +26,7 @@
                 title = opts.title.call(this);
             }
             
-            tip.find('.tipsy-inner').text(title || opts.fallback);
+            tip.find('.tipsy-inner')[opts.html ? 'html' : 'text'](title || opts.fallback);
             
             var pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
             tip.get(0).className = 'tipsy'; // reset classname in case of dynamic gravity
