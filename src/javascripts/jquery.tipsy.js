@@ -15,7 +15,7 @@
                 $.data(this, 'active.tipsy', tip);
             }
             
-            if (this.hasAttribute('title') || !this.hasAttribute('original-title')) {
+            if ($(this).attr('title') || typeof($(this).attr('original-title')) != 'string') {
                 $(this).attr('original-title', $(this).attr('title') || '').removeAttr('title');
             }
             
