@@ -1,7 +1,7 @@
 (function($) {
     $.fn.tipsy = function(opts) {
 
-        opts = $.extend({fade: false, gravity: 'n', title: 'title', fallback: '', html: false}, opts || {});
+        opts = $.extend({}, $.fn.tipsy.defaults, opts);
         var tip = null;
 
         this.hover(function() {
@@ -69,7 +69,17 @@
             }, 100);
             
         });
+        
+        return this;
 
+    };
+    
+    $.fn.tipsy.defaults = {
+        fade: false,
+        fallback: '',
+        gravity: 'n',
+        html: false,
+        title: 'title'
     };
     
     $.fn.tipsy.autoNS = function() {
