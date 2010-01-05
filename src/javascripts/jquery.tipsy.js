@@ -7,7 +7,7 @@
             
             var opts = $.fn.tipsy.elementOptions(this, options);
             
-            this.hover(function() {
+            $(this).hover(function() {
 
                 $.data(this, 'cancel.tipsy', true);
 
