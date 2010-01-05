@@ -1,5 +1,5 @@
 PROJECT_NAME='tipsy'
-PROJECT_VERSION='0.1.6'
+PROJECT_VERSION='0.1.7'
 MANIFEST=%w(src LICENSE README)
 
 def project_tag
