@@ -1,10 +1,17 @@
 (function($) {
+    function fixTitle($ele) {
+        if ($ele.attr('title') || typeof($ele.attr('original-title')) != 'string') {
+            $ele.attr('original-title', $ele.attr('title') || '').removeAttr('title');
+        }
+    }
+    
     $.fn.tipsy = function(options) {
 
         options = $.extend({}, $.fn.tipsy.defaults, options);
         
         return this.each(function() {
             
+            fixTitle($(this));
             var opts = $.fn.tipsy.elementOptions(this, options);
             
             $(this).hover(function() {
@@ -17,11 +24,9 @@
                     tip.css({position: 'absolute', zIndex: 100000});
                     $.data(this, 'active.tipsy', tip);
                 }
-
-                if ($(this).attr('title') || typeof($(this).attr('original-title')) != 'string') {
-                    $(this).attr('original-title', $(this).attr('title') || '').removeAttr('title');
-                }
-
+                
+                fixTitle($(this));
+                
                 var title;
                 if (typeof opts.title == 'string') {
                     title = $(this).attr(opts.title == 'title' ? 'original-title' : opts.title);
