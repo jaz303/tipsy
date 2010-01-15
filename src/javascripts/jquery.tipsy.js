@@ -53,9 +53,9 @@
                 }
 
                 if (opts.fade) {
-                    tip.css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: 0.8});
+                    tip.css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: opts.opacity});
                 } else {
-                    tip.css({visibility: 'visible'});
+                    tip.css({visibility: 'visible', opacity: opts.opacity});
                 }
 
             }, function() {
@@ -86,6 +86,7 @@
     };
     
     $.fn.tipsy.defaults = {
+        opacity: 0.8,
         fade: false,
         fallback: '',
         gravity: 'n',
