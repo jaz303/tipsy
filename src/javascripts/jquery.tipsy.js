@@ -91,11 +91,11 @@
     };
     
     $.fn.tipsy.defaults = {
-        opacity: 0.8,
         fade: false,
         fallback: '',
         gravity: 'n',
         html: false,
+        opacity: 0.8,
         title: 'title'
     };
     
