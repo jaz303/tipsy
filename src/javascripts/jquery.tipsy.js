@@ -13,68 +13,72 @@
             
             fixTitle($(this));
             var opts = $.fn.tipsy.elementOptions(this, options);
+            var timeout = null;
             
             $(this).hover(function() {
+                var self = this;
+                timeout = setTimeout(function() {
+                    $.data(self, 'cancel.tipsy', true);
 
-                $.data(this, 'cancel.tipsy', true);
+                    var tip = $.data(self, 'active.tipsy');
+                    if (!tip) {
+                        tip = $('<div class="tipsy"><div class="tipsy-inner"/></div>');
+                        tip.css({position: 'absolute', zIndex: 100000});
+                        $.data(self, 'active.tipsy', tip);
+                    }
 
-                var tip = $.data(this, 'active.tipsy');
-                if (!tip) {
-                    tip = $('<div class="tipsy"><div class="tipsy-inner"/></div>');
-                    tip.css({position: 'absolute', zIndex: 100000});
-                    $.data(this, 'active.tipsy', tip);
-                }
-                
-                fixTitle($(this));
-                
-                var title;
-                if (typeof opts.title == 'string') {
-                    title = $(this).attr(opts.title == 'title' ? 'original-title' : opts.title);
-                } else if (typeof opts.title == 'function') {
-                    title = opts.title.call(this);
-                }
+                    fixTitle($(self));
 
-                tip.find('.tipsy-inner')[opts.html ? 'html' : 'text'](title || opts.fallback);
+                    var title;
+                    if (typeof opts.title == 'string') {
+                        title = $(self).attr(opts.title == 'title' ? 'original-title' : opts.title);
+                    } else if (typeof opts.title == 'function') {
+                        title = opts.title.call(self);
+                    }
 
-                var pos = $.extend({}, $(this).offset(), {width: this.offsetWidth, height: this.offsetHeight});
-                tip.get(0).className = 'tipsy'; // reset classname in case of dynamic gravity
-                tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).appendTo(document.body);
-                var actualWidth = tip[0].offsetWidth, actualHeight = tip[0].offsetHeight;
-                var gravity = (typeof opts.gravity == 'function') ? opts.gravity.call(this) : opts.gravity;
+                    tip.find('.tipsy-inner')[opts.html ? 'html' : 'text'](title || opts.fallback);
 
-                switch (gravity.charAt(0)) {
-                    case 'n':
-                        tip.css({top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}).addClass('tipsy-north');
-                        break;
-                    case 's':
-                        tip.css({top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2}).addClass('tipsy-south');
-                        break;
-                    case 'e':
-                        tip.css({top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth}).addClass('tipsy-east');
-                        break;
-                    case 'w':
-                        tip.css({top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}).addClass('tipsy-west');
-                        break;
-                }
+                    var pos = $.extend({}, $(self).offset(), {width: self.offsetWidth, height: self.offsetHeight});
+                    tip.get(0).className = 'tipsy'; // reset classname in case of dynamic gravity
+                    tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).appendTo(document.body);
+                    var actualWidth = tip[0].offsetWidth, actualHeight = tip[0].offsetHeight;
+                    var gravity = (typeof opts.gravity == 'function') ? opts.gravity.call(self) : opts.gravity;
 
-                if (opts.fade) {
-                    tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: opts.opacity});
-                } else {
-                    tip.css({visibility: 'visible', opacity: opts.opacity});
-                }
+                    switch (gravity.charAt(0)) {
+                        case 'n':
+                            tip.css({top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}).addClass('tipsy-north');
+                            break;
+                        case 's':
+                            tip.css({top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2}).addClass('tipsy-south');
+                            break;
+                        case 'e':
+                            tip.css({top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth}).addClass('tipsy-east');
+                            break;
+                        case 'w':
+                            tip.css({top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}).addClass('tipsy-west');
+                            break;
+                    }
+
+                    if (opts.fade) {
+                        tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: opts.opacity});
+                    } else {
+                        tip.css({visibility: 'visible', opacity: opts.opacity});
+                    }
+                }, opts.delayIn * 1000);
 
             }, function() {
                 $.data(this, 'cancel.tipsy', false);
                 var self = this;
+                clearTimeout(timeout);
                 setTimeout(function() {
                     if ($.data(this, 'cancel.tipsy')) return;
                     var tip = $.data(self, 'active.tipsy');
                     if (opts.fade) {
                         tip.stop().fadeOut(function() { $(this).remove(); });
-                    } else {
+                    } else if (tip) {
                         tip.remove();
                     }
-                }, 100);
+                }, opts.delayOut * 1000);
 
             });
             
@@ -91,6 +95,8 @@
     };
     
     $.fn.tipsy.defaults = {
+        delayIn: 0,
+        delayOut: 0.1,
         fade: false,
         fallback: '',
         gravity: 'n',
@@ -108,3 +114,4 @@
     };
     
 })(jQuery);
+

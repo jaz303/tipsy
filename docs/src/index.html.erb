@@ -131,6 +131,27 @@ an anchor tag's title attribute.</p>
 <div class='caption'>HTML example:</div>
 <pre class='code'>$('#example-html').tipsy({html: true });</pre>
 
+<div class="caption">Delay example:</div>
+<pre class='code'>$('#example-delay').tipsy({ delayIn: 0.5, delayOut: 1 });</pre>
+
+<p>
+	<a id='example-html' title='display is delayed by 0.5s, hiding by 1s' href='#'>Hover over me</a>
+</p>
+
+<h2 id="options">Options</h2>
+<p>Here is the default option declaration:
+<pre>
+    $.fn.tipsy.defaults = {
+        delayIn: 0,
+        delayOut: 0.1,
+        fade: false,
+        fallback: '',
+        gravity: 'n',
+        html: false,
+        opacity: 0.8,
+        title: 'title'
+    };
+</pre>
 
 <h2 id='notes'>Notes</h2>
 
