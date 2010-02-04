@@ -64,7 +64,7 @@
                     } else {
                         tip.css({visibility: 'visible', opacity: opts.opacity});
                     }
-                }, opts.delayIn * 1000);
+                }, opts.delayIn);
 
             }, function() {
                 $.data(this, 'cancel.tipsy', false);
@@ -78,7 +78,7 @@
                     } else if (tip) {
                         tip.remove();
                     }
-                }, opts.delayOut * 1000);
+                }, opts.delayOut);
 
             });
             
@@ -96,7 +96,7 @@
     
     $.fn.tipsy.defaults = {
         delayIn: 0,
-        delayOut: 0.1,
+        delayOut: 100,
         fade: false,
         fallback: '',
         gravity: 'n',
