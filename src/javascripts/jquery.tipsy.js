@@ -9,12 +9,13 @@
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
+        this.enabled = true;
     }
     
     Tipsy.prototype = {
         show: function() {
             var title = this.getTitle();
-            if (title) {
+            if (title && this.enabled) {
                 var $tip = this.tip();
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
@@ -84,7 +85,11 @@
                 });
             }
             return this.$tip;
-        }
+        },
+        
+        enable: function() { this.enabled = true; },
+        disable: function() { this.enabled = false; },
+        toggleEnabled: function() { this.enabled = !this.enabled; }
     };
     
     $.fn.tipsy = function(options) {
