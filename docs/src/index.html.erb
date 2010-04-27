@@ -139,7 +139,27 @@ an anchor tag's title attribute.</p>
 </p>
 
 
+  <!-- Dynamic Updating -->
 
+  <h3>Dynamically Updating Text</h3>
+
+  <p>Tipsy tooltips are 'live' - if the source attribute's value changes, the tooltip text will be
+    updated the next time the tooltip is shown. There's one caveat - if you wish to remove the tooltip
+    by setting the <code>title</code> attribute to an empty string, set the <code>original-title</code>
+    attribute instead (this only applies if you're using the <code>title</code> attribute).
+  </p>
+  
+  <div class='caption'>Dynamic updating example:</div>
+  <div id='dynamic-example' class='flash'>
+    <a href='#' rel='tipsy' title=''>Hover over me</a> |
+    New tooltip text:
+    <input type='text' value='' size='10' />
+    <input type='button' onclick="$('#dynamic-example a')[0].setAttribute('original-title', $('#dynamic-example input').val())" value='Update' />
+  </div>
+
+  <script type='text/javascript'>
+    $('#dynamic-example a').tipsy();
+  </script>
 
   <!-- Manual Triggering -->
 
