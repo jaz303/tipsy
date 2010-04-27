@@ -98,7 +98,9 @@
     
     $.fn.tipsy = function(options) {
         
-        if (typeof options == 'string') {
+        if (options === true) {
+            return this.eq(0).data('tipsy');
+        } else if (typeof options == 'string') {
             return this.eq(0).data('tipsy')[options]();
         }
         
