@@ -87,6 +87,10 @@
             return this.$tip;
         },
         
+        validate: function() {
+            if (!this.$element[0].parentNode) this.hide();
+        },
+        
         enable: function() { this.enabled = true; },
         disable: function() { this.enabled = false; },
         toggleEnabled: function() { this.enabled = !this.enabled; }
