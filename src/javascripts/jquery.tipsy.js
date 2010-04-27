@@ -98,34 +98,55 @@
     $.fn.tipsy = function(options) {
         
         if (options === true) {
-            return this.eq(0).data('tipsy');
+            return this.data('tipsy');
         } else if (typeof options == 'string') {
-            return this.eq(0).data('tipsy')[options]();
+            return this.data('tipsy')[options]();
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
         
-        this.each(function() { $.data(this, 'tipsy', new Tipsy(this, options)); });
+        function get(ele) {
+            var tipsy = $.data(ele, 'tipsy');
+            if (!tipsy) {
+                tipsy = new Tipsy(ele, options);
+                $.data(ele, 'tipsy', tipsy);
+            }
+            return tipsy;
+        }
+        
+        function enter() {
+            var tipsy = get(this);
+            tipsy.hoverState = 'in';
+            if (options.delayIn == 0) {
+                tipsy.show();
+            } else {
+                setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
+            }
+        };
+        
+        function leave() {
+            var tipsy = get(this);
+            tipsy.hoverState = 'out';
+            if (options.delayOut == 0) {
+                tipsy.hide();
+            } else {
+                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+            }
+        };
+        
+        if (!options.live) {
+            this.each(function() { $.data(this, 'tipsy', new Tipsy(this, options)) });
+        }
         
         if (options.trigger == 'hover') {
-            this.hover(function() {
-                var tipsy = $.data(this, 'tipsy');
-                tipsy.hoverState = 'in';
-                if (options.delayIn == 0) {
-                    tipsy.show();
-                } else {
-                    setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
-                }
-            }, function() {
-                var tipsy = $.data(this, 'tipsy');
-                tipsy.hoverState = 'out';
-                if (options.delayOut == 0) {
-                    tipsy.hide();
-                } else {
-                    setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
-                }
-            });
+            if (options.live) {
+                this.live('mouseenter', enter).live('mouseleave', leave);
+            } else {
+                this.hover(enter, leave);
+            }
         }
+        
+        return this;
         
     };
     
@@ -136,6 +157,7 @@
         fallback: '',
         gravity: 'n',
         html: false,
+        live: false,
         opacity: 0.8,
         title: 'title',
         trigger: 'hover'

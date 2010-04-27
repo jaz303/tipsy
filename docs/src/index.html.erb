@@ -157,7 +157,7 @@ an anchor tag's title attribute.</p>
   </p>
   
   <div class='caption'>Dynamic updating example:</div>
-  <div id='dynamic-example' class='flash'>
+  <div id='dynamic-example' class='example'>
     <a href='#' rel='tipsy' title=''>Hover over me</a> |
     New tooltip text:
     <input type='text' value='' size='10' />
@@ -175,7 +175,7 @@ an anchor tag's title attribute.</p>
   <p>It's possible to disable hover events and instead trigger tooltips manually:</p>
   
   <div class='caption'>Manual triggering example:</div>
-  <div id='manual-example' class='flash'>
+  <div id='manual-example' class='example'>
     <a rel='tipsy' title='Well hello there'>My tooltip is manually triggered</a> |
     <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("show"); return false;'>Show it</a> |
     <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("hide"); return false;'>Hide it</a>
@@ -195,7 +195,31 @@ an anchor tag's title attribute.</p>
   &lt;script type=&#x27;text/javascript&#x27;&gt;
     $(&#x27;#manual-example a[rel=tipsy]&#x27;).tipsy({trigger: &#x27;manual&#x27;});
   &lt;/script&gt;</pre>
-
+  
+  <!-- Live Events Support -->
+  
+  <h3>Support for Live Events</h3>
+  
+  <p>
+    Live events are supported using the option <code>{live: true}</code>.
+    jQuery &ge; 1.4.1 is required and live tooltips do not support manual triggering.
+  </p>
+  
+  <div class='caption'>Live events example:</div>
+  <div id='live-example' class='example'>
+    <div id='live-template' style='display:none'><a href='#' class='live-tipsy' title='A tooltip'>Dynamic tooltip</a></div>
+    <input type='button' value='Add' onclick='$("#live-example").append($("#live-template").clone().attr("id", "").show());' /><br />
+  </div>
+  
+  <script type='text/javascript'>
+    $('a.live-tipsy').tipsy({live: true});
+  </script>
+  
+  <div class='caption'>Code for live events:</div>
+  <pre class='code'>&lt;script type=&#x27;text/javascript&#x27;&gt;
+  $(&#x27;a.live-tipsy&#x27;).tipsy({live: true});
+&lt;/script&gt;</pre>
+  
   <!-- Options -->
 
 
@@ -209,6 +233,7 @@ an anchor tag's title attribute.</p>
         fallback: '',
         gravity: 'n',
         html: false,
+        live: false,
         opacity: 0.8,
         title: 'title',
         trigger: 'hover'
