@@ -131,13 +131,20 @@ an anchor tag's title attribute.</p>
 <div class='caption'>HTML example:</div>
 <pre class='code'>$('#example-html').tipsy({html: true });</pre>
 
-<div class="caption">Delay example:</div>
-<pre class='code'>$('#example-delay').tipsy({ delayIn: 0.5, delayOut: 1 });</pre>
+  <!-- Delay -->
+  
+  <h3>Show/Hide Delay</h3>
 
-<p>
-	<a id='example-html' title='display is delayed by 0.5s, hiding by 1s' href='#'>Hover over me</a>
-</p>
+  <div class="caption">Delay example:</div>
+  <pre class='code'>$('#example-delay').tipsy({delayIn: 500, delayOut: 1000});</pre>
 
+  <p>
+  	<a id='delay-example' title='display is delayed by 0.5s, hiding by 1s' href='#'>Hover and wait</a>
+  </p>
+  
+  <script type='text/javascript'>
+    $('#delay-example').tipsy({delayIn: 500, delayOut: 1000});
+  </script>
 
   <!-- Dynamic Updating -->
 

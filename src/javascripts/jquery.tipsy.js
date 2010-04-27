@@ -110,17 +110,19 @@
         if (options.trigger == 'hover') {
             this.hover(function() {
                 var tipsy = $.data(this, 'tipsy');
+                tipsy.hoverState = 'in';
                 if (options.delayIn == 0) {
                     tipsy.show();
                 } else {
-                    // TODO: get delay support in
+                    setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
                 }
             }, function() {
                 var tipsy = $.data(this, 'tipsy');
+                tipsy.hoverState = 'out';
                 if (options.delayOut == 0) {
                     tipsy.hide();
                 } else {
-                    // TODO: get delay support in
+                    setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
                 }
             });
         }
