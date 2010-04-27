@@ -14,6 +14,10 @@ task :clean do
   `rm -rf pkg`
 end
 
+task :docs do
+  `cd docs && project-kit --target=archive build src build`
+end
+
 task :build => :clean do
   `mkdir -p #{target}`
   `cd docs && project-kit --target=archive build src build`

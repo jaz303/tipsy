@@ -138,18 +138,53 @@ an anchor tag's title attribute.</p>
 	<a id='example-html' title='display is delayed by 0.5s, hiding by 1s' href='#'>Hover over me</a>
 </p>
 
+
+
+
+  <!-- Manual Triggering -->
+
+  <h3>Manually Triggering a Tooltip</h3>
+  
+  <p>It's possible to disable hover events and instead trigger tooltips manually:</p>
+  
+  <div class='caption'>Manual triggering example:</div>
+  <div id='manual-example' class='flash'>
+    <a rel='tipsy' title='Well hello there'>My tooltip is manually triggered</a> |
+    <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("show"); return false;'>Show it</a> |
+    <a href='#' onclick='$("#manual-example a[rel=tipsy]").tipsy("hide"); return false;'>Hide it</a>
+  </div>
+
+  <script type='text/javascript'>
+    $('#manual-example a[rel=tipsy]').tipsy({trigger: 'manual'});
+  </script>
+
+  <div class='caption'>Code for manual triggering:</div>
+  <pre class='code'>&lt;p id=&#x27;manual-example&#x27;&gt;
+    &lt;a rel=&#x27;tipsy&#x27; title=&#x27;Well hello there&#x27;&gt;My tooltip is manually triggered&lt;/a&gt;
+    &lt;a href=&#x27;#&#x27; onclick=&#x27;$(&quot;#manual-example a[rel=tipsy]&quot;).tipsy(&quot;show&quot;); return false;&#x27;&gt;Show&lt;/a&gt;
+    &lt;a href=&#x27;#&#x27; onclick=&#x27;$(&quot;#manual-example a[rel=tipsy]&quot;).tipsy(&quot;hide&quot;); return false;&#x27;&gt;Hide&lt;/a&gt;
+  &lt;/p&gt;
+
+  &lt;script type=&#x27;text/javascript&#x27;&gt;
+    $(&#x27;#manual-example a[rel=tipsy]&#x27;).tipsy({trigger: &#x27;manual&#x27;});
+  &lt;/script&gt;</pre>
+
+  <!-- Options -->
+
+
 <h2 id="options">Options</h2>
 <p>Here is the default option declaration:
 <pre>
     $.fn.tipsy.defaults = {
         delayIn: 0,
-        delayOut: 0.1,
+        delayOut: 0,
         fade: false,
         fallback: '',
         gravity: 'n',
         html: false,
         opacity: 0.8,
-        title: 'title'
+        title: 'title',
+        trigger: 'hover'
     };
 </pre>
 
