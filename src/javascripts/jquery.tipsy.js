@@ -78,7 +78,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"><div class="tipsy-inner"/></div>').css({
+                this.$tip = $('<div class="tipsy"><div class="tipsy-arrow"></div><div class="tipsy-inner"/></div></div>').css({
                     position: 'absolute',
                     zIndex: 100000
                 });
