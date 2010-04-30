@@ -4,11 +4,6 @@
     
     $('#example-1').tipsy();
     
-    $('#north').tipsy({gravity: 'n'});
-    $('#south').tipsy({gravity: 's'});
-    $('#east').tipsy({gravity: 'e'});
-    $('#west').tipsy({gravity: 'w'});
-    
     $('#auto-gravity').tipsy({gravity: $.fn.tipsy.autoNS});
     
     $('#example-fade').tipsy({fade: true});
@@ -47,24 +42,52 @@ an anchor tag's title attribute.</p>
 <table id='gravity' cellspacing='5'>
   <tr>
     <td>
+      <a id='north-west' href='#' title='This is an example of north-west gravity'>Northwest</a>
+    </td>
+    <td>
       <a id='north' href='#' title='This is an example of north gravity'>North</a>
     </td>
     <td>
-      <a id='south' href='#' title='This is an example of south gravity'>South</a>
+      <a id='north-east' href='#' title='This is an example of north-east gravity'>Northeast</a>
     </td>
   </tr>
   <tr>
     <td>
+      <a id='west' href='#' title='This is an example of west gravity'>West</a>
+    </td>
+    <td>&nbsp;</td>
+    <td>
       <a id='east' href='#' title='This is an example of east gravity'>East</a>
     </td>
+  </tr>
+  <tr>
     <td>
-      <a id='west' href='#' title='This is an example of west gravity'>West</a>
+      <a id='south-west' href='#' title='This is an example of south-west gravity'>Southwest</a>
+    </td>
+    <td>
+      <a id='south' href='#' title='This is an example of south gravity'>South</a>
+    </td>
+    <td>
+      <a id='south-east' href='#' title='This is an example of south-east gravity'>Southeast</a>
     </td>
   </tr>
 </table>
 
+<script type='text/javascript'>
+  $(function() {
+    $('#north').tipsy({gravity: 'n'});
+    $('#south').tipsy({gravity: 's'});
+    $('#east').tipsy({gravity: 'e'});
+    $('#west').tipsy({gravity: 'w'});
+    $('#north-west').tipsy({gravity: 'nw'});
+    $('#north-east').tipsy({gravity: 'ne'});
+    $('#south-west').tipsy({gravity: 'sw'});
+    $('#south-east').tipsy({gravity: 'se'});
+  });
+</script>
+
 <div class='caption'>Gravity example:</div>
-<pre class='code'>$('#foo').tipsy({gravity: 'n'}); // n | s | e | w</pre>
+<pre class='code'>$('#foo').tipsy({gravity: 'n'}); // nw | n | ne | w | e | sw | s | se</pre>
 
 <p>As of version 0.1.3, it's possible to use a callback function to set the gravity dynamically at hover-time. Within the callback, <code>this</code> refers to the active element, and the function should return the calculated gravity as a string. Two demo callbacks are supplied - <code>$.fn.tipsy.autoNS</code> and <code>$.fn.tipsy.autoWE</code> - which select north/south and west/east gravity, respectively, based on the element's location in the viewport.</p>
 
