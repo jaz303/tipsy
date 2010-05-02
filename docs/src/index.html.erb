@@ -190,6 +190,38 @@ an anchor tag's title attribute.</p>
   <script type='text/javascript'>
     $('#dynamic-example a').tipsy();
   </script>
+  
+  <!-- Focus/Blur Triggering -->
+  
+  <h3>Using Tooltips on Form Inputs</h3>
+  
+  <p>Tooltips can be bound to form inputs' focus/blur events using the option
+    <code>{trigger: 'focus'}</code>:</p>
+  
+  <div class='caption'>Form input tooltips example:</div>
+  <div id='focus-example' class='example'>
+    <select name='title' title='Select title'>
+      <option>Mr</option>
+      <option>Mrs</option>
+      <option>Miss</option>
+    </select><br />
+    <input type='text' name='forename' title='Enter forename' /><br />
+    <input type='text' name='surname' title='Enter surname' /><br />
+    <textarea name='message' title='Enter your message' style='margin:0'></textarea>
+  </div>
+  
+  <script type='text/javascript'>
+    $(function() {
+      $('#focus-example [title]').tipsy({trigger: 'focus', gravity: 'w'});
+    });
+  </script>
+  
+  <div class='caption'>Form input tooltips code:</div>
+  <pre class='code'>&lt;script type=&#x27;text/javascript&#x27;&gt;
+  $(function() {
+    $(&#x27;#focus-example [title]&#x27;).tipsy({trigger: &#x27;focus&#x27;, gravity: &#x27;w&#x27;});
+  });
+&lt;/script&gt;</pre>
 
   <!-- Manual Triggering -->
 

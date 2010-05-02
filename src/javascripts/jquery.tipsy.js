@@ -149,12 +149,11 @@
             this.each(function() { $.data(this, 'tipsy', new Tipsy(this, options)) });
         }
         
-        if (options.trigger == 'hover') {
-            if (options.live) {
-                this.live('mouseenter', enter).live('mouseleave', leave);
-            } else {
-                this.hover(enter, leave);
-            }
+        if (options.trigger != 'manual') {
+            var binder   = options.live ? 'live' : 'bind',
+                eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
+                eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
+            this[binder](eventIn, enter)[binder](eventOut, leave);
         }
         
         return this;
