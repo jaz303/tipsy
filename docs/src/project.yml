@@ -5,6 +5,8 @@ project:
     main_nav:
         - ["Overview", "#overview"]
         - ["Examples & Usage", "#examples"]
+        - ["Summary of Configuration Options", "#options"]
+        - ["Notes", "#notes"]
         - ["Download", "#download"]
     stylesheets: ['stylesheets/tipsy.css', 'tipsy-docs.css']
     javascripts: ['javascripts/jquery.tipsy.js']

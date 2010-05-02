@@ -277,42 +277,42 @@ an anchor tag's title attribute.</p>
   
   <!-- Options -->
 
-
-<h2 id="options">Options</h2>
-<p>Here is the default option declaration:
-<pre>
-    $.fn.tipsy.defaults = {
-        delayIn: 0,
-        delayOut: 0,
-        fade: false,
-        fallback: '',
-        gravity: 'n',
-        html: false,
-        live: false,
-        opacity: 0.8,
-        title: 'title',
-        trigger: 'hover'
-    };
-</pre>
-
-<h2 id='notes'>Notes</h2>
-
-<p>Tipsy needs to erase any existing value for an element's <code>title</code> attribute in
-  order to suppress the browser's native tooltips. It is stashed in the element's
-  <code>original-title</code> attribute in case you need to retrieve it later.</p>
+  <h2 id="options">Summary of Configuration Options</h2>
+  <p>Here is the default options declaration:
+  <pre>$.fn.tipsy.defaults = {
+    delayIn: 0,      // delay before showing tooltip (ms)
+    delayOut: 0,     // delay before hiding tooltip (ms)
+    fade: false,     // fade tooltips in/out?
+    fallback: '',    // fallback text to use when no tooltip text
+    gravity: 'n',    // gravity
+    html: false,     // is tooltip content HTML?
+    live: false,     // use live event support?
+    offset: 0,       // pixel offset of tooltip from element
+    opacity: 0.8,    // opacity of tooltip
+    title: 'title',  // attribute/callback containing tooltip text
+    trigger: 'hover' // how tooltip is triggered - hover | focus | manual
+};</pre>
   
-<p>As of version 0.1.4, the tooltip text is recomputed on every hover event so updating the
-  <code>title</code> attribute will have the expected effect.</p>
+  <!-- Notes -->
 
-<h2 id='download'>Download</h2>
+  <h2 id='notes'>Notes</h2>
 
-<h3>Package</h3>
+  <p>Tipsy needs to erase any existing value for an element's <code>title</code> attribute in
+    order to suppress the browser's native tooltips. It is stashed in the element's
+    <code>original-title</code> attribute in case you need to retrieve it later.</p>
+  
+  <p>As of version 0.1.4, the tooltip text is recomputed on every hover event so updating the
+    <code>title</code> attribute will have the expected effect.</p>
 
-<p>
-  Package downloads are available from the
-  <a href='http://plugins.jquery.com/project/tipsy'>jQuery project page</a>.
-</p>
+  <!-- Download -->
 
-<h3>github</h3>
-<pre class='shell'><span class='green'>jason@donut</span> <span class='blue'>~ $</span> git clone git://github.com/jaz303/tipsy.git</pre>
+  <h2 id='download'>Download</h2>
 
+  <h3>Package</h3>
+  <p>
+    Package downloads are available from the
+    <a href='http://plugins.jquery.com/project/tipsy'>jQuery project page</a>.
+  </p>
+
+  <h3>github</h3>
+  <pre class='shell'><span class='green'>jason@donut</span> <span class='blue'>~ $</span> git clone git://github.com/jaz303/tipsy.git</pre>
