@@ -10,6 +10,7 @@
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
+        fixTitle(this.$element);
     }
     
     Tipsy.prototype = {
