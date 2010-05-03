@@ -147,7 +147,7 @@
         };
         
         if (!options.live) {
-            this.each(function() { $.data(this, 'tipsy', new Tipsy(this, options)) });
+            this.each(function() { get(this); });
         }
         
         if (options.trigger != 'manual') {
