@@ -120,7 +120,7 @@
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
             if (!tipsy) {
-                tipsy = new Tipsy(ele, $.fn.tipsy.elementOptions(options));
+                tipsy = new Tipsy(ele, $.fn.tipsy.elementOptions(ele, options));
                 $.data(ele, 'tipsy', tipsy);
             }
             return tipsy;
