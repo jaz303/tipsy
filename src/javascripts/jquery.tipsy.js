@@ -101,7 +101,11 @@
         },
         
         validate: function() {
-            if (!this.$element[0].parentNode) this.hide();
+            if (!this.$element[0].parentNode) {
+                this.hide();
+                this.$element = null;
+                this.options = null;
+            }
         },
         
         enable: function() { this.enabled = true; },
