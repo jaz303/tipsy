@@ -118,7 +118,9 @@
         if (options === true) {
             return this.data('tipsy');
         } else if (typeof options == 'string') {
-            return this.data('tipsy')[options]();
+            var tipsy = this.data('tipsy');
+            if (tipsy) tipsy[options]();
+            return this;
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
