@@ -1,21 +1,15 @@
 // tipsy, facebook style tooltips for jquery
 // version 1.0.0a
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
-// releated under the MIT license
+// released under the MIT license
 
 (function($) {
-    
-    function fixTitle($ele) {
-        if ($ele.attr('title') || typeof($ele.attr('original-title')) != 'string') {
-            $ele.attr('original-title', $ele.attr('title') || '').removeAttr('title');
-        }
-    }
     
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
-        fixTitle(this.$element);
+        this.fixTitle();
     }
     
     Tipsy.prototype = {
@@ -80,9 +74,16 @@
             }
         },
         
+        fixTitle: function() {
+            var $e = this.$element;
+            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
+                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
+            }
+        },
+        
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
-            fixTitle($e);
+            this.fixTitle();
             var title, o = this.options;
             if (typeof o.title == 'string') {
                 title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
@@ -140,6 +141,7 @@
             if (options.delayIn == 0) {
                 tipsy.show();
             } else {
+                tipsy.fixTitle();
                 setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
             }
         };
