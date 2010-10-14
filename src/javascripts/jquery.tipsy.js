@@ -28,9 +28,7 @@
                 });
                 
                 var actualWidth = $tip[0].offsetWidth, actualHeight = $tip[0].offsetHeight;
-                var gravity = (typeof this.options.gravity == 'function')
-                                ? this.options.gravity.call(this.$element[0])
-                                : this.options.gravity;
+                var gravity = (typeof this.options.gravity == 'function') ? this.options.gravity.call(this.$element[0]) : this.options.gravity;
                 
                 var tp;
                 switch (gravity.charAt(0)) {
@@ -45,6 +43,8 @@
                         break;
                     case 'w':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
+                        break;
+                    default:
                         break;
                 }
                 
@@ -84,7 +84,6 @@
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
-            var title, o = this.options;
             if (typeof o.title == 'string') {
                 title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
             } else if (typeof o.title == 'function') {
@@ -138,23 +137,23 @@
         function enter() {
             var tipsy = get(this);
             tipsy.hoverState = 'in';
-            if (options.delayIn == 0) {
+            if (options.delayIn === 0) {
                 tipsy.show();
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
             }
-        };
+        }
         
         function leave() {
             var tipsy = get(this);
             tipsy.hoverState = 'out';
-            if (options.delayOut == 0) {
+            if (options.delayOut === 0) {
                 tipsy.hide();
             } else {
                 setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
             }
-        };
+        }
         
         if (!options.live) this.each(function() { get(this); });
         
