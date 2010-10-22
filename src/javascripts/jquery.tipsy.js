@@ -198,5 +198,15 @@
     $.fn.tipsy.autoWE = function() {
         return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
     };
-    
+
+    $.fn.tipsy.autoNSedge = function() {
+        var leftOffset = $(this).offset().left;
+        var leftRight = Math.min(leftOffset, $(window).width() - leftOffset);
+        if (leftRight > $(window).width() * 0.05) {
+            return $.fn.tipsy.autoNS.call(this);
+        } else {
+            return $.fn.tipsy.autoNS.call(this) + $.fn.tipsy.autoWE.call(this);
+        }
+    };
+
 })(jQuery);
