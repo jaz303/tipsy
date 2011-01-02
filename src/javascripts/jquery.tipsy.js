@@ -158,16 +158,15 @@
         
         if (!options.live) this.each(function() { get(this); });
 
-        var triggers   = options.trigger.split(','),
-            triggerIn  = triggers[0],
-            triggerOut = triggers[1] || triggers[0],
+        var triggerIn  = options.triggerIn || options.trigger,
+            triggerOut = options.triggerOut || options.trigger,
             binder     = options.live ? 'live' : 'bind';
 
         if (triggerIn != 'manual') 
-            this[binder]( $.inArray(triggerIn, ['hover', 'in', 'enter', 'auto']) ? 'mouseenter' : 'focus', enter)
+            this[binder]( $.inArray(triggerIn, ['hover', 'auto']) ? 'mouseenter' : 'focus', enter)
 
         if (triggerOut != 'manual')
-            this[binder]( $.inArray(triggerOut, ['hover', 'out', 'leave', 'auto']) ? 'mouseleave' : 'blur', leave);
+            this[binder]( $.inArray(triggerOut, ['hover', 'auto']) ? 'mouseleave' : 'blur', leave);
 
         return this;
         
@@ -184,7 +183,9 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        triggerIn: 'auto',
+        triggerOut: 'auto'
     };
     
     // Overwrite this method to provide options on a per-element basis.
