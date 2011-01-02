@@ -157,14 +157,18 @@
         };
         
         if (!options.live) this.each(function() { get(this); });
-        
-        if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
-                eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
-        }
-        
+
+        var triggers   = options.trigger.split(','),
+            triggerIn  = triggers[0],
+            triggerOut = triggers[1] || triggers[0],
+            binder     = options.live ? 'live' : 'bind';
+
+        if (triggerIn != 'manual') 
+            this[binder]( $.inArray(triggerIn, ['hover', 'in', 'enter', 'auto']) ? 'mouseenter' : 'focus', enter)
+
+        if (triggerOut != 'manual')
+            this[binder]( $.inArray(triggerOut, ['hover', 'out', 'leave', 'auto']) ? 'mouseleave' : 'blur', leave);
+
         return this;
         
     };
