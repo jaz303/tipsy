@@ -1,12 +1,77 @@
-.tipsy { padding: 5px; font-size: 10px; position: absolute; z-index: 100000; }
-  .tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: center; }
-  .tipsy-inner { border-radius: 3px; -moz-border-radius:3px; -webkit-border-radius:3px; }
-  .tipsy-arrow { position: absolute; background: url('../images/tipsy.gif') no-repeat top left; width: 9px; height: 5px; }
-  .tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -4px; }
-    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; }
-    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; }
-  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -4px; background-position: bottom left; }
-    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; background-position: bottom left; }
-    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; background-position: bottom left; }
-  .tipsy-e .tipsy-arrow { top: 50%; margin-top: -4px; right: 0; width: 5px; height: 9px; background-position: top right; }
-  .tipsy-w .tipsy-arrow { top: 50%; margin-top: -4px; left: 0; width: 5px; height: 9px; }
+.tipsy {
+  font-size: 10px;
+  position: absolute;
+  padding: 5px;
+  z-index: 100000;
+}
+
+.tipsy-inner {
+  background-color: #000;
+  color: #FFF;
+  max-width: 200px;
+  text-align: center;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  padding: 5px 8px 4px;
+}
+
+
+.tipsy-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.tipsy-n .tipsy-arrow,
+.tipsy-nw .tipsy-arrow,
+.tipsy-ne .tipsy-arrow {
+  top: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+
+.tipsy-s .tipsy-arrow,
+.tipsy-sw .tipsy-arrow,
+.tipsy-se .tipsy-arrow {
+  bottom: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+}
+
+.tipsy-n .tipsy-arrow,
+.tipsy-s .tipsy-arrow {
+  left: 50%;
+}
+
+.tipsy-nw .tipsy-arrow,
+.tipsy-sw .tipsy-arrow {
+  left: 10px;
+}
+
+.tipsy-ne .tipsy-arrow,
+.tipsy-se .tipsy-arrow {
+  right: 10px;
+}
+
+.tipsy-e .tipsy-arrow,
+.tipsy-w .tipsy-arrow {
+  top: 50%;
+  margin-top: -5px;
+}
+
+.tipsy-e .tipsy-arrow {
+  right: 0;
+  border-top: 5px solid transparent;
+  border-left: 5px solid black;
+  border-bottom: 5px solid transparent;
+}
+
+.tipsy-w .tipsy-arrow {
+  left: 0;
+  border-top: 5px solid transparent;
+  border-right: 5px solid black;
+  border-bottom: 5px solid transparent;
+}
