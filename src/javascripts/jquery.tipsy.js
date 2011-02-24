@@ -32,6 +32,46 @@
                                 ? this.options.gravity.call(this.$element[0])
                                 : this.options.gravity;
                 
+                /*
+                Blake Kus <blakekus@gmail.com>
+                2011-02-24
+                New gravity variables:
+                    ns: determine the best direction to show with priority towards n
+                    sn: determine the best direction to show with priority towards s
+                    ew: determine the best direction to show with priority towards e
+                    we: determine the best direction to show with priority towards w
+                */
+                var st = parseInt(pos.top)-parseInt($(document).scrollTop());
+                var sb = (parseInt($(document).scrollTop())+parseInt($(window).height()))-(parseInt(pos.top)+parseInt(pos.height));
+                var sl = parseInt(pos.left)-parseInt($(document).scrollLeft());
+                var sr = (parseInt($(document).scrollLeft())+parseInt($(window).width()))-(parseInt(pos.left)+parseInt(pos.width));
+                switch (gravity) {
+                    case 'ns':
+                        if(sb > parseInt(actualHeight))            gravity = 'n';
+                        else if(st > parseInt(actualHeight))    gravity = 's';
+                        else if(sb > st)                        gravity = 'n';
+                        else                                    gravity = 's';
+                        break;
+                    case 'sn':
+                        if(st > parseInt(actualHeight))            gravity = 's';
+                        else if(sb > parseInt(actualHeight))    gravity = 'n';
+                        else if(st > sb)                        gravity = 's';
+                        else                                    gravity = 'n';
+                        break;
+                    case 'ew':
+                        if(sl > parseInt(actualHeight))            gravity = 'e';
+                        else if(sr > parseInt(actualHeight))    gravity = 'w';
+                        else if(sl > sr)                        gravity = 'e';
+                        else                                    gravity = 'w';
+                        break;
+                    case 'we':
+                        if(sr > parseInt(actualHeight))            gravity = 'w';
+                        else if(sl > parseInt(actualHeight))    gravity = 'e';
+                        else if(sr > sl)                        gravity = 'w';
+                        else                                    gravity = 'e';
+                        break;
+                }
+
                 var tp;
                 switch (gravity.charAt(0)) {
                     case 'n':
