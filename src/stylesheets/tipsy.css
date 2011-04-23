@@ -7,13 +7,19 @@
   /* Uncomment for shadow */
   /*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
   
-  .tipsy-arrow { position: absolute; width: 0; height: 0; }
+  .tipsy-arrow { position: absolute; width: 0; height: 0; border: 5px solid transparent; }
   
-  .tipsy-n .tipsy-arrow, .tipsy-nw .tipsy-arrow, .tipsy-ne .tipsy-arrow { top: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 5px solid black; }
-  .tipsy-s .tipsy-arrow, .tipsy-sw .tipsy-arrow, .tipsy-se .tipsy-arrow { bottom: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid black; }
+  /* Rules to colour arrows */
+  .tipsy-arrow-n { border-bottom-color: #000; }
+  .tipsy-arrow-s { border-top-color: #000; }
+  .tipsy-arrow-e { border-left-color: #000; }
+  .tipsy-arrow-w { border-right-color: #000; }
+  
+  .tipsy-n .tipsy-arrow, .tipsy-nw .tipsy-arrow, .tipsy-ne .tipsy-arrow { top: 0; border-top: none; }
+  .tipsy-s .tipsy-arrow, .tipsy-sw .tipsy-arrow, .tipsy-se .tipsy-arrow { bottom: 0; border-bottom: none; }
   .tipsy-n .tipsy-arrow, .tipsy-s .tipsy-arrow { left: 50%; margin-left: -5px; }
   .tipsy-nw .tipsy-arrow, .tipsy-sw .tipsy-arrow { left: 10px; }
   .tipsy-ne .tipsy-arrow, .tipsy-se .tipsy-arrow { right: 10px; }
   .tipsy-e .tipsy-arrow, .tipsy-w .tipsy-arrow { top: 50%; margin-top: -5px; }
-  .tipsy-e .tipsy-arrow { right: 0; border-top: 5px solid transparent; border-left: 5px solid black; border-bottom: 5px solid transparent; }
-  .tipsy-w .tipsy-arrow { left: 0; border-top: 5px solid transparent; border-right: 5px solid black; border-bottom: 5px solid transparent; }
+  .tipsy-e .tipsy-arrow { right: 0; border-right: none; }
+  .tipsy-w .tipsy-arrow { left: 0; border-left: none; }

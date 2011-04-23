@@ -4,3 +4,7 @@
     #gravity a:hover { color: #505050; background: none; }
 
 .red .tipsy-inner { background: red; }
+.red .tipsy-arrow-n { border-bottom-color: red; }
+.red .tipsy-arrow-s { border-top-color: red; }
+.red .tipsy-arrow-e { border-left-color: red; }
+.red .tipsy-arrow-w { border-right-color: red; }

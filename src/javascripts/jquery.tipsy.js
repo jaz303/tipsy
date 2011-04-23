@@ -60,6 +60,7 @@
                 }
                 
                 $tip.css(tp).addClass('tipsy-' + gravity);
+                $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
                 if (this.options.className) {
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
