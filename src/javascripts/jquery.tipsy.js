@@ -206,5 +206,30 @@
     $.fn.tipsy.autoWE = function() {
         return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
     };
+
+	$.fn.tipsy.autoBounds = function(margin, prefer) {
+		return function()
+		{
+			var dir = { ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false) }
+
+			bound_top = $(document).scrollTop() + margin;
+			bound_left = $(document).scrollLeft() + margin;
+
+			if ( $(this).offset().top < bound_top) {
+				dir.ns = 'n';
+			}
+			if ( $(this).offset().left < bound_left ) {
+				dir.ew = 'w';
+			}
+			if ( $(window).width() + $(document).scrollLeft() - $(this).offset().left < margin ) {
+				dir.ew = 'e';
+			}
+			if ( $(window).height() + $(document).scrollTop() - $(this).offset().top < margin ) {
+				dir.ns = 's';
+			}
+
+			return dir.ns + (dir.ew ? dir.ew : '');
+		}
+	};
     
 })(jQuery);
