@@ -3,3 +3,4 @@
   #gravity a { }
     #gravity a:hover { color: #505050; background: none; }
 
+.red .tipsy-inner { background: red; }

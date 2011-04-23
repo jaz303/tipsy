@@ -60,6 +60,9 @@
                 }
                 
                 $tip.css(tp).addClass('tipsy-' + gravity);
+                if (this.options.className) {
+                    $tip.addClass(maybeCall(this.options.className, this.$element[0]));
+                }
                 
                 if (this.options.fade) {
                     $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
@@ -173,6 +176,7 @@
     };
     
     $.fn.tipsy.defaults = {
+        className: null,
         delayIn: 0,
         delayOut: 0,
         fade: false,
