@@ -5,12 +5,16 @@
 
 (function($) {
     
+    function maybeCall(thing, ctx) {
+        return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
+    };
+    
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
         this.fixTitle();
-    }
+    };
     
     Tipsy.prototype = {
         show: function() {
@@ -27,10 +31,9 @@
                     height: this.$element[0].offsetHeight
                 });
                 
-                var actualWidth = $tip[0].offsetWidth, actualHeight = $tip[0].offsetHeight;
-                var gravity = (typeof this.options.gravity == 'function')
-                                ? this.options.gravity.call(this.$element[0])
-                                : this.options.gravity;
+                var actualWidth = $tip[0].offsetWidth,
+                    actualHeight = $tip[0].offsetHeight,
+                    gravity = maybeCall(this.options.gravity, this.$element[0]);
                 
                 var tp;
                 switch (gravity.charAt(0)) {
