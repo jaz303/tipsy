@@ -35,6 +35,37 @@
                     actualHeight = $tip[0].offsetHeight,
                     gravity = maybeCall(this.options.gravity, this.$element[0]);
                 
+				var st = parseInt(pos.top)-parseInt($(document).scrollTop());
+				var sb = (parseInt($(document).scrollTop())+parseInt($(window).height()))-(parseInt(pos.top)+parseInt(pos.height));
+				var sl = parseInt(pos.left)-parseInt($(document).scrollLeft());
+				var sr = (parseInt($(document).scrollLeft())+parseInt($(window).width()))-(parseInt(pos.left)+parseInt(pos.width));
+				switch (gravity) {
+					case 'ns':
+						if(sb > parseInt(actualHeight))			gravity = 'n';
+						else if(st > parseInt(actualHeight))	gravity = 's';
+						else if(sb > st)						gravity = 'n';
+						else									gravity = 's';
+						break;
+					case 'sn':
+						if(st > parseInt(actualHeight))			gravity = 's';
+						else if(sb > parseInt(actualHeight))	gravity = 'n';
+						else if(st > sb)						gravity = 's';
+						else									gravity = 'n';
+						break;
+					case 'ew':
+						if(sl > parseInt(actualHeight))			gravity = 'e';
+						else if(sr > parseInt(actualHeight))	gravity = 'w';
+						else if(sl > sr)						gravity = 'e';
+						else									gravity = 'w';
+						break;
+					case 'we':
+						if(sr > parseInt(actualHeight))			gravity = 'w';
+						else if(sl > parseInt(actualHeight))	gravity = 'e';
+						else if(sr > sl)						gravity = 'w';
+						else									gravity = 'e';
+						break;
+				}
+				
                 var tp;
                 switch (gravity.charAt(0)) {
                     case 'n':
@@ -58,6 +89,10 @@
                         tp.left = pos.left + pos.width / 2 - actualWidth + 15;
                     }
                 }
+				
+				if(this.options.addClass.length > 0){
+					$tip.addClass(this.options.addClass);
+				}
                 
                 $tip.css(tp).addClass('tipsy-' + gravity);
                 $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
@@ -103,7 +138,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+				this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow-border"><div class="tipsy-arrow"></div></div><div class="tipsy-inner"/></div>');
             }
             return this.$tip;
         },
@@ -170,6 +205,9 @@
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
+			if (options.trigger == 'all') {
+				this[binder]('mouseenter', enter)[binder]('mouseleave', leave);
+			}
         }
         
         return this;
@@ -188,7 +226,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+		addClass: ''
     };
     
     // Overwrite this method to provide options on a per-element basis.
