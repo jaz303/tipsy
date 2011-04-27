@@ -1,12 +1,136 @@
-.tipsy { padding: 5px; font-size: 10px; position: absolute; z-index: 100000; }
-  .tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: center; }
-  .tipsy-inner { border-radius: 3px; -moz-border-radius:3px; -webkit-border-radius:3px; }
-  .tipsy-arrow { position: absolute; background: url('../images/tipsy.gif') no-repeat top left; width: 9px; height: 5px; }
-  .tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -4px; }
-    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; }
-    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; }
-  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -4px; background-position: bottom left; }
-    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; background-position: bottom left; }
-    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; background-position: bottom left; }
-  .tipsy-e .tipsy-arrow { top: 50%; margin-top: -4px; right: 0; width: 5px; height: 9px; background-position: top right; }
-  .tipsy-w .tipsy-arrow { top: 50%; margin-top: -4px; left: 0; width: 5px; height: 9px; }
+.tipsy {
+  font-size: 1.2em;
+  position: absolute;
+  padding: 9px;
+  z-index: 100000;
+}
+
+.tipsy-inner {
+  background-color: #FFFFCC;
+  color: #000000;
+  max-width: 300px;
+  text-align: center;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  padding: 5px 8px 4px;
+  margin: -1px;
+  border: 1px solid #E2C97F;
+}
+
+.tipsy-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.tipsy-n .tipsy-arrow-border,
+.tipsy-nw .tipsy-arrow-border,
+.tipsy-ne .tipsy-arrow-border {
+  top: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #E2C97F;
+  margin-left: -9px;
+  position: absolute;
+}
+.tipsy-n .tipsy-arrow,
+.tipsy-nw .tipsy-arrow,
+.tipsy-ne .tipsy-arrow {
+  top: 2px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #FFFFCC;
+  margin-left: -7px;
+}
+
+.tipsy-s .tipsy-arrow-border,
+.tipsy-sw .tipsy-arrow-border,
+.tipsy-se .tipsy-arrow-border {
+  bottom: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #E2C97F;
+  margin-left: -9px;
+  position: absolute;
+}
+.tipsy-s .tipsy-arrow,
+.tipsy-sw .tipsy-arrow,
+.tipsy-se .tipsy-arrow {
+  bottom: 2px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #FFFFCC;
+  margin-left: -7px;
+}
+
+.tipsy-n .tipsy-arrow,
+.tipsy-n .tipsy-arrow-border,
+.tipsy-s .tipsy-arrow,
+.tipsy-s .tipsy-arrow-border {
+  left: 50%;
+}
+
+.tipsy-nw .tipsy-arrow,
+.tipsy-nw .tipsy-arrow-border,
+.tipsy-sw .tipsy-arrow,
+.tipsy-sw .tipsy-arrow-border {
+  left: 10px;
+}
+
+.tipsy-ne .tipsy-arrow,
+.tipsy-ne .tipsy-arrow-border,
+.tipsy-se .tipsy-arrow,
+.tipsy-se .tipsy-arrow-border {
+  right: 10px;
+}
+
+.tipsy-e .tipsy-arrow,
+.tipsy-e .tipsy-arrow-border,
+.tipsy-w .tipsy-arrow,
+.tipsy-w .tipsy-arrow-border {
+  top: 50%;
+  margin-top: -9px;
+}
+
+.tipsy-e .tipsy-arrow-border {
+  right: 0;
+  border-top: 9px solid transparent;
+  border-left: 9px solid #E2C97F;
+  border-bottom: 9px solid transparent;
+  position: absolute;
+}
+.tipsy-e .tipsy-arrow {
+  right: 2px;
+  border-top: 7px solid transparent;
+  border-left: 7px solid #FFFFCC;
+  border-bottom: 7px solid transparent;
+  margin-top: -7px;
+}
+
+.tipsy-w .tipsy-arrow-border {
+  left: 0;
+  border-top: 9px solid transparent;
+  border-right: 9px solid #E2C97F;
+  border-bottom: 9px solid transparent;
+  position: absolute;
+}
+.tipsy-w .tipsy-arrow {
+  left: 2px;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #FFFFCC;
+  border-bottom: 7px solid transparent;
+  margin-top: -7px;
+}
+
+.tipsy.black .tipsy-inner{background-color: #000000;color: #ffffff;border-color:#ffffff;}
+.tipsy.black.tipsy-n .tipsy-arrow,.tipsy.black.tipsy-nw .tipsy-arrow,.tipsy.black.tipsy-ne .tipsy-arrow {border-bottom-color: #000000;}
+.tipsy.black.tipsy-n .tipsy-arrow-border,.tipsy.black.tipsy-nw .tipsy-arrow-border,.tipsy.black.tipsy-ne .tipsy-arrow-border {border-bottom-color: #ffffff;}
+.tipsy.black.tipsy-s .tipsy-arrow,.tipsy.black.tipsy-sw .tipsy-arrow,.tipsy.black.tipsy-se .tipsy-arrow {border-top-color: #000000;}
+.tipsy.black.tipsy-s .tipsy-arrow-border,.tipsy.black.tipsy-sw .tipsy-arrow-border,.tipsy.black.tipsy-se .tipsy-arrow-border {border-top-color: #ffffff;}
+.tipsy.black.tipsy-e .tipsy-arrow {border-left-color: #000000;}
+.tipsy.black.tipsy-e .tipsy-arrow-border {border-left-color: #ffffff;}
+.tipsy.black.tipsy-w .tipsy-arrow {border-right-color: #000000;}
+.tipsy.black.tipsy-w .tipsy-arrow-border {border-right-color: #ffffff;}
+
+.tipsy.left .tipsy-inner{text-align:left;}
