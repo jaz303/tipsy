@@ -1,15 +1,28 @@
 // tipsy, facebook style tooltips for jquery
 // version 1.0.0a
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
-// released under the MIT license
+// releated under the MIT license
+//
+// Modified by Blake Kus, 2011-02-28
+// Added CSS arrow (by MoOx https://github.com/jaz303/tipsy/pull/41)
+// Added CSS arrow border
+// Added gravity: ns, sn, we, ew
+// Added trigger: 'all' to trigger on hover and focus
+// Added class variable to dynamically add a class
 
 (function($) {
+    
+    function fixTitle($ele) {
+        if ($ele.attr('title') || typeof($ele.attr('original-title')) != 'string') {
+            $ele.attr('original-title', $ele.attr('title') || '').removeAttr('title');
+        }
+    }
     
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
-        this.fixTitle();
+        fixTitle(this.$element);
     }
     
     Tipsy.prototype = {
@@ -32,47 +45,47 @@
                                 ? this.options.gravity.call(this.$element[0])
                                 : this.options.gravity;
                 
-                /*
-                Blake Kus <blakekus@gmail.com>
-                2011-02-24
-                New gravity variables:
-                    ns: determine the best direction to show with priority towards n
-                    sn: determine the best direction to show with priority towards s
-                    ew: determine the best direction to show with priority towards e
-                    we: determine the best direction to show with priority towards w
-                */
-                var st = parseInt(pos.top)-parseInt($(document).scrollTop());
-                var sb = (parseInt($(document).scrollTop())+parseInt($(window).height()))-(parseInt(pos.top)+parseInt(pos.height));
-                var sl = parseInt(pos.left)-parseInt($(document).scrollLeft());
-                var sr = (parseInt($(document).scrollLeft())+parseInt($(window).width()))-(parseInt(pos.left)+parseInt(pos.width));
-                switch (gravity) {
-                    case 'ns':
-                        if(sb > parseInt(actualHeight))            gravity = 'n';
-                        else if(st > parseInt(actualHeight))    gravity = 's';
-                        else if(sb > st)                        gravity = 'n';
-                        else                                    gravity = 's';
-                        break;
-                    case 'sn':
-                        if(st > parseInt(actualHeight))            gravity = 's';
-                        else if(sb > parseInt(actualHeight))    gravity = 'n';
-                        else if(st > sb)                        gravity = 's';
-                        else                                    gravity = 'n';
-                        break;
-                    case 'ew':
-                        if(sl > parseInt(actualHeight))            gravity = 'e';
-                        else if(sr > parseInt(actualHeight))    gravity = 'w';
-                        else if(sl > sr)                        gravity = 'e';
-                        else                                    gravity = 'w';
-                        break;
-                    case 'we':
-                        if(sr > parseInt(actualHeight))            gravity = 'w';
-                        else if(sl > parseInt(actualHeight))    gravity = 'e';
-                        else if(sr > sl)                        gravity = 'w';
-                        else                                    gravity = 'e';
-                        break;
-                }
+				/*
+				Blake Kus <blakekus@gmail.com>
+				2011-02-24
+				New gravity variables:
+					ns: determine the best direction to show with priority towards n
+					sn: determine the best direction to show with priority towards s
+					ew: determine the best direction to show with priority towards e
+					we: determine the best direction to show with priority towards w
+				*/
+				var st = parseInt(pos.top)-parseInt($(document).scrollTop());
+				var sb = (parseInt($(document).scrollTop())+parseInt($(window).height()))-(parseInt(pos.top)+parseInt(pos.height));
+				var sl = parseInt(pos.left)-parseInt($(document).scrollLeft());
+				var sr = (parseInt($(document).scrollLeft())+parseInt($(window).width()))-(parseInt(pos.left)+parseInt(pos.width));
+				switch (gravity) {
+					case 'ns':
+						if(sb > parseInt(actualHeight))			gravity = 'n';
+						else if(st > parseInt(actualHeight))	gravity = 's';
+						else if(sb > st)						gravity = 'n';
+						else									gravity = 's';
+						break;
+					case 'sn':
+						if(st > parseInt(actualHeight))			gravity = 's';
+						else if(sb > parseInt(actualHeight))	gravity = 'n';
+						else if(st > sb)						gravity = 's';
+						else									gravity = 'n';
+						break;
+					case 'ew':
+						if(sl > parseInt(actualHeight))			gravity = 'e';
+						else if(sr > parseInt(actualHeight))	gravity = 'w';
+						else if(sl > sr)						gravity = 'e';
+						else									gravity = 'w';
+						break;
+					case 'we':
+						if(sr > parseInt(actualHeight))			gravity = 'w';
+						else if(sl > parseInt(actualHeight))	gravity = 'e';
+						else if(sr > sl)						gravity = 'w';
+						else									gravity = 'e';
+						break;
+				}
 
-                var tp;
+				var tp;
                 switch (gravity.charAt(0)) {
                     case 'n':
                         tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
@@ -95,6 +108,10 @@
                         tp.left = pos.left + pos.width / 2 - actualWidth + 15;
                     }
                 }
+				
+				if(this.options.addClass.length > 0){
+					$tip.addClass(this.options.addClass);
+				}
                 
                 $tip.css(tp).addClass('tipsy-' + gravity);
                 
@@ -114,16 +131,9 @@
             }
         },
         
-        fixTitle: function() {
-            var $e = this.$element;
-            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
-            }
-        },
-        
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
-            this.fixTitle();
+            fixTitle($e);
             var title, o = this.options;
             if (typeof o.title == 'string') {
                 title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
@@ -136,7 +146,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow-border"><div class="tipsy-arrow"></div></div><div class="tipsy-inner"/></div>');
             }
             return this.$tip;
         },
@@ -159,9 +169,7 @@
         if (options === true) {
             return this.data('tipsy');
         } else if (typeof options == 'string') {
-            var tipsy = this.data('tipsy');
-            if (tipsy) tipsy[options]();
-            return this;
+            return this.data('tipsy')[options]();
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
@@ -181,7 +189,6 @@
             if (options.delayIn == 0) {
                 tipsy.show();
             } else {
-                tipsy.fixTitle();
                 setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
             }
         };
@@ -203,6 +210,9 @@
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
+			if (options.trigger == 'all') {
+				this[binder]('mouseenter', enter)[binder]('mouseleave', leave);
+			}
         }
         
         return this;
@@ -220,7 +230,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+		addClass: ''
     };
     
     // Overwrite this method to provide options on a per-element basis.
