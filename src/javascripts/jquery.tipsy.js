@@ -24,7 +24,7 @@
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
-                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'})[this.options.insertMethod](this.options.insertTo);
                 
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
@@ -59,7 +59,7 @@
                     }
                 }
                 
-                $tip.css(tp).addClass('tipsy-' + gravity);
+                $tip.offset(tp).addClass('tipsy-' + gravity);
                 $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
                 if (this.options.className) {
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
@@ -188,7 +188,9 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        insertTo: 'body',
+        insertMethod: 'prependTo'
     };
     
     // Overwrite this method to provide options on a per-element basis.
