@@ -133,4 +133,35 @@
 .tipsy.black.tipsy-w .tipsy-arrow {border-right-color: #000000;}
 .tipsy.black.tipsy-w .tipsy-arrow-border {border-right-color: #ffffff;}
 
+.tipsy.red .tipsy-inner{background-color: #ff0000;color: #ffffff;border-color:#ffffff;}
+.tipsy.red.tipsy-n .tipsy-arrow,.tipsy.red.tipsy-nw .tipsy-arrow,.tipsy.red.tipsy-ne .tipsy-arrow {border-bottom-color: #ff0000;}
+.tipsy.red.tipsy-n .tipsy-arrow-border,.tipsy.red.tipsy-nw .tipsy-arrow-border,.tipsy.red.tipsy-ne .tipsy-arrow-border {border-bottom-color: #ffffff;}
+.tipsy.red.tipsy-s .tipsy-arrow,.tipsy.red.tipsy-sw .tipsy-arrow,.tipsy.red.tipsy-se .tipsy-arrow {border-top-color: #ff0000;}
+.tipsy.red.tipsy-s .tipsy-arrow-border,.tipsy.red.tipsy-sw .tipsy-arrow-border,.tipsy.red.tipsy-se .tipsy-arrow-border {border-top-color: #ffffff;}
+.tipsy.red.tipsy-e .tipsy-arrow {border-left-color: #ff0000;}
+.tipsy.red.tipsy-e .tipsy-arrow-border {border-left-color: #ffffff;}
+.tipsy.red.tipsy-w .tipsy-arrow {border-right-color: #ff0000;}
+.tipsy.red.tipsy-w .tipsy-arrow-border {border-right-color: #ffffff;}
+
+.tipsy.green .tipsy-inner{background-color: #00ff00;color: #000000;border-color:#000000;}
+.tipsy.green.tipsy-n .tipsy-arrow,.tipsy.green.tipsy-nw .tipsy-arrow,.tipsy.green.tipsy-ne .tipsy-arrow {border-bottom-color: #00ff00;}
+.tipsy.green.tipsy-n .tipsy-arrow-border,.tipsy.green.tipsy-nw .tipsy-arrow-border,.tipsy.green.tipsy-ne .tipsy-arrow-border {border-bottom-color: #000000;}
+.tipsy.green.tipsy-s .tipsy-arrow,.tipsy.green.tipsy-sw .tipsy-arrow,.tipsy.green.tipsy-se .tipsy-arrow {border-top-color: #00ff00;}
+.tipsy.green.tipsy-s .tipsy-arrow-border,.tipsy.green.tipsy-sw .tipsy-arrow-border,.tipsy.green.tipsy-se .tipsy-arrow-border {border-top-color: #000000;}
+.tipsy.green.tipsy-e .tipsy-arrow {border-left-color: #00ff00;}
+.tipsy.green.tipsy-e .tipsy-arrow-border {border-left-color: #000000;}
+.tipsy.green.tipsy-w .tipsy-arrow {border-right-color: #00ff00;}
+.tipsy.green.tipsy-w .tipsy-arrow-border {border-right-color: #000000;}
+
+.tipsy.blue .tipsy-inner{background-color: #0000ff;color: #000000;border-color:#000000;}
+.tipsy.blue.tipsy-n .tipsy-arrow,.tipsy.blue.tipsy-nw .tipsy-arrow,.tipsy.blue.tipsy-ne .tipsy-arrow {border-bottom-color: #0000ff;}
+.tipsy.blue.tipsy-n .tipsy-arrow-border,.tipsy.blue.tipsy-nw .tipsy-arrow-border,.tipsy.blue.tipsy-ne .tipsy-arrow-border {border-bottom-color: #000000;}
+.tipsy.blue.tipsy-s .tipsy-arrow,.tipsy.blue.tipsy-sw .tipsy-arrow,.tipsy.blue.tipsy-se .tipsy-arrow {border-top-color: #0000ff;}
+.tipsy.blue.tipsy-s .tipsy-arrow-border,.tipsy.blue.tipsy-sw .tipsy-arrow-border,.tipsy.blue.tipsy-se .tipsy-arrow-border {border-top-color: #000000;}
+.tipsy.blue.tipsy-e .tipsy-arrow {border-left-color: #0000ff;}
+.tipsy.blue.tipsy-e .tipsy-arrow-border {border-left-color: #000000;}
+.tipsy.blue.tipsy-w .tipsy-arrow {border-right-color: #0000ff;}
+.tipsy.blue.tipsy-w .tipsy-arrow-border {border-right-color: #000000;}
+
 .tipsy.left .tipsy-inner{text-align:left;}
+.tipsy.right .tipsy-inner{text-align:right;}
