@@ -142,26 +142,57 @@
             return tipsy;
         }
         
-        function enter() {
-            var tipsy = get(this);
-            tipsy.hoverState = 'in';
-            if (options.delayIn == 0) {
+        function show(tipsy) {
+            if (tipsy.mouseInsideTarget || tipsy.mouseInsideTipsy) {
                 tipsy.show();
+            }
+        }
+        
+        function delayHide(tipsy) {
+            if (tipsy.delayHideTimeout) {
+                return;
+            }
+            
+            // important: setTimeout needed to allow mouse events to fire,
+            // e.g. if mouse leaves target but immediately enters tipsy.
+            tipsy.delayHideTimeout = setTimeout(function () {
+                tipsy.delayHideTimeout = null;
+                if (!tipsy.mouseInsideTarget && !tipsy.mouseInsideTipsy) {
+                    tipsy.hide();
+                } else {
+                }
+            }, options.delayOut || 0);
+        }
+        
+        function enterTarget() {
+            var tipsy = get(this);
+            tipsy.mouseInsideTarget = true;
+            
+            if (options.delayIn == 0) {
+                show(tipsy);
             } else {
                 tipsy.fixTitle();
-                setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
+                setTimeout(function() { show(tipsy); }, options.delayIn);
             }
-        };
+            
+            tipsy.$tip.unbind('mouseenter mouseleave');
+            tipsy.$tip.hover(function() { enterTipsy.call(tipsy); }, function() { leaveTipsy.call(tipsy); });
+        }
         
-        function leave() {
+        function leaveTarget() {
             var tipsy = get(this);
-            tipsy.hoverState = 'out';
-            if (options.delayOut == 0) {
-                tipsy.hide();
-            } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
-            }
-        };
+            tipsy.mouseInsideTarget = false;
+            delayHide(tipsy);
+        }
+        
+        function enterTipsy() {
+            this.mouseInsideTipsy = true;
+        }
+        
+        function leaveTipsy() {
+            this.mouseInsideTipsy = false;
+            delayHide(this);
+        }
         
         if (!options.live) this.each(function() { get(this); });
         
@@ -169,7 +200,7 @@
             var binder   = options.live ? 'live' : 'bind',
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+            this[binder](eventIn, enterTarget)[binder](eventOut, leaveTarget);
         }
         
         return this;
