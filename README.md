@@ -27,7 +27,7 @@ Copy the contents of src/{images,javascripts,stylesheets} to the corresponding a
 
 #### 2. Insert
 
-Insert the neccesary elements in your document's <head> section, e.g.:
+Insert the necessary elements in your document's <head> section, e.g.:
 
     <script type='text/javascript' src='/javascripts/jquery.tipsy.js'></script>
     <link rel="stylesheet" href="/stylesheets/tipsy.css" type="text/css" />
