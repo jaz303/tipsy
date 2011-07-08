@@ -21,8 +21,11 @@
             var title = this.getTitle();
             if (title && this.enabled) {
                 var $tip = this.tip();
+                var $link = $tip.find('.tipsy-inner > a');
                 
-                $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $link.attr('href', this.$element.attr('href'));
+                $link[this.options.html ? 'html' : 'text'](title);
+                
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
@@ -103,7 +106,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"><a></a></div>');
             }
             return this.$tip;
         },
