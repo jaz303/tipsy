@@ -22,7 +22,7 @@
             if (title && this.enabled) {
                 var $tip = this.tip();
                 
-                $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $tip.find('.tipsy-inner').empty()[typeof title == 'string' ? (this.options.html ? 'html' : 'text') : 'append'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
@@ -97,7 +97,9 @@
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
-            title = ('' + title).replace(/(^\s*|\s*$)/, "");
+            if (typeof title == 'string') {
+                title = ('' + title).replace(/(^\s*|\s*$)/, "");
+            }
             return title || o.fallback;
         },
         
