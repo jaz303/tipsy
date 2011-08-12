@@ -21,6 +21,7 @@
             var title = this.getTitle();
             if (title && this.enabled) {
                 var $tip = this.tip();
+	            var $bgColor = this.getBgColor();
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
@@ -36,18 +37,23 @@
                     gravity = maybeCall(this.options.gravity, this.$element[0]);
                 
                 var tp;
+                var arrowColor;
                 switch (gravity.charAt(0)) {
                     case 'n':
                         tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        arrowColor = {borderBottomColor: $bgColor};
                         break;
                     case 's':
                         tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        arrowColor = {borderTopColor: $bgColor};
                         break;
                     case 'e':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
+                        arrowColor = {borderLeftColor: $bgColor};
                         break;
                     case 'w':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
+                        arrowColor = {borderRightColor: $bgColor};
                         break;
                 }
                 
@@ -58,9 +64,12 @@
                         tp.left = pos.left + pos.width / 2 - actualWidth + 15;
                     }
                 }
-                
+
                 $tip.css(tp).addClass('tipsy-' + gravity);
                 $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
+                $tip.find('.tipsy-arrow').css(arrowColor);
+                $tip.find('.tipsy-inner').css({backgroundColor: $bgColor});
+                
                 if (this.options.className) {
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
@@ -99,6 +108,18 @@
             }
             title = ('' + title).replace(/(^\s*|\s*$)/, "");
             return title || o.fallback;
+        },
+        
+        getBgColor: function() {
+        	var bgColor, $e = this.$element, o = this.options;
+
+        	if($e.attr('alt')){
+        		bgColor = $e.attr('alt')
+        	} else {
+        		bgColor = o.bgColor;
+        	}
+
+        	return bgColor;
         },
         
         tip: function() {
@@ -188,7 +209,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        bgColor: '#000'
     };
     
     // Overwrite this method to provide options on a per-element basis.

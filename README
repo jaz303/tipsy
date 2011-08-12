@@ -41,6 +41,11 @@ Remember to include jquery.tipsy.js *after* including the main jQuery library.
 	});
 </script>
 
+4. To override the default color as set in the jquery.tipsy.js file, simple add the color you want to display in the elements alt tag, e.g.:
+
+<a href="#" rel="tooltip">Default tooltip</a>
+<a href="#" rel="tooltip" alt="#DD4B39">A red tooltip</a>
+
 Please refer to the docs directory for more examples and documentation.
 
 == A NOTE ON FORKING:
