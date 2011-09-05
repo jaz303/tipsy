@@ -27,9 +27,33 @@
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
                 var pos = $.extend({}, this.$element.offset(), {
-                    width: this.$element[0].offsetWidth,
-                    height: this.$element[0].offsetHeight
+                    width: this.$element[0].offsetWidth || 0,
+                    height: this.$element[0].offsetHeight || 0
                 });
+                
+                if (typeof this.$element[0].nearestViewportElement == 'object') {
+                    // SVG
+                    var nve = this.$element[0].nearestViewportElement;
+                    var pt = nve.createSVGPoint();
+                    var matrix = this.$element[0].getScreenCTM();
+                    var bbox = this.$element[0].getBBox();
+                    pt.x = bbox.x;
+                    pt.y = bbox.y;
+                    var ul = pt.matrixTransform(matrix);
+                    var sparent = $(this.$element[0]);
+                    if (typeof $(this.$element[0]).scrollParent == 'function') {
+                        sparent = $(this.$element[0]).scrollParent();
+                    }
+                    pos.top = ul.y + sparent.scrollTop();
+                    pos.left = ul.x + sparent.scrollLeft();
+
+                    pt.x += bbox.width;
+                    pt.y += bbox.height;
+                    var lr = pt.matrixTransform(matrix);
+                    pos.width += lr.x - ul.x;
+                    pos.height += lr.y - ul.y;
+                }
+
                 
                 var actualWidth = $tip[0].offsetWidth,
                     actualHeight = $tip[0].offsetHeight,
@@ -70,6 +94,25 @@
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
+                var t = this;
+                var set_hovered  = function(set_hover){
+                    return function(){
+                            t.$tip.stop();
+                            t.tipHovered = set_hover;
+                            if (!set_hover){
+                                if (t.options.delayOut == 0) {
+                                    t.hide();
+                                } else {
+                                    setTimeout(function() { 
+                                        if (t.hoverState == 'out') t.hide(); }, t.options.delayOut);
+                                }
+                            }
+                        }
+                }
+
+                    $tip.hover(set_hovered(true), set_hovered(false));
+                
+               $tip.hover(set_hovered(true), set_hovered(false));
             }
         },
         
@@ -86,14 +129,27 @@
             if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
                 $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
             }
+            
+            if ($e.children('title').length || $e.children('original-title').length){
+                $e.append('<original-title>' + ($e.children('title').text() || '') + '</original-title>')
+                    .children('title').remove();
+            }
         },
         
         getTitle: function() {
+            
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
             var title, o = this.options;
+
             if (typeof o.title == 'string') {
-                title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
+                var title_name = o.title == 'title' ? 'original-title' : o.title;
+                if ($e.children(title_name).length){
+                    title = $e.children(title_name).text();
+                } else{
+                    title = $e.attr(title_name);
+                }
+                
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
@@ -159,15 +215,20 @@
             if (options.delayOut == 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
-            }
+                var to = function() {
+                            if (!tipsy.tipHovered || !options.hoverlock){
+                                if (tipsy.hoverState == 'out') tipsy.hide(); 
+                            }
+                        }
+                setTimeout(to, options.delayOut);
+            }    
         };
         
         if (!options.live) this.each(function() { get(this); });
         
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
+            var binder = options.live ? 'live' : 'bind',
+                eventIn = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
         }
@@ -188,7 +249,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        hoverlock: false,
     };
     
     // Overwrite this method to provide options on a per-element basis.
@@ -236,6 +298,6 @@
 
 			return dir.ns + (dir.ew ? dir.ew : '');
 		}
-	};
-    
+    };
 })(jQuery);
+
