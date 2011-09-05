@@ -124,13 +124,16 @@
         
         fixTitle: function() {
             var $e = this.$element;
-            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
-            }
-            
-            if ($e.children('title').length || $e.children('original-title').length){
-                $e.append('<original-title>' + ($e.children('title').text() || '') + '</original-title>')
-                    .children('title').remove();
+            if (typeof $e.context.nearestViewportElement != 'object'){            
+                if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
+                    $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
+                }
+            } else{
+                                            
+                if ($e.children('title').length){
+                    $e.append('<original-title>' + ($e.children('title').html() || '') + '</original-title>')
+                        .children('title').remove();
+                }
             }
         },
         
