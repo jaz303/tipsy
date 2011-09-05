@@ -109,8 +109,6 @@
                             }
                         }
                 }
-
-                    $tip.hover(set_hovered(true), set_hovered(false));
                 
                $tip.hover(set_hovered(true), set_hovered(false));
             }
@@ -188,6 +186,10 @@
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
+
+        if (options.hoverlock && options.delayOut == 0) {
+			options.delayOut = 100;
+		}
         
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
