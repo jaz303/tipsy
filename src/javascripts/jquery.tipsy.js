@@ -7,14 +7,14 @@
     
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
-    };
+    }
     
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
         this.fixTitle();
-    };
+    }
     
     Tipsy.prototype = {
         show: function() {
@@ -30,7 +30,7 @@
                     width: this.$element[0].offsetWidth || 0,
                     height: this.$element[0].offsetHeight || 0
                 });
-                
+
                 if (typeof this.$element[0].nearestViewportElement == 'object') {
                     // SVG
                     var nve = this.$element[0].nearestViewportElement;
@@ -94,22 +94,22 @@
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
+
                 var t = this;
                 var set_hovered  = function(set_hover){
                     return function(){
-                            t.$tip.stop();
-                            t.tipHovered = set_hover;
-                            if (!set_hover){
-                                if (t.options.delayOut == 0) {
-                                    t.hide();
-                                } else {
-                                    setTimeout(function() { 
-                                        if (t.hoverState == 'out') t.hide(); }, t.options.delayOut);
-                                }
+                        t.$tip.stop();
+                        t.tipHovered = set_hover;
+                        if (!set_hover){
+                            if (t.options.delayOut === 0) {
+                                t.hide();
+                            } else {
+                                setTimeout(function() { 
+                                    if (t.hoverState == 'out') t.hide(); }, t.options.delayOut);
                             }
                         }
-                }
-                
+                    };
+                };
                $tip.hover(set_hovered(true), set_hovered(false));
             }
         },
@@ -141,7 +141,6 @@
             
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
-            var title, o = this.options;
 
             if (typeof o.title == 'string') {
                 var title_name = o.title == 'title' ? 'original-title' : o.title;
@@ -190,9 +189,9 @@
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
 
-        if (options.hoverlock && options.delayOut == 0) {
-			options.delayOut = 100;
-		}
+        if (options.hoverlock && options.delayOut === 0) {
+	    options.delayOut = 100;
+	}
         
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
@@ -206,29 +205,29 @@
         function enter() {
             var tipsy = get(this);
             tipsy.hoverState = 'in';
-            if (options.delayIn == 0) {
+            if (options.delayIn === 0) {
                 tipsy.show();
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
             }
-        };
+        }
         
         function leave() {
             var tipsy = get(this);
             tipsy.hoverState = 'out';
-            if (options.delayOut == 0) {
+            if (options.delayOut === 0) {
                 tipsy.hide();
             } else {
                 var to = function() {
-                            if (!tipsy.tipHovered || !options.hoverlock){
-                                if (tipsy.hoverState == 'out') tipsy.hide(); 
-                            }
-                        }
+                    if (!tipsy.tipHovered || !options.hoverlock){
+                        if (tipsy.hoverState == 'out') tipsy.hide(); 
+                    }
+                };
                 setTimeout(to, options.delayOut);
             }    
-        };
-        
+        }
+
         if (options.trigger != 'manual') {
             var binder = options.live ? 'live' : 'bind',
                 eventIn = options.trigger == 'hover' ? 'mouseenter' : 'focus',
@@ -253,7 +252,7 @@
         opacity: 0.8,
         title: 'title',
         trigger: 'hover',
-        hoverlock: false,
+        hoverlock: false
     };
     
     // Overwrite this method to provide options on a per-element basis.
@@ -300,7 +299,7 @@
 			if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
 
 			return dir.ns + (dir.ew ? dir.ew : '');
-		}
+		};
     };
 })(jQuery);
 
