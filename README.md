@@ -1,7 +1,9 @@
 # tipsy
 
 Facebook-style tooltip plugin for jQuery
+
 (c) 2008-2010 Jason Frame (jason@onehackoranother.com)
+
 Released under The MIT License.
 
 ## Description:
