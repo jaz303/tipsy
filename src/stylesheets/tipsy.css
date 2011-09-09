@@ -23,3 +23,31 @@
     .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
   .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
   .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+
+  /* tipsy white theme */
+  .tipsy-white { font-size: 11px; position: absolute; padding: 5px; z-index: 100000; }
+    .tipsy-inner-white { background-color: #FFF; color: #000; max-width: 200px; padding: 5px 8px 6px 8px; text-align: center; }
+
+    /* Rounded corners */
+    .tipsy-inner-white { border-radius: 0px; -moz-border-radius: 0px; -webkit-border-radius: 0px; }
+
+    /* Uncomment for shadow */
+    /*.tipsy-inner-white { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
+
+    .tipsy-arrow-white { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #FFF; }
+
+    /* Rules to colour arrows */
+    .tipsy-arrow-n-white { border-bottom-color: #FFF; }
+    .tipsy-arrow-s-white { border-top-color: #FFF; }
+    .tipsy-arrow-e-white { border-left-color: #FFF; }
+    .tipsy-arrow-w-white { border-right-color: #FFF; }
+
+  	.tipsy-n-white .tipsy-arrow-white { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
+      .tipsy-nw-white .tipsy-arrow-white { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
+      .tipsy-ne-white .tipsy-arrow-white { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
+    .tipsy-s-white .tipsy-arrow-white { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+      .tipsy-sw-white .tipsy-arrow-white { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+      .tipsy-se-white .tipsy-arrow-white { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-e-white .tipsy-arrow-white { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+    .tipsy-w-white .tipsy-arrow-white { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+  /* end tipsy white theme */

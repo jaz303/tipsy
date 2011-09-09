@@ -41,6 +41,41 @@ Remember to include jquery.tipsy.js *after* including the main jQuery library.
 	});
 </script>
 
+4. To set a theme per tooltip, define the theme specific classes and set the name of the theme in the options:
+
+<style>
+    .tipsy-white { font-size: 11px; position: absolute; padding: 5px; z-index: 100000; }
+        .tipsy-inner-white { background-color: #FFF; color: #000; max-width: 200px; padding: 5px 8px 6px 8px; text-align: center; }
+        .tipsy-inner-white { border-radius: 0px; -moz-border-radius: 0px; -webkit-border-radius: 0px; }
+  
+        .tipsy-arrow-white { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #FFF; }
+  
+        .tipsy-arrow-n-white { border-bottom-color: #FFF; }
+        .tipsy-arrow-s-white { border-top-color: #FFF; }
+        .tipsy-arrow-e-white { border-left-color: #FFF; }
+        .tipsy-arrow-w-white { border-right-color: #FFF; }
+  
+        .tipsy-n-white .tipsy-arrow-white { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
+        .tipsy-nw-white .tipsy-arrow-white { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
+        .tipsy-ne-white .tipsy-arrow-white { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
+        .tipsy-s-white .tipsy-arrow-white { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+        .tipsy-sw-white .tipsy-arrow-white { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+        .tipsy-se-white .tipsy-arrow-white { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
+        .tipsy-e-white .tipsy-arrow-white { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+        .tipsy-w-white .tipsy-arrow-white { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+</style>
+
+<script type='text/javascript'>
+	$(function() {
+		// This will produce a white tooltip without rounded corners
+		$('a[rel=tipsy-white]').tipsy({fade: true, gravity: 'n', theme: 'white'});
+
+		// This will produce the default black tooltip
+		$('a[rel=tipsy]').tipsy({fade: true, gravity: 'n'});
+	});
+</script>
+
+
 Please refer to the docs directory for more examples and documentation.
 
 == A NOTE ON FORKING:
