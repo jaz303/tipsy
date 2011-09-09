@@ -22,4 +22,8 @@
     .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
     .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
   .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+    .tipsy-en .tipsy-arrow { right: 0; top: 10px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+    .tipsy-es .tipsy-arrow { right: 0; bottom: 10px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
   .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+    .tipsy-wn .tipsy-arrow { left: 0; top: 10px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+    .tipsy-ws .tipsy-arrow { left: 0; bottom: 10px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }

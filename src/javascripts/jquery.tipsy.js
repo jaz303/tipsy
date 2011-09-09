@@ -50,15 +50,22 @@
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
                         break;
                 }
-                
                 if (gravity.length == 2) {
-                    if (gravity.charAt(1) == 'w') {
-                        tp.left = pos.left + pos.width / 2 - 15;
-                    } else {
-                        tp.left = pos.left + pos.width / 2 - actualWidth + 15;
+                    switch(gravity.charAt(1)){
+                        case 'w':
+                            tp.left = pos.left + pos.width / 2 - 15;
+                            break;
+                        case 'e':
+                            tp.left = pos.left + pos.width / 2 - actualWidth + 15;
+                            break;
+                        case 'n':
+                            tp.top = pos.top + pos.height / 2 - 15;
+                            break;
+                        case 's':
+                            tp.top = pos.top + pos.height / 2 - actualHeight + 15;
+                            break;
                     }
                 }
-                
                 $tip.css(tp).addClass('tipsy-' + gravity);
                 $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
                 if (this.options.className) {
