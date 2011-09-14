@@ -8,12 +8,50 @@
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
     };
-    
+
+    // CAUTION the current implementation does not allow for tipsied elements to stay out of DOM (in between events)
+    // i.e. don't remove, store, then re-insert tipsied elements (and why would you want to do that anyway?)
+    var garbageCollect = (function() {
+        var currentInterval;
+        var to = null;
+        var tipsies = [];
+
+        function _do() {
+            for (var i = 0; i < tipsies.length;) {
+                var t = tipsies[i];
+                // FIXME? the 2nd (non-paranoid) check is from the link below, it should be replaced if a better way is found
+                // http://stackoverflow.com/questions/4040715/check-if-cached-jquery-object-is-still-in-dom
+                if (t.options.gcInterval == 0 || t.$element.closest('body').length == 0) {
+                    t.hide();
+                    tipsies.splice(i,1);
+                } else {
+                    i++
+                }
+            }
+        }
+        function _loop() {
+            to = setTimeout(function() { _do(); _loop(); }, currentInterval);
+        }
+
+        return function(t) {
+            if (t.options.gcInterval == 0) return;
+
+            if (to && t.options.gcInterval < currentInterval) {
+                clearTimeout(to); to = null;
+                currentInterval = t.options.gcInterval;
+            }
+            tipsies.push(t);
+            if (!to) _loop();
+        };
+    })();
+
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
         this.fixTitle();
+
+        garbageCollect(this);
     };
     
     Tipsy.prototype = {
@@ -182,6 +220,7 @@
         delayOut: 0,
         fade: false,
         fallback: '',
+        gcInterval: 0,
         gravity: 'n',
         html: false,
         live: false,
