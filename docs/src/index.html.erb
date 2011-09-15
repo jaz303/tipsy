@@ -276,7 +276,7 @@ an anchor tag's title attribute.</p>
   <h3>Hoverable Tooltips</h3>
 
   <p>
-    If you set the trigger to <code>hoverable</code>, the tooltip will stick around if you hover over it, not just if you hover over its element.
+    If you set <code>hoverable: true</code>, the tooltip will stick around if you hover over it or interact with it, not just if you hover/focus its element.
     This can be useful for tooltips containing things like clickable links.
   </p>
   <p>If you don't set a <code>delayOut</code>, it will default to 200.</p>
@@ -288,12 +288,12 @@ an anchor tag's title attribute.</p>
   </p>
 
   <script type='text/javascript'>
-    $('#hoverable-example').tipsy({html: true, trigger:'hoverable'});
+    $('#hoverable-example').tipsy({html: true, hoverable:true});
   </script>
 
   <p>Code:</p>
   <div class='code'><pre>&lt;script type='text/javascript'&gt;
-  $('#hoverable-example').tipsy({html: true, trigger:'hoverable'});
+  $('#hoverable-example').tipsy({html: true, hoverable: true});
 &lt;/script&gt;</pre></div>
 
   
@@ -334,10 +334,11 @@ an anchor tag's title attribute.</p>
     gravity: 'n',     // gravity (string or function)
     html: false,      // is tooltip content HTML?
     live: false,      // use live event support?
+    hoverable: false, // keep tooltip around when hovered/interacted with?
     offset: 0,        // pixel offset of tooltip from element
     opacity: 0.8,     // opacity of tooltip
     title: 'title',   // attribute/callback containing tooltip text
-    trigger: 'hover'  // how tooltip is triggered - hover | focus | manual | hoverable
+    trigger: 'hover'  // how tooltip is triggered - hover | focus | manual
 };</pre></div>
   
   <!-- Notes -->
