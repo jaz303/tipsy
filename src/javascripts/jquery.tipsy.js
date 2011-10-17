@@ -33,25 +33,10 @@
 
                 if (typeof this.$element[0].nearestViewportElement == 'object') {
                     // SVG
-                    var nve = this.$element[0].nearestViewportElement;
-                    var pt = nve.createSVGPoint();
-                    var matrix = this.$element[0].getScreenCTM();
-                    var bbox = this.$element[0].getBBox();
-                    pt.x = bbox.x;
-                    pt.y = bbox.y;
-                    var ul = pt.matrixTransform(matrix);
-                    var sparent = $(this.$element[0]);
-                    if (typeof $(this.$element[0]).scrollParent == 'function') {
-                        sparent = $(this.$element[0]).scrollParent();
-                    }
-                    pos.top = ul.y + sparent.scrollTop();
-                    pos.left = ul.x + sparent.scrollLeft();
-
-                    pt.x += bbox.width;
-                    pt.y += bbox.height;
-                    var lr = pt.matrixTransform(matrix);
-                    pos.width += lr.x - ul.x;
-                    pos.height += lr.y - ul.y;
+					var el = this.$element[0];
+                    var rect = el.getBoundingClientRect();
+					pos.width = rect.width;
+					pos.height = rect.height;
                 }
 
                 
