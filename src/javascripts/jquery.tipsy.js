@@ -109,12 +109,11 @@
         
         fixTitle: function() {
             var $e = this.$element;
-            if (typeof $e.context.nearestViewportElement != 'object'){            
-                if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-                    $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
-                }
-            } else{
-                                            
+            
+            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
+                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
+            }
+            if (typeof $e.context.nearestViewportElement == 'object'){                                                        
                 if ($e.children('title').length){
                     $e.append('<original-title>' + ($e.children('title').text() || '') + '</original-title>')
                         .children('title').remove();
