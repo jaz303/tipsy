@@ -59,6 +59,9 @@
                     }
                 }
                 
+				if (this.options.theme != 'default') {
+					$tip.addClass('tipsy-theme-' + this.options.theme);
+				}
                 $tip.css(tp).addClass('tipsy-' + gravity);
                 $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
                 if (this.options.className) {
@@ -188,7 +191,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+		theme: 'default'
     };
     
     // Overwrite this method to provide options on a per-element basis.
