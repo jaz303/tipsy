@@ -22,6 +22,7 @@
                 // FIXME? the 2nd (non-paranoid) check is from the link below, it should be replaced if a better way is found
                 // http://stackoverflow.com/questions/4040715/check-if-cached-jquery-object-is-still-in-dom
                 if (t.options.gcInterval == 0 || t.$element.closest('body').length == 0) {
+                    t.hoverState = 'out';
                     t.hide();
                     tipsies.splice(i,1);
                 } else {
