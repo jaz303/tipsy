@@ -7,7 +7,7 @@
     
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
-    };
+    }
 
     // CAUTION the current implementation does not allow for tipsied elements to stay out of DOM (in between events)
     // i.e. don't remove, store, then re-insert tipsied elements (and why would you want to do that anyway?)
@@ -21,12 +21,12 @@
                 var t = tipsies[i];
                 // FIXME? the 2nd (non-paranoid) check is from the link below, it should be replaced if a better way is found
                 // http://stackoverflow.com/questions/4040715/check-if-cached-jquery-object-is-still-in-dom
-                if (t.options.gcInterval == 0 || t.$element.closest('body').length == 0) {
+                if (t.options.gcInterval === 0 || t.$element.closest('body').length === 0) {
                     t.hoverState = 'out';
                     t.hide();
                     tipsies.splice(i,1);
                 } else {
-                    i++
+                    i++;
                 }
             }
         }
@@ -35,7 +35,7 @@
         }
 
         return function(t) {
-            if (t.options.gcInterval == 0) return;
+            if (t.options.gcInterval === 0) return;
 
             if (to && t.options.gcInterval < currentInterval) {
                 clearTimeout(to); to = null;
@@ -52,7 +52,7 @@
         this.enabled = true;
         this.fixTitle();
         garbageCollect(this);
-    };
+    }
 
     
     Tipsy.prototype = {
@@ -213,8 +213,8 @@
         options = $.extend({}, $.fn.tipsy.defaults, options);
 
         if (options.hoverlock && options.delayOut === 0) {
-	    options.delayOut = 100;
-	}
+            options.delayOut = 100;
+        }
         
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
@@ -313,9 +313,9 @@
      $.fn.tipsy.autoBounds = function(margin, prefer) {
 		return function() {
 			var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
-			    boundTop = $(document).scrollTop() + margin,
-			    boundLeft = $(document).scrollLeft() + margin,
-			    $this = $(this);
+                boundTop = $(document).scrollTop() + margin,
+                boundLeft = $(document).scrollLeft() + margin,
+                $this = $(this);
 
 			if ($this.offset().top < boundTop) dir.ns = 'n';
 			if ($this.offset().left < boundLeft) dir.ew = 'w';
