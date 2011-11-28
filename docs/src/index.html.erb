@@ -273,16 +273,38 @@ an anchor tag's title attribute.</p>
   
   <!-- Live Events Support -->
   
-  <h3>Support for Live Events</h3>
+  <h3>Support for Delegate/Live Events</h3>
+
+  <p>
+    Delegated events are supported using the option <code>{delegate: 'selector'}</code>.
+    jQuery &ge; 1.4.2 is required and delegated tooltips do not support manual triggering.
+    With delegate, tipsy is called on the parent element that will handle delegation with a selector for the elements that will have tooltips.
+  </p>
   
+  <div class='caption'>Delegate events example:</div>
+  <div id='delegate-example' class='example'>
+    <div id='delegate-template' style='display:none'><a href='#' class='delegate-tipsy' title='A delegated tooltip'>Dynamic tooltip</a></div>
+    <input type='button' value='Add' onclick='$("#delegate-example").append($("#delegate-template").clone().attr("id", "").show());' /><br />
+  </div>
+  
+  <script type='text/javascript'>
+    $('#delegate-example').tipsy({delegate: 'a.delegate-tipsy'});
+  </script>
+  
+  <div class='caption'>Code for delegated events:</div>
+  <div class='code'><pre>&lt;script type=&#x27;text/javascript&#x27;&gt;
+  $(&#x27;#delegate-example&#x27;).tipsy({delegate: &#x27;a.delegate-tipsy&#x27;});
+&lt;/script&gt;</pre></div>
+
   <p>
     Live events are supported using the option <code>{live: true}</code>.
     jQuery &ge; 1.4.1 is required and live tooltips do not support manual triggering.
+    Delegate should generally be preferred over live as it sets up faster.
   </p>
   
   <div class='caption'>Live events example:</div>
   <div id='live-example' class='example'>
-    <div id='live-template' style='display:none'><a href='#' class='live-tipsy' title='A tooltip'>Dynamic tooltip</a></div>
+    <div id='live-template' style='display:none'><a href='#' class='live-tipsy' title='A live tooltip'>Dynamic tooltip</a></div>
     <input type='button' value='Add' onclick='$("#live-example").append($("#live-template").clone().attr("id", "").show());' /><br />
   </div>
   
@@ -307,6 +329,7 @@ an anchor tag's title attribute.</p>
     fallback: '',     // fallback text to use when no tooltip text
     gravity: 'n',     // gravity (string or function)
     html: false,      // is tooltip content HTML?
+    delegate: false,  // use jquery delegate for live events (selector)
     live: false,      // use live event support?
     offset: 0,        // pixel offset of tooltip from element
     opacity: 0.8,     // opacity of tooltip
