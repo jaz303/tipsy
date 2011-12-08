@@ -24,7 +24,12 @@
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
-                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'})[this.options.insertMethod](this.options.insertTo);
+                
+                var insertTo = this.options.insertTo;
+                if (typeof insertTo == 'function') {
+                  insertTo = insertTo.call(this.$element[0]);
+                };
+                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'})[this.options.insertMethod](insertTo);
                 
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
