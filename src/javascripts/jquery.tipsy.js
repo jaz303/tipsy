@@ -49,6 +49,9 @@
                     case 'w':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
                         break;
+                    case 'c':
+                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        break;
                 }
                 
                 if (gravity.length == 2) {
