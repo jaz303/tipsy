@@ -1,4 +1,4 @@
-// Fork - added close on click & callback
+// Forked by james - added close on click
 
 
 // tipsy, facebook style tooltips for jquery
@@ -76,13 +76,23 @@
                 
                 if (this.options.clickClose) {
                     $tip.bind('click', {element: this.$element, callback: this.options.closeCallback}, function(event) {
-                        event.data.element.tipsy('hide')
+                        event.data.element.tipsy('hide');
                         if (event.data.callback) {
-                            event.data.callback()
+                            event.data.callback();
                         }
-                    })
+                    });
                 }
             }
+        },
+
+        showTimed: function() {
+            var self = this;
+            self.show();
+            self.$element.delay(this.options.timerLength)
+            .queue(function(next) {
+                self.hide();
+                next();
+            });
         },
         
         hide: function() {
@@ -202,7 +212,8 @@
         title: 'title',
         trigger: 'hover',
         clickClose: false,
-        closeCallback: null
+        closeCallback: null,
+        timerLength: 3 * 1000
     };
     
     // Overwrite this method to provide options on a per-element basis.
@@ -231,7 +242,7 @@
      * @param prefer (string, e.g. 'n', 'sw', 'w') - the direction to prefer
      *        if there are no viewable region edges effecting the tooltip's
      *        gravity. It will try to vary from this minimally, for example,
-     *        if 'sw' is preferred and an element is near the right viewable 
+     *        if 'sw' is preferred and an element is near the right viewable
      *        region edge, but not the top edge, it will set the gravity for
      *        that element's tooltip to be 'se', preserving the southern
      *        component.
@@ -249,7 +260,7 @@
             if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
 
             return dir.ns + (dir.ew ? dir.ew : '');
-        }
+        };
     };
     
 })(jQuery);
