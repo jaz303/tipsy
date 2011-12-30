@@ -133,7 +133,7 @@
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
         
-        function get(ele) {
+        function getEl(ele) {
             var tipsy = $.data(ele, 'tipsy');
             if (!tipsy) {
                 tipsy = new Tipsy(ele, $.fn.tipsy.elementOptions(ele, options));
@@ -143,7 +143,7 @@
         }
         
         function enter() {
-            var tipsy = get(this);
+            var tipsy = getEl(this);
             tipsy.hoverState = 'in';
             if (options.delayIn == 0) {
                 tipsy.show();
@@ -154,7 +154,7 @@
         };
         
         function leave() {
-            var tipsy = get(this);
+            var tipsy = getEl(this);
             tipsy.hoverState = 'out';
             if (options.delayOut == 0) {
                 tipsy.hide();
@@ -163,7 +163,7 @@
             }
         };
         
-        if (!options.live) this.each(function() { get(this); });
+        if (!options.live) this.each(function() { getEl(this); });
         
         if (options.trigger != 'manual') {
             var binder   = options.live ? 'live' : 'bind',
