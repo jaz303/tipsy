@@ -250,7 +250,9 @@
                 setTimeout(to, options.delayOut);
             }    
         }
-
+        
+        if (!options.live) this.each(function() { get(this); });
+        
         if (options.trigger != 'manual') {
             var binder = options.live ? 'live' : 'bind',
                 eventIn = options.trigger == 'hover' ? 'mouseenter' : 'focus',
