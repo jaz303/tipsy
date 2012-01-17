@@ -171,6 +171,7 @@
                     title = $e.children(title_name).html();
                 } else{
                     title = $e.attr(title_name);
+                    if (typeof title == 'undefined') title = ''
                 }
                 
             } else if (typeof o.title == 'function') {
