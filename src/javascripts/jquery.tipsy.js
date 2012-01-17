@@ -205,8 +205,12 @@
         if (options === true) {
             return this.data('tipsy');
         } else if (typeof options == 'string') {
-            var tipsy = this.data('tipsy');
-            if (tipsy) tipsy[options]();
+            $(this).each(function(i,el){
+              if ($(el).data('tipsy')) {
+                  tipsy = $(el).data('tipsy')
+                  tipsy[options]();
+              }
+            });
             return this;
         }
         
