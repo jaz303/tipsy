@@ -26,7 +26,7 @@
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
-                var pos = $.extend({}, this.$element.offset(), {
+                var pos = $.extend({}, this.$element.offset(), this.$element[0].getBBox ? this.$element[0].getBBox() : {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
                 });
