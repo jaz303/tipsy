@@ -31,6 +31,14 @@
                     height: this.$element[0].offsetHeight
                 });
                 
+                // this adds SVG support
+                // thanks to n8agrin - https://github.com/n8agrin/tipsy/commit/50d29373ab9ac9b66da749d9b34078bfdb1b5e1b
+                if (this.$element[0].nearestViewportElement) {
+                  var rect = this.$element[0].getBoundingClientRect();
+                  pos.width = rect.width;
+                  pos.height = rect.height;
+                }
+                
                 var actualWidth = $tip[0].offsetWidth,
                     actualHeight = $tip[0].offsetHeight,
                     gravity = maybeCall(this.options.gravity, this.$element[0]);
