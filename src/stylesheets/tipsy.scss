@@ -1,0 +1,133 @@
+@import "compass/css3";
+
+$bg-color:#000;
+$text-color:darken(#fff, 10%);
+$shadow-color:darken(#000, 10%);
+$shadow-spread:0;
+$border-radius:3px;
+
+.tipsy { 
+    font-size: 14px; 
+    position: absolute; 
+    padding: 5px; 
+    z-index: 100000;
+
+}
+
+.tipsy-inner { 
+    background-color: $bg-color;
+    color: $text-color; 
+    max-width: 200px; 
+    padding: 10px 10px 9px 10px; 
+    text-align: center; 
+
+    strong {
+        font-weight:bold;
+        color:black;
+    }
+}
+
+/* Rounded corners */
+.tipsy-inner {
+    @include border-radius($border-radius);
+}
+
+/* Uncomment for shadow */
+.tipsy-inner { 
+    @include box-shadow(0 0 $shadow-spread 0 $shadow-color);
+}
+
+.tipsy-arrow { position: absolute; width: 0px; height: 0px; line-height: 0; border: 5px dashed $bg-color; }
+
+/* Rules to colour arrows */
+.tipsy-arrow-n { border-bottom-color: $bg-color; }
+.tipsy-arrow-s { border-top-color: $bg-color; }
+.tipsy-arrow-e { border-left-color: $bg-color; }
+.tipsy-arrow-w { border-right-color: $bg-color; }
+
+.tipsy-n .tipsy-arrow { 
+    top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; 
+}
+.tipsy-nw .tipsy-arrow { 
+    top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;
+}
+.tipsy-ne .tipsy-arrow { 
+    top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;
+}
+.tipsy-s .tipsy-arrow { 
+    bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; 
+}
+.tipsy-sw .tipsy-arrow { 
+    bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; 
+}
+.tipsy-se .tipsy-arrow { 
+    bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; 
+}
+.tipsy-e .tipsy-arrow { 
+    right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent;     
+}
+.tipsy-w .tipsy-arrow { 
+    left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent;     
+}
+
+// Add a shadow to the arrow
+.tipsy-inner:after {
+    display:block;
+    content:" ";
+    background-color:none;
+    width:8px;
+    height:8px;
+
+    position:absolute;    
+    z-index:-1;
+
+    @include transform(rotate(-45deg));
+    @include box-shadow(0 0 $shadow-spread 0 $shadow-color);
+}
+
+
+.tipsy-e .tipsy-inner:after { 
+    right:1px;
+    top:50%;
+    margin-top:-4px;
+}
+
+.tipsy-w .tipsy-inner:after {
+    left:2px;
+    top:50%;
+    margin-top:-4px;
+}
+
+
+.tipsy-s .tipsy-inner:after {     
+    bottom:2px;
+    left:50%;
+    margin-left:-3px;
+}
+
+.tipsy-n .tipsy-inner:after {     
+    top:3px;
+    right:50%;
+    margin-right:-3px;
+}
+
+
+.tipsy-se .tipsy-inner:after {     
+    bottom:2px;
+    right:10px;
+}
+
+.tipsy-sw .tipsy-inner:after {     
+    bottom:2px;
+    left:11px;
+}
+
+.tipsy-ne .tipsy-inner:after {     
+    top:2px;
+    right:11px;
+}
+
+.tipsy-nw .tipsy-inner:after {     
+    top:2px;
+    left:11px;
+}
