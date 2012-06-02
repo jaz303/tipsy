@@ -28,11 +28,11 @@ Or clone from:
 
 ## Usage:
 
-1. Copy the contents of src/{images,javascripts,stylesheets} to the corresponding asset directories in your project. 
+1. Copy the contents of src/{images,javascripts,stylesheets} to the corresponding asset directories in your project.
    If the relative path of your images directory from your stylesheets   directory is not "../images", you'll need to adjust tipsy.css appropriately.
 
 2. Insert the neccesary elements in your document's `<head>` section, e.g.:
-   
+
         <script type='text/javascript' src='/javascripts/jquery.tipsy.js'></script>
         <link rel="stylesheet" href="/stylesheets/tipsy.css" type="text/css" />
 
