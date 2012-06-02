@@ -21,8 +21,11 @@
             var title = this.getTitle();
             if (title && this.enabled) {
                 var $tip = this.tip();
+                var $link = $tip.find('.tipsy-inner > a');
                 
-                $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $link.attr('href', this.$element.attr('href'));
+                $link[this.options.html ? 'html' : 'text'](title);
+                
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
@@ -103,7 +106,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"><a></a></div>');
             }
             return this.$tip;
         },
@@ -142,26 +145,57 @@
             return tipsy;
         }
         
-        function enter() {
-            var tipsy = get(this);
-            tipsy.hoverState = 'in';
-            if (options.delayIn == 0) {
+        function show(tipsy) {
+            if (tipsy.mouseInsideTarget || tipsy.mouseInsideTipsy) {
                 tipsy.show();
+            }
+        }
+        
+        function delayHide(tipsy) {
+            if (tipsy.delayHideTimeout) {
+                return;
+            }
+            
+            // important: setTimeout needed to allow mouse events to fire,
+            // e.g. if mouse leaves target but immediately enters tipsy.
+            tipsy.delayHideTimeout = setTimeout(function () {
+                tipsy.delayHideTimeout = null;
+                if (!tipsy.mouseInsideTarget && !tipsy.mouseInsideTipsy) {
+                    tipsy.hide();
+                } else {
+                }
+            }, options.delayOut || 0);
+        }
+        
+        function enterTarget() {
+            var tipsy = get(this);
+            tipsy.mouseInsideTarget = true;
+            
+            if (options.delayIn == 0) {
+                show(tipsy);
             } else {
                 tipsy.fixTitle();
-                setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
+                setTimeout(function() { show(tipsy); }, options.delayIn);
             }
-        };
+            
+            tipsy.$tip.unbind('mouseenter mouseleave');
+            tipsy.$tip.hover(function() { enterTipsy.call(tipsy); }, function() { leaveTipsy.call(tipsy); });
+        }
         
-        function leave() {
+        function leaveTarget() {
             var tipsy = get(this);
-            tipsy.hoverState = 'out';
-            if (options.delayOut == 0) {
-                tipsy.hide();
-            } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
-            }
-        };
+            tipsy.mouseInsideTarget = false;
+            delayHide(tipsy);
+        }
+        
+        function enterTipsy() {
+            this.mouseInsideTipsy = true;
+        }
+        
+        function leaveTipsy() {
+            this.mouseInsideTipsy = false;
+            delayHide(this);
+        }
         
         if (!options.live) this.each(function() { get(this); });
         
@@ -169,7 +203,7 @@
             var binder   = options.live ? 'live' : 'bind',
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+            this[binder](eventIn, enterTarget)[binder](eventOut, leaveTarget);
         }
         
         return this;
