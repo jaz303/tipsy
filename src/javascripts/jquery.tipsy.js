@@ -65,8 +65,8 @@
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
                 
-                if (this.options.fade) {
-                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
+                if (this.options.fadeIn) {
+                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity}, this.options.fadeIn);
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
@@ -74,8 +74,8 @@
         },
         
         hide: function() {
-            if (this.options.fade) {
-                this.tip().stop().fadeOut(function() { $(this).remove(); });
+            if (this.options.fadeOut) {
+                this.tip().stop().fadeOut(this.options.fadeOut, function() { $(this).remove(); });
             } else {
                 this.tip().remove();
             }
@@ -98,6 +98,7 @@
                 title = o.title.call($e[0]);
             }
             
+            //don't show "undefined" if the title is useful
             if (title)
               title = ('' + title).replace(/(^\s*|\s*$)/, "");
             return title || o.fallback;
@@ -134,6 +135,9 @@
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
+        
+        options.fadeIn = options.fadeIn || options.fade;
+        options.fadeOut = options.fadeOut || options.fade;
         
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
@@ -183,6 +187,8 @@
         delayIn: 0,
         delayOut: 0,
         fade: false,
+        fadeIn: false,
+        fadeOut: false,
         fallback: '',
         gravity: 'n',
         html: false,
