@@ -97,7 +97,9 @@
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
-            title = ('' + title).replace(/(^\s*|\s*$)/, "");
+            
+            if (title)
+              title = ('' + title).replace(/(^\s*|\s*$)/, "");
             return title || o.fallback;
         },
         
