@@ -97,10 +97,8 @@
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
-            
-            //don't show "undefined" if the title is useful
-            if (title)
-              title = ('' + title).replace(/(^\s*|\s*$)/, "");
+
+            if (title) title = ('' + title).replace(/(^\s*|\s*$)/, "");
             return title || o.fallback;
         },
         
