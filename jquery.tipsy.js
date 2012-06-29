@@ -10,14 +10,29 @@
 		this.$element = $( element );
 		this.options  = options;
 		this.enabled  = true;
-		this.fixTitle();
+		if ( this.$element.attr( 'title' ) || typeof( this.$element.attr('original-title') ) != 'string' ) {
+			this.$element.attr( 'original-title', this.$element.attr( 'title' ) || '' ).removeAttr( 'title' );
+		}
+		this.$tip = $( '<div class="tipsy"><div class="tipsy-arrow"></div><div class="tipsy-inner"></div></div>' );
 	};
 	$.tipsy.prototype  = {
-		show          : function () {
-			var title = this.getTitle();
+		show     : function () {
+			var $e = this.$element, o = this.options;
+		function getTitle () {
+			var title;
+			if (typeof o.title == 'string') {
+				title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
+			} else if (typeof o.title == 'function') {
+				title = o.title.call($e[0]);
+			}
+			title = ('' + title).replace(/(^\s*|\s*$)/, "");
+			return title || o.fallback;
+		}
+			
+			var title = getTitle();
 			if (title && this.enabled) {
 				var self = this,
-					$tip = this.tip();
+					$tip = this.$tip;
 				
 				$tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
 				$tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
@@ -70,106 +85,74 @@
 				}
 			}
 		},
-
-		hide          : function () {
+		hide     : function () {
 			if ( this.options.fade )
-				this.tip().stop().fadeOut( function () { $( this ).remove(); } );
+				this.$tip.stop().fadeOut( function () { $( this ).remove(); } );
 			else 
-				this.tip().remove();
+				this.$tip.remove();
 		},
-
-		fixTitle      : function () {
-			var $e = this.$element;
-			if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-				$e.attr('original-title', $e.attr('title') || '').removeAttr('title');
-			}
+		validate : function () { // validate in DOM => validate visibility?
+			var element = this.$element && this.$element[0];
+			if ( element )
+				while ( element = element.parentNode )
+					if ( element == document )
+						return;
+			this.hide();
+			this.$element = this.options = this.$tip = null;
 		},
-
-		getTitle      : function () {
-			var title, $e = this.$element, o = this.options;
-			this.fixTitle();
-			var title, o = this.options;
-			if (typeof o.title == 'string') {
-				title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
-			} else if (typeof o.title == 'function') {
-				title = o.title.call($e[0]);
-			}
-			title = ('' + title).replace(/(^\s*|\s*$)/, "");
-			return title || o.fallback;
-		},
-
-		tip           : function () {
-			if (!this.$tip) {
-				this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
-			}
-			return this.$tip;
-		},
-
-		validate      : function () {
-			if (!this.$element[0].parentNode) {
-				this.hide();
-				this.$element = null;
-				this.options = null;
-			}
-		},
-
-		enable        : function() { this.enabled = true; },
-		disable       : function() { this.enabled = false; },
-		toggleEnabled : function() { this.enabled = !this.enabled; }
+		enable   : function() { this.enabled = true; },
+		disable  : function() { this.enabled = false; },
+		toggle   : function() { this.enabled = ! this.enabled; }
 	};
 	$.fn.tipsy         = function ( options ) {
-
-		if (options === true) {
-			return this.data('tipsy');
-		} else if (typeof options == 'string') {
-			var tipsy = this.data('tipsy');
-			if (tipsy) tipsy[options]();
+		if ( options === true )
+			return this.data( 'tipsy' );
+		if ( typeof options == 'string' ) {
+			if ( options in $.tipsy.prototype )
+				this.each( function () {
+					get.call( this )[ options ]();
+				} );
 			return this;
 		}
-
-		options = $.extend({}, $.tipsy.defaults, options);
-
-		function get(ele) {
-			var tipsy = $.data(ele, 'tipsy');
-			if (!tipsy) {
-				tipsy = new $.tipsy(ele, options);
-				$.data(ele, 'tipsy', tipsy);
-			}
+		function get ( options ) {
+			var tipsy = $.data( this, 'tipsy' );
+			if ( ! tipsy )
+				$.data( this, 'tipsy', tipsy = new $.tipsy( this, options ) );
 			return tipsy;
 		}
-
-		function enter() {
-			var tipsy = get(this);
+		function enter () {
+			var tipsy = get.call( this, options );
 			tipsy.hoverState = 'in';
-			if (options.delayIn == 0) {
-				tipsy.show();
-			} else {
-				tipsy.fixTitle();
-				setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
-			}
+			options.delayIn ? 
+				setTimeout( function () {
+					if (tipsy.hoverState == 'in')
+						tipsy.show();
+				}, options.delayIn )
+				: tipsy.show();
 		};
-
-		function leave() {
-			var tipsy = get(this);
+		function leave () {
+			var tipsy = get.call( this, options );
 			tipsy.hoverState = 'out';
-			if (options.delayOut == 0) {
-				tipsy.hide();
-			} else {
-				setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
-			}
+			options.delayOut ?
+				setTimeout( function () {
+					if (tipsy.hoverState == 'out')
+						tipsy.hide();
+				}, options.delayOut )
+				: tipsy.hide();
 		};
-
-		if (!options.live) this.each(function() { get(this); });
-
-		if (options.trigger != 'manual') {
+		options = $.extend( {}, $.tipsy.defaults, options );
+		if ( ! options.live )
+			this.each( function () {
+				get.call( this, options );
+			} );
+		if ( options.trigger != 'manual' ) {
 			var binder   = options.live ? 'live' : 'bind',
 				eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
 				eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-			this[binder](eventIn, enter)[binder](eventOut, leave);
+			this[binder](eventIn, enter)
+				[binder](eventOut, leave);
 		}
-
 		return this;
-
 	};
 	$.tipsy.defaults   = {
 		className : null,
@@ -185,14 +168,12 @@
 		title     : 'title',
 		trigger   : 'hover'
 	};
-	$.tipsy.revalidate = function () {
+	$.tipsy.validate   = function () {
 		$( '.tipsy' ).each( function () {
 			var element = $.data( this, 'tipsy-pointee' );
-			if ( element )
-				while ( element = element.parentNode )
-					if ( element == document )
-						return;
-			$( this ).remove();
+			element ?
+				$( element ).tipsy( 'validate' )
+				: $( this  ).remove();
 		} );
 	};
 	/**
