@@ -16,7 +16,17 @@ It's used by Twitter, Github, Slideshare and Bitbucket, amongst others.
 
 http://onehackoranother.com/projects/jquery/tipsy
 
-## Source:
+## Modified Source:
+
+Hosted at GitHub; browse at:
+
+  http://github.com/adriengibrat/tipsy/tree/master
+
+Or clone from:
+
+    git://github.com/adriengibrat/tipsy.git
+    
+## Original Source:
 
 Hosted at GitHub; browse at:
 
@@ -28,13 +38,12 @@ Or clone from:
 
 ## Usage:
 
-1. Copy the contents of src/{images,javascripts,stylesheets} to the corresponding asset directories in your project. 
-   If the relative path of your images directory from your stylesheets   directory is not "../images", you'll need to adjust tipsy.css appropriately.
+1. Copy the contents of the repository to the corresponding asset directories in your project. 
 
 2. Insert the neccesary elements in your document's `<head>` section, e.g.:
    
-        <script type='text/javascript' src='/javascripts/jquery.tipsy.js'></script>
-        <link rel="stylesheet" href="/stylesheets/tipsy.css" type="text/css" />
+        <script type='text/javascript' src='jquery.tipsy.js'></script>
+        <link rel="stylesheet" href="tipsy.css" type="text/css" />
 
  Remember to include jquery.tipsy.js *after* including the main jQuery library.
 
