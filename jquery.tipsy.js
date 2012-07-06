@@ -39,22 +39,13 @@ if ( ! Function.prototype.bind )
 		} );
 	};
 	$.tipsy            = function ( element, options ) {
-		var self       = this
-			, $element = $( element )
-			, $tip     = $( '<div class="tipsy"><div class="tipsy-arrow"></div><div class="tipsy-inner"></div></div>' )
+		var $element = $( element )
+			, $tip   = $( '<div class="tipsy"><div class="tipsy-arrow"></div><div class="tipsy-inner"></div></div>' )
 		;
-		this.enabled  = true;
-		this.active   = false;
 		this.$element = $element;
-		this.set( $.tipsy.options( element, options ) );
-/* @todo rewrite this crap */
-		
-		if ( $element.attr( 'title' ) || typeof( $element.attr('original-title') ) != 'string' ) {
-			$element.attr( 'original-title', $element.attr( 'title' ) || '' ).removeAttr( 'title' );
-		}
-/* @todo rewrite this crap */
+		this.set( options = $.tipsy.options( element, options ) );
 		this.$tip = $tip
-			.addClass( this.options.className )
+			.addClass( options.className )
 			.css( { top: 0, left: 0, visibility: 'hidden' } )
 			.remove()
 			.prependTo( document.body )
@@ -62,43 +53,41 @@ if ( ! Function.prototype.bind )
 			.bind( 'position', function () {
 				var width     = $tip.outerWidth()
 					, height  = $tip.outerHeight()
-					, gravity = $.isFunction( self.options.gravity ) ? self.options.gravity.call( element ) : self.options.gravity
+					, gravity = $.isFunction( options.gravity ) ? options.gravity.call( element ) : options.gravity
 					, pointee = $.extend( $element.offset(), {
 						width  : $element.outerWidth(),
 						height : $element.outerHeight()
 					} )
-					, position;
+					, position
+				;
 				switch ( gravity.charAt( 0 ) ) {
 					case 'n':
 						position = {
-							top    : pointee.top + pointee.height + self.options.offset
+							top    : pointee.top + pointee.height + options.offset
 							, left : pointee.left + pointee.width / 2 - width / 2
 						};
 						break;
 					case 's':
 						position = {
-							top    : pointee.top - height - self.options.offset
+							top    : pointee.top - height - options.offset
 							, left : pointee.left + pointee.width / 2 - width / 2
 						};
 						break;
 					case 'e':
 						position = {
 							top    : pointee.top + pointee.height / 2 - height / 2
-							, left : pointee.left - width - self.options.offset
+							, left : pointee.left - width - options.offset
 						};
 						break;
 					case 'w':
 						position = {
 							top    : pointee.top + pointee.height / 2 - height / 2
-							, left : pointee.left + pointee.width + self.options.offset
+							, left : pointee.left + pointee.width + options.offset
 						};
 						break;
 				}
 				if ( gravity.length == 2 )
-					if ( gravity.charAt( 1 ) == 'w' )
-						position.left = pointee.left + pointee.width / 2 - 15;
-					else
-						position.left = pointee.left + pointee.width / 2 - width + 15;
+					position.left = pointee.left + pointee.width / 2 - ( gravity.charAt( 1 ) == 'w' ? 15 : width - 15 );
 				$tip
 					.css( position )
 					.attr( 'class', 'tipsy' ) // reset classname in case of dynamic gravity
@@ -112,32 +101,39 @@ if ( ! Function.prototype.bind )
 		set        : function ( options ) {
 			if ( $.isPlainObject( options ) ) {
 				this.options = $.extend( this.options || {}, options );
-				if ( this.options.trigger != 'manual' && ! this.options.live  )
+				var trigger = this.options.trigger;
+				if ( trigger != 'manual' && ! this.options.live )
 					this.$element
 						.unbind( '.tipsy' )
-						.bind( this.options.trigger == 'hover' ? 'mouseenter.tipsy' : 'focus.tipsy', this.show.bind( this ) )
-						.bind( this.options.trigger == 'hover' ? 'mouseleave.tipsy' : 'blur.tipsy', this.hide.bind( this ) )
+						.bind( ( trigger == 'hover' ? 'mouseenter' : 'focus' ) + '.tipsy', this.show.bind( this ) )
+						.bind( ( trigger == 'hover' ? 'mouseleave' : 'blur' ) + '.tipsy', this.hide.bind( this ) )
 					;
+				var title = this.$element.attr( 'title' );
+				if ( title ) {
+					this.$element.attr( 'data-original-title', title ).removeAttr( 'title' );
+					if ( ! this.options.title )
+						this.options.title = title;
+				 }
 			}
-			return this;
+			return this.options.title ? this.enable() : this.disable();
 		}
 		, show     : function () {
-/* @todo rewrite this crap */
+/* @todo rewrite this crap /
 			if ( typeof this.options.title == 'string' )
-				title = this.$element.attr( this.options.title == 'title' ? 'original-title' : this.options.title );
+				title = this.$element.attr( this.options.title == 'title' ? 'data-original-title' : this.options.title );
 			else if ( typeof this.options.title == 'function' )
 				title = this.options.title.call( this.$element.get( 0 ) );
 			if ( title )
 				title = String( title ).replace( /(^\s*|\s*$)/, '' );
 			else
 				title = this.options.fallback;
-/* @todo rewrite this crap */
-			if ( ! title || ! this.enabled )
+/ @todo rewrite this crap */
+			if ( ! this.enabled )
 				return this;
 			this.active = true;
 			this.$tip
 				.find( '.tipsy-inner' )
-					.html( title )
+					.html( this.options.title )
 				.end()
 					.trigger( 'position' )
 			;
@@ -178,13 +174,21 @@ if ( ! Function.prototype.bind )
 			}, this.options.delayOut );
 			return this;
 		}
-		, validate : function () { // validate in DOM => validate visibility?
-			var element = this.$element && this.$element.get( 0 );
+		, remove   : function () {
+			var title = this.$element.attr( 'data-original-title' );
+			if ( title )
+				this.$element.attr( 'title', title ).removeAttr( 'data-original-title' );
+			this.hide().disable().$tip.remove();
+		}
+		, validate : function () {
+			if ( this.$element.is( ':not(:visible)' ) )
+				return this.hide();
+			var element = this.$element.get( 0 );
 			if ( element )
 				while ( element = element.parentNode )
 					if ( element == document )
 						return this;
-			return this.hide();
+			return this.remove();
 		}
 		, enable   : function () {
 			this.enabled = true;
@@ -208,7 +212,7 @@ if ( ! Function.prototype.bind )
 		, live     : false
 		, offset   : 0
 		, opacity  : .8
-		, title    : 'title'
+		, title    : null
 		, trigger  : 'hover'
 	};
 	$.tipsy.get        = function ( element, options, reset ) {
