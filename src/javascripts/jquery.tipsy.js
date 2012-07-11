@@ -1,6 +1,6 @@
-// tipsy, facebook style tooltips for jquery
+// tipsy, facebook style tooltips for jquery with fancy fading
 // version 1.0.0a
-// (c) 2008-2010 jason frame [jason@onehackoranother.com]
+// (c) 2008-2010 jason frame [jason@onehackoranother.com] and modificated by Sergio Alvarez @saleiva
 // released under the MIT license
 
 (function($) {
@@ -106,7 +106,7 @@
           }
 
           if (this.options.fade) {
-            this.tip().stop().animate(mo, 200, function(){console.log('uka!'); $(this).remove();});
+            this.tip().stop().animate(mo, 200, function(){$(this).remove();});
           } else {
             this.tip().remove();
           }
