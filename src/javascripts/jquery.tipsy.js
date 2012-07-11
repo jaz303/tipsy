@@ -48,19 +48,19 @@
             switch (gravity.charAt(0)) {
               case 'n':
               tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
-              mo = {top: parseInt(pos.top + pos.height + MOVE_OFFSET), opacity: this.options.opacity};
+              mo = {top: parseInt(pos.top + pos.height + this.options.offset + MOVE_OFFSET), opacity: this.options.opacity};
               break;
               case 's':
               tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
-              mo = {top: parseInt(pos.top - actualHeight - MOVE_OFFSET), opacity: this.options.opacity};
+              mo = {top: parseInt(pos.top - actualHeight - this.options.offset - MOVE_OFFSET), opacity: this.options.opacity};
               break;
               case 'e':
               tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
-              mo = {left: parseInt(pos.left - actualWidth - MOVE_OFFSET), opacity: this.options.opacity};
+              mo = {left: parseInt(pos.left - actualWidth - this.options.offset - MOVE_OFFSET), opacity: this.options.opacity};
               break;
               case 'w':
               tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
-              mo = {left: parseInt(pos.left + pos.width + MOVE_OFFSET), opacity: this.options.opacity};
+              mo = {left: parseInt(pos.left + pos.width + this.options.offset + MOVE_OFFSET), opacity: this.options.opacity};
               break;
             }
             
