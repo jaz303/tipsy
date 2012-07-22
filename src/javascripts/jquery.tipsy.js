@@ -25,8 +25,8 @@
     
     Tipsy.prototype = {
         show: function() {
-            var title = this.getTitle();
-            if (title && this.enabled) {
+            var title;
+            if (this.enabled && (title = this.getTitle())) {
                 var $tip = this.tip();
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
