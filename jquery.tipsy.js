@@ -2,28 +2,13 @@
 // version 1.5.0 (big rewrite by adrien Gibrat)
 // (c) 2008-2012 jason frame [jason@onehackoranother.com]
 // released under the MIT license
-if ( ! Function.prototype.bind )
-	Function.prototype.bind = function ( context ) {
-		var args  = Array.prototype.slice.call( arguments, 1 ), 
-			bind  = this, 
-			nop   = function () {},
-			bound = function () {
-				return bind.apply( 
-					this instanceof nop ? this : context == null ? window : context, 
-					args.concat( Array.prototype.slice.call( arguments ) )
-				);
-			};
-		nop.prototype   = this.prototype;
-		bound.prototype = new nop();
-		return bound;
-	};
 ( function ( $ ) {
 	$.fn.tipsy         = function ( options ) {
 		var set    = typeof options !== 'string'
 			, opts = set ? $.tipsy.options( this.get( 0 ) || document, options ) : $.tipsy.defaults
 		;
-		if ( opts.live ) { // @todo: rewrite this to use jQuery 1.7 $.fn.one() !
-			$( document )
+		if ( opts.live ) { // @todo: rewrite this to use jQuery 1.7 $.fn.one() ?!
+			$( this.context )
 				.delegate( this.selector, opts.trigger == 'hover' ? 'mouseenter.tipsy' : 'focus.tipsy', function () {
 					$.tipsy.get( this, opts ).show();
 				} )
@@ -105,29 +90,20 @@ if ( ! Function.prototype.bind )
 				if ( trigger != 'manual' && ! this.options.live )
 					this.$element
 						.unbind( '.tipsy' )
-						.bind( ( trigger == 'hover' ? 'mouseenter' : 'focus' ) + '.tipsy', this.show.bind( this ) )
-						.bind( ( trigger == 'hover' ? 'mouseleave' : 'blur' ) + '.tipsy', this.hide.bind( this ) )
+						.bind( ( trigger == 'hover' ? 'mouseenter' : 'focus' ) + '.tipsy', $.proxy( this.show, this ) )
+						.bind( ( trigger == 'hover' ? 'mouseleave' : 'blur' ) + '.tipsy', $.proxy( this.hide, this ) )
 					;
-				var title = this.$element.attr( 'title' );
-				if ( title ) {
-					this.$element.attr( 'data-original-title', title ).removeAttr( 'title' );
-					if ( ! this.options.title )
-						this.options.title = title;
-				 }
 			}
-			return this.options.title ? this.enable() : this.disable();
+			return this;
 		}
 		, show     : function () {
-/* @todo rewrite this crap /
-			if ( typeof this.options.title == 'string' )
-				title = this.$element.attr( this.options.title == 'title' ? 'data-original-title' : this.options.title );
-			else if ( typeof this.options.title == 'function' )
-				title = this.options.title.call( this.$element.get( 0 ) );
-			if ( title )
-				title = String( title ).replace( /(^\s*|\s*$)/, '' );
-			else
-				title = this.options.fallback;
-/ @todo rewrite this crap */
+			var title = this.$element.attr( 'title' );
+			if ( title ) {
+				this.$element.attr( 'data-original-title', title ).removeAttr( 'title' );
+				//if ( ! this.options.title )
+					this.options.title = title;
+			 }
+			this.options.title ? this.enable() : this.disable();
 			if ( ! this.enabled )
 				return this;
 			this.active = true;
