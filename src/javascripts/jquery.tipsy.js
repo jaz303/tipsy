@@ -33,10 +33,17 @@
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
-                var pos = $.extend({}, this.$element.offset(), {
-                    width: this.$element[0].offsetWidth,
-                    height: this.$element[0].offsetHeight
-                });
+                var pos = $.extend({}, this.$element.offset());
+
+                // If the element is contained in a SVG object, use getBBox
+                if (this.$element.parents('svg').size() > 0) {
+                    pos = $.extend(pos, this.$element[0].getBBox());
+                } else {
+                    pos = $.extend(pos, {
+                        width: this.$element[0].offsetWidth,
+                        height: this.$element[0].offsetHeight
+                    });
+                }
                 
                 var actualWidth = $tip[0].offsetWidth,
                     actualHeight = $tip[0].offsetHeight,
