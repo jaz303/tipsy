@@ -100,7 +100,7 @@
 			var title = this.$element.attr( 'title' );
 			if ( title ) {
 				this.$element.attr( 'data-original-title', title ).removeAttr( 'title' );
-				//if ( ! this.options.title )
+				if ( ! this.options.title )
 					this.options.title = title;
 			 }
 			this.options.title ? this.enable() : this.disable();
@@ -183,7 +183,6 @@
 		, delayIn  : 0
 		, delayOut : 0
 		, fade     : false
-		, fallback : ''
 		, gravity  : 'n'
 		, live     : false
 		, offset   : 0
