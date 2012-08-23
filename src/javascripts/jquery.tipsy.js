@@ -121,7 +121,8 @@
         fixTitle: function() {
             var $e = this.$element;
             if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-                $(this).attr('original-title', $(this).attr('title') || '').removeAttr('title').attr("title", "");
+                var $title = $e.attr('title');
+		$e.removeAttr('title').attr('title','').attr('original-title', $title || '');
             }
         },
         
