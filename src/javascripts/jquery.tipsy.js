@@ -110,8 +110,17 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
-                this.$tip.data('tipsy-pointee', this.$element[0]);
+              var $tip = $('<div class="tipsy"></div>');
+              var $arrow = $('<div class="tipsy-arrow"></div>');
+
+              if (this.options.arrowBorder) {
+                $arrow.append('<div class="tipsy-arrow-inner"></div>');
+              }
+              $tip.append($arrow);
+              $tip.append('<div class="tipsy-inner"></div>');
+              $tip.data('tipsy-pointee', this.$element[0]);
+
+              this.$tip = $tip;
             }
             return this.$tip;
         },
@@ -185,6 +194,7 @@
     };
     
     $.fn.tipsy.defaults = {
+        arrowBorder: false,
         className: null,
         delayIn: 0,
         delayOut: 0,
