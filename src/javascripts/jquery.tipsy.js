@@ -15,6 +15,12 @@
       }
       return false;
     };
+
+    var tipsyIDcounter = 0;
+    function tipsyID() {
+        var tipsyID = tipsyIDcounter++;
+        return "tipsyuid" + tipsyID;
+    };
     
     function Tipsy(element, options) {
         this.$element = $(element);
@@ -77,6 +83,10 @@
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
+
+                var $tipID = tipsyID();
+                $tip.attr("id", $tipID);
+                this.$element.attr("aria-describedby", $tipID);
             }
         },
         
@@ -110,7 +120,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>').attr("role","tooltip");
                 this.$tip.data('tipsy-pointee', this.$element[0]);
             }
             return this.$tip;
