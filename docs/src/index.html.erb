@@ -294,12 +294,37 @@ an anchor tag's title attribute.</p>
   <div class='code'><pre>&lt;script type=&#x27;text/javascript&#x27;&gt;
   $(&#x27;a.live-tipsy&#x27;).tipsy({live: true});
 &lt;/script&gt;</pre></div>
+
+  <!-- ARIA attribute Support -->
+  
+  <h3>Support for ARIA attributes</h3>
+  
+  <p>
+    ARIA attributes are supported using the option <code>{aria: true}</code>.
+    The tooltip trigger must have a parent set to <code>role=&quot;application&quot;</code> or <code>role=&quot;document&quot;</code> and the tooltip should be enabled on focus (screen reader users are most likely to be using the keyboard).
+  </p>
+  <p>
+    The tooltip will be set to <code>role=&quot;tooltip&quot;</code> and the trigger will be linked to the tooltip with <code>aria-describedby</code> (using a generated ID).
+  </p>
+
+  <p role='application'><a id='aria-example' href='#' title='You should hear this text in screen readers'>Tooltip with ARIA</a></p>
+
+  <div class='caption'>Aria example:</div>
+  <div class='code'><pre>$('#aria-example').tipsy({aria: true});</pre></div>
+  
+  <script type='text/javascript'>
+    $(function() {
+      $("#aria-example").tipsy({trigger: "focus", aria: true});
+      $("#aria-example").tipsy({trigger: "hover", aria: true});
+    });
+  </script>
   
   <!-- Options -->
 
   <h2 id="options">Summary of Configuration Options</h2>
   <p>Here is the default options declaration:
   <div class='code'><pre>$.fn.tipsy.defaults = {
+    aria: false,      // add ARIA attributes? (note dependencies)
     className: null,  // custom class to add to tooltip (string or function)
     delayIn: 0,       // delay before showing tooltip (ms)
     delayOut: 0,      // delay before hiding tooltip (ms)
