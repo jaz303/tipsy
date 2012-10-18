@@ -48,8 +48,3 @@ Or clone from:
 
 Please refer to the docs directory for more examples and documentation.
 
-## A note on forking:
-
-By forking this project you hereby grant permission for any commits to your fork to be
-merged back into this repository and, with attribution, be released under the terms of
-the MIT License.
