@@ -3,6 +3,7 @@
   $(function() {
     
     $('#example-1').tipsy();
+	$('#example-2').tipsy({ theme: 'white' });
     
     $('#auto-gravity').tipsy({gravity: $.fn.tipsy.autoNS});
     
@@ -97,6 +98,18 @@ an anchor tag's title attribute.</p>
 
 <div class='caption'>Dynamic gravity example:</div>
 <div class='code'><pre>$('#foo').tipsy({gravity: $.fn.tipsy.autoNS});</pre></div>
+
+<h3>Themes</h3>
+
+<p>Using the theme parameter, you can change the design of the tooltip element. There is currently two themes default (black) and white.</p>
+
+<div class='caption'>Using the white theme example:</div>
+<div class='code'><pre>$('#example-2').tipsy({ theme: 'white' });</pre></div>
+
+<p style="background: #333; padding: 40px;">
+	<a id='example-2' href='#' style="color: #fff;" title='Hello World'>Hover over me</a>
+</p>
+
 
 <h3>Fading</h3>
 
@@ -312,6 +325,7 @@ an anchor tag's title attribute.</p>
     opacity: 0.8,     // opacity of tooltip
     title: 'title',   // attribute/callback containing tooltip text
     trigger: 'hover'  // how tooltip is triggered - hover | focus | manual
+	theme: 'default'  // the design of the tooltip element
 };</pre></div>
   
   <!-- Notes -->
