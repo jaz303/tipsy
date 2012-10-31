@@ -25,7 +25,7 @@
 
     Tipsy.prototype = {
         show: function() {
-            if (!isElementInDOM(this.$element[0])) return;
+            if (!isElementInDOM(this.$element[0]) || !this.$element.is(':visible')) return;
             var title = this.getTitle();
             if (title && this.enabled) {
                 var $tip = this.tip();
