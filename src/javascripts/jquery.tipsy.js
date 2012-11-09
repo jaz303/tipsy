@@ -40,10 +40,6 @@
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
 
 
-                if (this.options.hoverable) {
-                    $tip.hover(tipOver, tipOut);
-                }
-
                 var that = this;
                 function tipOver() {
                     that.hoverTooltip = true;
@@ -57,6 +53,10 @@
                     }
                 }
                 
+                if (this.options.hoverable) {
+                    $tip.hover(tipOver, tipOut);
+                }
+
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
