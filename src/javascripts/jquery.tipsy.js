@@ -38,6 +38,24 @@
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+
+
+                if (this.options.hoverable) {
+                    $tip.hover(tipOver, tipOut);
+                }
+
+                var that = this;
+                function tipOver() {
+                    that.hoverTooltip = true;
+                }
+                function tipOut() {
+                    if (that.hoverState == 'in') return;  // If field is still focused.
+                    that.hoverTooltip = false;
+                    if (that.options.trigger != 'manual') {
+                        var eventOut = that.options.trigger == 'hover' ? 'mouseleave.tipsy' : 'blur.tipsy';
+                        that.$element.trigger(eventOut);
+                    }
+                }
                 
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
@@ -155,6 +173,9 @@
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
+        if (options.hoverable) {
+            options.delayOut = options.delayOut || 200;
+        }
         
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
@@ -182,7 +203,7 @@
             if (options.delayOut == 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+                setTimeout(function() { if (tipsy.hoverState == 'out' && !tipsy.hoverTooltip) tipsy.hide(); }, options.delayOut);
             }
         };
         
@@ -190,8 +211,8 @@
         
         if (options.trigger != 'manual') {
             var binder   = options.live ? 'live' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
-                eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
+                eventIn  = options.trigger == 'hover' ? 'mouseenter.tipsy' : 'focus.tipsy',
+                eventOut = options.trigger == 'hover' ? 'mouseleave.tipsy' : 'blur.tipsy';
             this[binder](eventIn, enter)[binder](eventOut, leave);
         }
         
@@ -209,6 +230,7 @@
         gravity: 'n',
         html: false,
         live: false,
+        hoverable: false,
         offset: 0,
         opacity: 0.8,
         title: 'title',

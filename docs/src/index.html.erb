@@ -270,6 +270,32 @@ an anchor tag's title attribute.</p>
 &lt;script type=&#x27;text/javascript&#x27;&gt;
   $(&#x27;#manual-example a[rel=tipsy]&#x27;).tipsy({trigger: &#x27;manual&#x27;});
 &lt;/script&gt;</pre></div>
+
+  <!-- Hoverable -->
+
+  <h3>Hoverable Tooltips</h3>
+
+  <p>
+    If you set <code>hoverable: true</code>, the tooltip will stick around if you hover over it or interact with it, not just if you hover/focus its element.
+    This can be useful for tooltips containing things like clickable links.
+  </p>
+  <p>If you don't set a <code>delayOut</code>, it will default to 200.</p>
+
+  <div class='caption'>Example:</div>
+
+  <p>
+    <a id='hoverable-example' title='I have <a href="#foo">a link</a>' href='#'>Hover me</a>
+  </p>
+
+  <script type='text/javascript'>
+    $('#hoverable-example').tipsy({html: true, hoverable:true});
+  </script>
+
+  <p>Code:</p>
+  <div class='code'><pre>&lt;script type='text/javascript'&gt;
+  $('#hoverable-example').tipsy({html: true, hoverable: true});
+&lt;/script&gt;</pre></div>
+
   
   <!-- Live Events Support -->
   
@@ -333,6 +359,7 @@ an anchor tag's title attribute.</p>
     gravity: 'n',     // gravity (string or function)
     html: false,      // is tooltip content HTML?
     live: false,      // use live event support?
+    hoverable: false, // keep tooltip around when hovered/interacted with?
     offset: 0,        // pixel offset of tooltip from element
     opacity: 0.8,     // opacity of tooltip
     title: 'title',   // attribute/callback containing tooltip text
