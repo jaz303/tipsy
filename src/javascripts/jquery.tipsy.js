@@ -174,7 +174,7 @@
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
         if (options.hoverable) {
-            options.delayOut = options.delayOut || 200;
+            options.delayOut = options.delayOut || 20;
         }
         
         function get(ele) {
