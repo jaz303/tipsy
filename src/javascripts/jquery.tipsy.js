@@ -214,6 +214,11 @@
                 eventIn  = options.trigger == 'hover' ? 'mouseenter.tipsy' : 'focus.tipsy',
                 eventOut = options.trigger == 'hover' ? 'mouseleave.tipsy' : 'blur.tipsy';
             this[binder](eventIn, enter)[binder](eventOut, leave);
+            if (options.hideOnClick) {
+                this[binder](eventIn, enter)[binder]('click.tipsy', function () {
+                    get(this).hide();
+                });
+            }
         }
         
         return this;
@@ -228,6 +233,7 @@
         fade: false,
         fallback: '',
         gravity: 'n',
+        hideOnClick: false,
         html: false,
         live: false,
         hoverable: false,
