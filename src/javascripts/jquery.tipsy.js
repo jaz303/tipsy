@@ -15,6 +15,12 @@
       }
       return false;
     };
+
+    var tipsyIDcounter = 0;
+    function tipsyID() {
+        var tipsyID = tipsyIDcounter++;
+        return "tipsyuid" + tipsyID;
+    };
     
     function Tipsy(element, options) {
         this.$element = $(element);
@@ -32,7 +38,25 @@
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+
+
+                var that = this;
+                function tipOver() {
+                    that.hoverTooltip = true;
+                }
+                function tipOut() {
+                    if (that.hoverState == 'in') return;  // If field is still focused.
+                    that.hoverTooltip = false;
+                    if (that.options.trigger != 'manual') {
+                        var eventOut = that.options.trigger == 'hover' ? 'mouseleave.tipsy' : 'blur.tipsy';
+                        that.$element.trigger(eventOut);
+                    }
+                }
                 
+                if (this.options.hoverable) {
+                    $tip.hover(tipOver, tipOut);
+                }
+
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
@@ -77,6 +101,12 @@
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
+
+                if (this.options.aria) {
+                    var $tipID = tipsyID();
+                    $tip.attr("id", $tipID);
+                    this.$element.attr("aria-describedby", $tipID);
+                }
             }
         },
         
@@ -85,6 +115,9 @@
                 this.tip().stop().fadeOut(function() { $(this).remove(); });
             } else {
                 this.tip().remove();
+            }
+            if (this.options.aria) {
+                this.$element.removeAttr("aria-describedby");
             }
         },
         
@@ -110,7 +143,7 @@
         
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>').attr("role","tooltip");
                 this.$tip.data('tipsy-pointee', this.$element[0]);
             }
             return this.$tip;
@@ -140,6 +173,9 @@
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
+        if (options.hoverable) {
+            options.delayOut = options.delayOut || 20;
+        }
         
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
@@ -167,17 +203,20 @@
             if (options.delayOut == 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+                setTimeout(function() { if (tipsy.hoverState == 'out' && !tipsy.hoverTooltip) tipsy.hide(); }, options.delayOut);
             }
         };
         
         if (!options.live) this.each(function() { get(this); });
         
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
-                eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+            var eventIn  = options.trigger == 'hover' ? 'mouseenter.tipsy' : 'focus.tipsy',
+                eventOut = options.trigger == 'hover' ? 'mouseleave.tipsy' : 'blur.tipsy';
+            if (options.live) {
+                $(this.context).on(eventIn, this.selector, enter).on(eventOut, this.selector, leave);
+            } else {
+                this.bind(eventIn, enter).bind(eventOut, leave);
+            }
         }
         
         return this;
@@ -185,6 +224,7 @@
     };
     
     $.fn.tipsy.defaults = {
+        aria: false,
         className: null,
         delayIn: 0,
         delayOut: 0,
@@ -193,6 +233,7 @@
         gravity: 'n',
         html: false,
         live: false,
+        hoverable: false,
         offset: 0,
         opacity: 0.8,
         title: 'title',
@@ -240,19 +281,19 @@
      *        component.
      */
      $.fn.tipsy.autoBounds = function(margin, prefer) {
-		return function() {
-			var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
-			    boundTop = $(document).scrollTop() + margin,
-			    boundLeft = $(document).scrollLeft() + margin,
-			    $this = $(this);
+        return function() {
+            var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
+                boundTop = $(document).scrollTop() + margin,
+                boundLeft = $(document).scrollLeft() + margin,
+                $this = $(this);
 
-			if ($this.offset().top < boundTop) dir.ns = 'n';
-			if ($this.offset().left < boundLeft) dir.ew = 'w';
-			if ($(window).width() + $(document).scrollLeft() - $this.offset().left < margin) dir.ew = 'e';
-			if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
+            if ($this.offset().top < boundTop) dir.ns = 'n';
+            if ($this.offset().left < boundLeft) dir.ew = 'w';
+            if ($(window).width() + $(document).scrollLeft() - $this.offset().left < margin) dir.ew = 'e';
+            if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
 
-			return dir.ns + (dir.ew ? dir.ew : '');
-		}
-	};
+            return dir.ns + (dir.ew ? dir.ew : '');
+        }
+    };
     
 })(jQuery);
