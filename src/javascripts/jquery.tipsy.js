@@ -157,7 +157,11 @@
                 tipsy.show();
             } else {
                 tipsy.fixTitle();
-                setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
+                setTimeout(function() {
+                    if (tipsy.hoverState == 'in' && existsInDom(tipsy.$element)) {
+                        tipsy.show();
+                    }
+                }, options.delayIn);
             }
         };
         
@@ -170,6 +174,10 @@
                 setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
             }
         };
+
+        function existsInDom(element) {
+          return element.closest('body').length > 0;
+        }
         
         if (!options.live) this.each(function() { get(this); });
         
