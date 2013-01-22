@@ -30,6 +30,7 @@
                 var $tip = this.tip();
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $tip.find('.tipsy-inner').css('width', this.options.width);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
@@ -196,7 +197,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        width: 200
     };
     
     $.fn.tipsy.revalidate = function() {
