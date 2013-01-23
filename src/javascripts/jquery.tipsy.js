@@ -295,4 +295,20 @@
         }
     };
 
+    $.fn.tipsy.autoBounds = function(marginNorth, marginEast, prefer) {
+        return function() {
+            var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
+                boundTop = $(document).scrollTop() + marginNorth,
+                boundLeft = $(document).scrollLeft() + marginEast,
+                $this = $(this);
+
+            if ($this.offset().top < boundTop) dir.ns = 'n';
+            if ($this.offset().left < boundLeft) dir.ew = 'w';
+            if ($(window).width() + $(document).scrollLeft() - $this.offset().left < marginEast) dir.ew = 'e';
+            if ($(window).height() + $(document).scrollTop() - $this.offset().top < marginNorth) dir.ns = 's';
+
+            return dir.ns + (dir.ew ? dir.ew : '');
+        }
+    };
+
 })(jQuery);
