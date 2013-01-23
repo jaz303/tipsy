@@ -31,7 +31,7 @@ Or clone from:
 1. Copy the contents of src/{javascripts,stylesheets} to the corresponding asset directories in your project.
 
 2. Insert the neccesary elements in your document's `<head>` section, e.g.:
-   
+
         <script type='text/javascript' src='/javascripts/jquery.tipsy.js'></script>
         <link rel="stylesheet" href="/stylesheets/tipsy.css" type="text/css" />
 
