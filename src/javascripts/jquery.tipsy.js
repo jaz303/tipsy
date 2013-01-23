@@ -41,10 +41,6 @@
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
                 
-                if (this.options.className) {
-                    $tip.addClass(maybeCall(this.options.className, this.$element[0]));
-                }
-                
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
