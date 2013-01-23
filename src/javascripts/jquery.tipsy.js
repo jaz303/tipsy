@@ -36,9 +36,9 @@
             if (title && this.enabled) {
                 var $tip = this.tip();
 
-                $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $tip.find('.tipsy-inner' + this.options.theme)[this.options.html ? 'html' : 'text'](title);
 
-                $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
+                $tip[0].className = 'tipsy' + this.options.theme; // reset classname in case of dynamic gravity
                 if (this.options.className) {
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
@@ -87,8 +87,8 @@
                     }
                 }
 
-                $tip.css(tp).addClass('tipsy-' + gravity);
-                $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
+                $tip.css(tp).addClass('tipsy-' + gravity + this.options.theme);
+                $tip.find('.tipsy-arrow' + this.options.theme)[0].className = 'tipsy-arrow' + this.options.theme + ' tipsy-arrow-' + gravity.charAt(0) + this.options.theme;
 
                 if (this.options.fade) {
                     $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
@@ -136,7 +136,7 @@
 
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>').attr("role","tooltip");
+                this.$tip = $('<div class="tipsy' + this.options.theme + '"></div>').html('<div class="tipsy-arrow' + this.options.theme + '"></div><div class="tipsy-inner' + this.options.theme + '"></div>').attr("role","tooltip");
                 this.$tip.data('tipsy-pointee', this.$element[0]);
             }
             return this.$tip;
@@ -166,6 +166,9 @@
             if (tipsy) tipsy[options]();
             return this;
         }
+
+        // Establish theme
+        options.theme = options.theme != '' ? '-' + options.theme : '';
 
         options = $.extend({}, $.fn.tipsy.defaults, options);
 
@@ -228,7 +231,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        theme: ''
     };
 
     $.fn.tipsy.revalidate = function() {
