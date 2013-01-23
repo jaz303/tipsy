@@ -157,6 +157,8 @@
 
     $.fn.tipsy = function(options) {
 
+        $.fn.tipsy.enable();
+
         if (options === true) {
             return this.data('tipsy');
         } else if (typeof options == 'string') {
@@ -177,6 +179,9 @@
         }
 
         function enter() {
+            if ($.fn.tipsy.enabled !== true) {
+                return;
+            }
             var tipsy = get(this);
             tipsy.hoverState = 'in';
             if (options.delayIn === 0) {
@@ -234,6 +239,14 @@
         }
       });
     };
+
+    $.fn.tipsy.enable = function() {
+        $.fn.tipsy.enabled = true;
+    }
+
+    $.fn.tipsy.disable = function() {
+        $.fn.tipsy.enabled = false;
+    }
 
     // Overwrite this method to provide options on a per-element basis.
     // For example, you could store the gravity in a 'tipsy-gravity' attribute:
