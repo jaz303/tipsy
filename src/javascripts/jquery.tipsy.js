@@ -52,8 +52,8 @@
                     pos = $.extend(pos, this.$element[0].getBBox());
                 } else {
                     pos = $.extend(pos, {
-                        width: this.$element[0].offsetWidth,
-                        height: this.$element[0].offsetHeight
+                        width: this.$element[0].offsetWidth || 0,
+                        height: this.$element[0].offsetHeight || 0
                     });
                 }
 
