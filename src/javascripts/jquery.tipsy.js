@@ -38,7 +38,7 @@
                     height: this.$element[0].offsetHeight
                 });
                 
-                if(this.options.appendTo != 'body') pos.top = pos.left = 0;
+                if(this.options.appendTo != 'document.body') pos.top = pos.left = 0;
                 
                 var actualWidth = $tip[0].offsetWidth,
                     actualHeight = $tip[0].offsetHeight,
@@ -199,7 +199,7 @@
         opacity: 0.8,
         title: 'title',
         trigger: 'hover',
-        appendTo: 'body'
+        appendTo: 'document.body'
     };
     
     $.fn.tipsy.revalidate = function() {
