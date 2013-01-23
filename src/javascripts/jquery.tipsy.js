@@ -37,10 +37,7 @@
                 }
 
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
-                if (this.options.className) {
-                    $tip.addClass(maybeCall(this.options.className, this.$element[0]));
-                }
-                
+
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
