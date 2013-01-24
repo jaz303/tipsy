@@ -149,7 +149,7 @@
             }
             return tipsy;
         }
-        
+
         function enter() {
             var tipsy = get(this);
             tipsy.hoverState = 'in';
@@ -157,19 +157,19 @@
                 tipsy.show();
             } else {
                 tipsy.fixTitle();
-                setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
+                setTimeout(function() { if (tipsy.hoverState == 'in' && tipsy.$element && tipsy.$element.is(':visible')) tipsy.show(); }, options.delayIn);
             }
-        };
-        
+        }
+
         function leave() {
             var tipsy = get(this);
             tipsy.hoverState = 'out';
             if (options.delayOut == 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+                setTimeout(function() { if (tipsy.hoverState == 'out' || !tipsy.$element || !tipsy.$element.is(':visible')) tipsy.hide(); }, options.delayOut);
             }
-        };
+        }
         
         if (!options.live) this.each(function() { get(this); });
         
