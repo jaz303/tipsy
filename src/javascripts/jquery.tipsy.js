@@ -1,6 +1,6 @@
 // tipsy, facebook style tooltips for jquery with fancy fading
 // version 1.0.0a
-// (c) 2008-2010 jason frame [jason@onehackoranother.com] and modificated by Sergio Alvarez @saleiva
+// (c) 2008-2010 jason frame [jason@onehackoranother.com]
 // released under the MIT license
 
 (function($) {
