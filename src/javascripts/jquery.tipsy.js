@@ -205,14 +205,18 @@
             if (options.delayOut === 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+                setTimeout(function() { if (tipsy.hoverState == 'out' || !tipsy.$element || !tipsy.$element.is(':visible')) tipsy.hide(); }, options.delayOut);
             }
         }
+<<<<<<< HEAD
 
         function existsInDom(element) {
           return element.closest('body').length > 0;
         }       
 
+=======
+        
+>>>>>>> dd1ac0604b8c8c3af60afcb3cff5b022f4fa7453
         if (!options.live) this.each(function() { get(this); });
 
         if (options.trigger != 'manual') {
