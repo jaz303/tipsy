@@ -7,27 +7,26 @@
 
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
-    };
+    }
 
     function isElementInDOM(ele) {
-      while (ele = ele.parentNode) {
-        if (ele == document) return true;
-      }
-      return false;
-    };
+        while (ele = ele.parentNode) {
+            if (ele == document) return true;
+        }
+        return false;
+    }
 
     var tipsyIDcounter = 0;
     function tipsyID() {
-        var tipsyID = tipsyIDcounter++;
-        return "tipsyuid" + tipsyID;
-    };
+        return "tipsyuid" + (tipsyIDcounter++);
+    }
 
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
         this.fixTitle();
-    };
+    }
 
     Tipsy.prototype = {
         show: function() {
@@ -167,10 +166,10 @@
             return this;
         }
 
-        // Establish theme
-        options.theme = options.theme != '' ? '-' + options.theme : '';
-
         options = $.extend({}, $.fn.tipsy.defaults, options);
+
+        // Establish theme
+        options.theme = (options.theme && options.theme !== '') ? '-' + options.theme : '';
 
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
@@ -208,22 +207,28 @@
                 setTimeout(function() { if (tipsy.hoverState == 'out' || !tipsy.$element || !tipsy.$element.is(':visible')) tipsy.hide(); }, options.delayOut);
             }
         }
-<<<<<<< HEAD
 
         function existsInDom(element) {
-          return element.closest('body').length > 0;
-        }       
+            return element.closest('body').length > 0;
+        }
 
-=======
-        
->>>>>>> dd1ac0604b8c8c3af60afcb3cff5b022f4fa7453
         if (!options.live) this.each(function() { get(this); });
 
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'on' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter mouseover' : 'focus',
+            var eventIn  = options.trigger == 'hover' ? 'mouseenter mouseover' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave mouseout' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+
+            if (options.live && options.live !== true) {
+                $(this).on(eventIn, options.live, enter);
+                $(this).on(eventOut, options.live, leave);
+            } else {
+                if (options.live && !$.live) {
+                    //live === true and using jQuery >= 1.9
+                    throw "Since jQuery 1.9, pass selector as live argument. eg. $(document).tipsy({live: 'a.live'});";
+                }
+                var binder = options.live ? 'live' : 'bind';
+                this[binder](eventIn, enter)[binder](eventOut, leave);
+            }
         }
 
         return this;
@@ -258,11 +263,11 @@
 
     $.fn.tipsy.enable = function() {
         $.fn.tipsy.enabled = true;
-    }
+    };
 
     $.fn.tipsy.disable = function() {
         $.fn.tipsy.enabled = false;
-    }
+    };
 
     // Overwrite this method to provide options on a per-element basis.
     // For example, you could store the gravity in a 'tipsy-gravity' attribute:
@@ -295,22 +300,6 @@
      *        that element's tooltip to be 'se', preserving the southern
      *        component.
      */
-     $.fn.tipsy.autoBounds = function(margin, prefer) {
-        return function() {
-            var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
-                boundTop = $(document).scrollTop() + margin,
-                boundLeft = $(document).scrollLeft() + margin,
-                $this = $(this);
-
-            if ($this.offset().top < boundTop) dir.ns = 'n';
-            if ($this.offset().left < boundLeft) dir.ew = 'w';
-            if ($(window).width() + $(document).scrollLeft() - $this.offset().left < margin) dir.ew = 'e';
-            if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
-
-            return dir.ns + (dir.ew ? dir.ew : '');
-        }
-    };
-
     $.fn.tipsy.autoBounds = function(marginNorth, marginEast, prefer) {
         return function() {
             var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
@@ -324,7 +313,7 @@
             if ($(window).height() + $(document).scrollTop() - $this.offset().top < marginNorth) dir.ns = 's';
 
             return dir.ns + (dir.ew ? dir.ew : '');
-        }
+        };
     };
 
 })(jQuery);

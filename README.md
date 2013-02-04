@@ -45,5 +45,11 @@ Or clone from:
 	     });
         </script>
 
+Since jQuery 1.9, 'live' tipsy expects selector as live option, e.g:
+
+        $(document).tipsy({
+            live: '.live-tooltip'
+        });
+
 Please refer to the docs directory for more examples and documentation.
 
