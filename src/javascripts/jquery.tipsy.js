@@ -166,10 +166,10 @@
             return this;
         }
 
-        // Establish theme
-        options.theme = options.theme != '' ? '-' + options.theme : '';
-
         options = $.extend({}, $.fn.tipsy.defaults, options);
+
+        // Establish theme
+        options.theme = (options.theme && options.theme !== '') ? '-' + options.theme : '';
 
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
