@@ -198,7 +198,7 @@
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() {
-                    if (tipsy.hoverState == 'in' && existsInDom(tipsy.$element)) {
+                    if (tipsy.hoverState == 'in' && isElementInDOM(tipsy.$element)) {
                         tipsy.show();
                     }
                 }, options.delayIn);
@@ -213,10 +213,6 @@
             } else {
                 setTimeout(function() { if (tipsy.hoverState == 'out' || !tipsy.$element || !tipsy.$element.is(':visible')) tipsy.hide(); }, options.delayOut);
             }
-        }
-
-        function existsInDom(element) {
-            return element.closest('body').length > 0;
         }
 
         if (!options.live) this.each(function() { get(this); });
