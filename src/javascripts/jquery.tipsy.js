@@ -259,32 +259,34 @@
             } else {
                 var to = function() {
                     if (!tipsy.tipHovered || !options.hoverlock){
-                        if (tipsy.hoverState == 'out') tipsy.hide(); 
+                        if (tipsy.hoverState == 'out') tipsy.hide();
                     }
                 };
                 setTimeout(to, options.delayOut);
-            }    
+            }
         }
-        
+
         if (!options.live) this.each(function() { get(this); });
-        
+
         if (options.trigger != 'manual') {
             var binder = options.live ? 'live' : 'bind',
                 eventIn = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
         }
-        
+
         return this;
-        
+
     };
-    
+
     $.fn.tipsy.defaults = {
         className: null,
         delayIn: 0,
         delayOut: 0,
         fade: false,
+        'zIndex': 100000,
         fallback: '',
+        cancelHide: null,
         gcInterval: 0,
         gravity: 'n',
         html: false,
