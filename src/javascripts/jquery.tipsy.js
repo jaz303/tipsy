@@ -114,18 +114,20 @@
                         tp.left = pos.left + pos.width / 2 - actualWidth + 15;
                     }
                 }
-                
+
                 $tip.css(tp).addClass('tipsy-' + gravity);
                 $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
                 if (this.options.className) {
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
-                
+
                 if (this.options.fade) {
                     $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
+
+                $tip.css({'z-index':this.options.zIndex});
 
                 var t = this;
                 var set_hovered  = function(set_hover){
