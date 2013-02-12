@@ -2,9 +2,17 @@
 // version 1.0.0a
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
 // released under the MIT license
-
+// Modified by Justin Donaldson [donaldson@bigml.com]
+// Added:
+// 1) Correctly handle svg elements (title children and/or xlink:title attr)
+// 2) Add some new dynamic gravity placement functions autoNWNE and autoSWSE
+// 3) z-index override for tipsies on top of tipsies
+// 4) Custom className argument that allows adding classes to the tipsy popup
+// 5) Add custom cancelHide function argument that can override a tipsy hide
+//    behavior. This is useful when you wish to keep a parent tipsy open while
+//    its child is still active.
 (function($) {
-    
+
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
     }
