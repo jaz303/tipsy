@@ -288,6 +288,14 @@
         return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
     };
 
+    $.fn.tipsy.autoNWNE = function() {
+        return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'ne' : 'nw';
+    };
+
+    $.fn.tipsy.autoSWSE = function() {
+        return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'se' : 'sw';
+    };
+
     /**
      * yields a closure of the supplied parameters, producing a function that takes
      * no arguments and is suitable for use as an autogravity function like so:
