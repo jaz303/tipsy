@@ -90,8 +90,8 @@
         
         fixTitle: function() {
             var $e = this.$element;
-            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
+            if ($e.prop('title') || typeof($e.prop('original-title')) != 'string') {
+                $e.prop('original-title', $e.prop('title') || '').removeAttr('title');
             }
         },
         
@@ -100,7 +100,7 @@
             this.fixTitle();
             var title, o = this.options;
             if (typeof o.title == 'string') {
-                title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
+                title = $e.prop(o.title == 'title' ? 'original-title' : o.title);
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
@@ -210,7 +210,7 @@
     
     // Overwrite this method to provide options on a per-element basis.
     // For example, you could store the gravity in a 'tipsy-gravity' attribute:
-    // return $.extend({}, options, {gravity: $(ele).attr('tipsy-gravity') || 'n' });
+    // return $.extend({}, options, {gravity: $(ele).prop('tipsy-gravity') || 'n' });
     // (remember - do not modify 'options' in place!)
     $.fn.tipsy.elementOptions = function(ele, options) {
         return $.metadata ? $.extend({}, options, $(ele).metadata()) : options;
