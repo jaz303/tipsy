@@ -73,6 +73,8 @@
                 }
                 
                 if (this.options.fade) {
+                    if(this.options.shadow)
+                        $(".tipsy-inner").css({'box-shadow': '0px 0px '+this.options.shadowBlur+'px '+this.options.shadowSpread+'px rgba(0, 0, 0, '+this.options.shadowOpacity+')', '-webkit-box-shadow': '0px 0px '+this.options.shadowBlur+'px '+this.options.shadowSpread+'px rgba(0, 0, 0, '+this.options.shadowOpacity+')'});
                     $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
@@ -189,6 +191,10 @@
         delayIn: 0,
         delayOut: 0,
         fade: false,
+        shadow: false,
+        shadowBlur: 8,
+        shadowOpacity: 1,
+        shadowSpread: 0,
         fallback: '',
         gravity: 'n',
         html: false,
