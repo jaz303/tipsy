@@ -51,5 +51,17 @@ Since jQuery 1.9, 'live' tipsy expects selector as live option, e.g:
             live: '.live-tooltip'
         });
 
+## Shadow:
+
+You can add shadow to Tipsy like this :
+
+    <script type='text/javascript'>
+         $(function() {
+         $('a[rel=tipsy]').tipsy({fade: true, gravity: 'n', shadow: true, shadowBlur: 10, shadowOpacity: 1, shadowSpread: 1});
+       });
+    </script>
+  
+
+
 Please refer to the docs directory for more examples and documentation.
 
