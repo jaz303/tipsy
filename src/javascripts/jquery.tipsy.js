@@ -16,6 +16,15 @@
         return false;
     }
 
+	// Returns true if it is a DOM element
+	// http://stackoverflow.com/a/384380/999
+	function isElement(o){
+		return (
+			typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
+			o && typeof o === "object" && o.nodeType === 1 && typeof o.nodeName==="string"
+		);	
+	}
+
     var tipsyIDcounter = 0;
     function tipsyID() {
         return "tipsyuid" + (tipsyIDcounter++);
@@ -34,7 +43,7 @@
                 return;
             }
 
-            if (this.$element instanceof HTMLElement && !this.$element.is(':visible')) { 
+            if (isElement(this.$element) && !this.$element.is(':visible')) { 
                 return; 
             }
             
