@@ -1,7 +1,8 @@
 // tipsy, facebook style tooltips for jquery
-// version 1.0.0a
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
 // released under the MIT license
+// Forked by Luke Andrews to remain compatible with jQuery 1.9+
+// https://github.com/attaboy/tipsy
 
 (function($) {
     
@@ -14,6 +15,15 @@
         if (ele == document) return true;
       }
       return false;
+    }
+    
+    function jQueryDelegateEventMethod() {
+      var majorVersionNumber = parseFloat($().jquery);
+      if majorVersionNumber >= 1.7 {
+        return 'on';
+      } else {
+        return 'live';
+      }
     };
     
     function Tipsy(element, options) {
@@ -174,7 +184,7 @@
         if (!options.live) this.each(function() { get(this); });
         
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
+            var binder   = options.live ? jQueryDelegateEventMethod() : 'bind',
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
