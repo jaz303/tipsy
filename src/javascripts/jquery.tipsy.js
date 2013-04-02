@@ -19,12 +19,12 @@
     
     function jQueryDelegateEventMethod() {
       var majorVersionNumber = parseFloat($().jquery);
-      if majorVersionNumber >= 1.7 {
+      if (majorVersionNumber >= 1.7) {
         return 'on';
       } else {
         return 'live';
       }
-    };
+    }
     
     function Tipsy(element, options) {
         this.$element = $(element);
