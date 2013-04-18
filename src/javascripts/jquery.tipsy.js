@@ -1,27 +1,30 @@
 // tipsy, facebook style tooltips for jquery
 // version 1.0.0a
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
+// (c) 2013 Devon Meunier <devon@ajah.ca>
 // released under the MIT license
 
 (function($) {
     
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
-    };
+    }
     
     function isElementInDOM(ele) {
-      while (ele = ele.parentNode) {
+      ele = ele.parentNode;
+      while (ele) {
         if (ele == document) return true;
+        else ele = ele.parentNode;
       }
       return false;
-    };
+    }
     
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
         this.fixTitle();
-    };
+    }
     
     Tipsy.prototype = {
         show: function() {
@@ -107,7 +110,6 @@
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
-            var title, o = this.options;
             if (typeof o.title == 'string') {
                 title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
             } else if (typeof o.title == 'function') {
@@ -162,23 +164,23 @@
         function enter() {
             var tipsy = get(this);
             tipsy.hoverState = 'in';
-            if (options.delayIn == 0) {
+            if (options.delayIn === 0) {
                 tipsy.show();
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() { if (tipsy.hoverState == 'in') tipsy.show(); }, options.delayIn);
             }
-        };
+        }
         
         function leave() {
             var tipsy = get(this);
             tipsy.hoverState = 'out';
-            if (options.delayOut == 0) {
+            if (options.delayOut === 0) {
                 tipsy.hide();
             } else {
                 setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
             }
-        };
+        }
         
         if (!options.live) this.each(function() { get(this); });
         
@@ -251,9 +253,9 @@
      $.fn.tipsy.autoBounds = function(margin, prefer) {
 		return function() {
 			var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
-			    boundTop = $(document).scrollTop() + margin,
-			    boundLeft = $(document).scrollLeft() + margin,
-			    $this = $(this);
+          boundTop = $(document).scrollTop() + margin,
+          boundLeft = $(document).scrollLeft() + margin,
+          $this = $(this);
 
 			if ($this.offset().top < boundTop) dir.ns = 'n';
 			if ($this.offset().left < boundLeft) dir.ew = 'w';
@@ -261,7 +263,7 @@
 			if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
 
 			return dir.ns + (dir.ew ? dir.ew : '');
-		}
+		};
 	};
     
 })(jQuery);
