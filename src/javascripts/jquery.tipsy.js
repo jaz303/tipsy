@@ -170,6 +170,16 @@
                 setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
             }
         };
+
+        function taptap(e) {
+            var tipsy = get(this);
+            if( tipsy.hoverState == 'in' ) {
+                leave.call(this);
+            } else {
+                enter.call(this);
+            }t
+            e.stopImmediatePropagation();
+        };
         
         if (!options.live) this.each(function() { get(this); });
         
@@ -177,6 +187,7 @@
             var binder   = options.live ? 'live' : 'bind',
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
+            this[binder]('click', taptap);
             this[binder](eventIn, enter)[binder](eventOut, leave);
         }
         
