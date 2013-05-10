@@ -31,9 +31,9 @@
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
-                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo($(this.options.parent));
                 
-                var pos = $.extend({}, this.$element.offset(), {
+                var pos = $.extend({}, (this.options.parent != document.body) ? {top: this.$element[0].offsetTop, left: this.$element[0].offsetLeft} : this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
                 });
@@ -196,7 +196,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        parent: document.body
     };
     
     $.fn.tipsy.revalidate = function() {
