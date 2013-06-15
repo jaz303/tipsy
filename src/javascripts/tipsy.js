@@ -119,8 +119,8 @@ Tipsy.prototype = {
 };
 
 var defaultRenderer = function(options) {
-  var tip   = $('<div class="tipsy"><div class="tipsy arrow"/></div>'),
-      inner = $('<div class="tipsy-inner"/>').appendTo(tip);
+  var tip   = $('<div class="tipsy-default"><div class="tipsy-arrow"/></div>'),
+      inner = $('<div class="tipsy-default-inner"/>').appendTo(tip);
   
   function setText(text) { inner.text(text); }
   function setHTML(html) { inner.html(html); }
