@@ -94,8 +94,8 @@
         },
         fixTitle: function() {
             var $e = this.$element;
-            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
+            if ($e.attr('title') || typeof($e.attr('original-title')) !== 'string') {
+                $e.attr('aria-label', $e.text() + ' ' + $e.attr('title')).attr('original-title', $e.attr('title') || '').removeAttr('title');
             }
         },
         getTitle: function() {
@@ -112,7 +112,7 @@
         },
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
+                this.$tip = $('<div class="tipsy" role="tooltip"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
                 this.$tip.data('tipsy-pointee', this.$element[0]);
             }
             return this.$tip;
