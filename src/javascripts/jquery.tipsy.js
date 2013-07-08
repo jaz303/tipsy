@@ -5,8 +5,8 @@
 
 (function($) {
     
-    function maybeCall(thing, ctx) {
-        return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
+    function maybeCall(thing, ctx, info) {
+        return (typeof thing == 'function') ? (thing.call(ctx, info)) : thing;
     };
     
     function isElementInDOM(ele) {
@@ -20,6 +20,7 @@
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
+        this.tipHover = false;
         this.fixTitle();
     };
     
@@ -31,16 +32,19 @@
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
-                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+                $tip.detach().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
                 });
-                
                 var actualWidth = $tip[0].offsetWidth,
                     actualHeight = $tip[0].offsetHeight,
-                    gravity = maybeCall(this.options.gravity, this.$element[0]);
+                    gravity = maybeCall(
+                    	this.options.gravity, this.$element[0], {
+				                width: actualWidth,
+			                	height: actualHeight
+			                });
                 
                 var tp;
                 switch (gravity.charAt(0)) {
@@ -73,7 +77,11 @@
                 }
                 
                 if (this.options.fade) {
-                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
+                    $tip.stop().
+                    	css({opacity: 0, display: 'block', visibility: 'visible'} ).
+                    	animate(
+                    		{opacity: this.options.opacity},
+	                    	typeof this.options.fade === 'number' ? this.options.fade : 300 );
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
@@ -82,9 +90,12 @@
         
         hide: function() {
             if (this.options.fade) {
-                this.tip().stop().fadeOut(function() { $(this).remove(); });
+                this.tip().stop().fadeOut( {
+                	duration: typeof this.options.fade === 'number' ? this.options.fade : 300,
+                	complete: function() { $(this).detach(); }
+                } );
             } else {
-                this.tip().remove();
+                this.tip().detach();
             }
         },
         
@@ -95,6 +106,11 @@
             }
         },
         
+        restoreTitle: function() {
+            var $e = this.$element;
+            $e.attr('title', $e.attr('original-title') );
+        },
+
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
@@ -109,9 +125,20 @@
         },
         
         tip: function() {
+        	var tipsy = this;
             if (!this.$tip) {
                 this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
                 this.$tip.data('tipsy-pointee', this.$element[0]);
+                if( this.options.hoverHold ) {
+	                this.$tip.
+	                	on( 'mouseenter', function() {
+	                		tipsy.tipHover = true;
+	                	} ).
+	                	on( 'mouseleave', function() {
+	                		tipsy.tipHover = false;
+				            	tipsy.$element.trigger( 'mouseleave' );
+	                	} );
+                }
             }
             return this.$tip;
         },
@@ -124,8 +151,19 @@
             }
         },
         
-        enable: function() { this.enabled = true; },
-        disable: function() { this.enabled = false; },
+        enable: function() {
+        	if( !this.enabled ) {
+	        	this.fixTitle();
+	        	this.enabled = true;
+        	}
+        },
+        disable: function() {
+        	if( this.enabled ) {
+	        	this.restoreTitle();
+	        	this.enabled = false;
+        	}
+        },
+
         toggleEnabled: function() { this.enabled = !this.enabled; }
     };
     
@@ -167,7 +205,12 @@
             if (options.delayOut == 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+                setTimeout(function() {
+				            if( !tipsy.tipHover && tipsy.hoverState == 'out' ) {
+				            	tipsy.hide();
+				            }
+                	},
+                	options.delayOut);
             }
         };
         
@@ -196,7 +239,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        hoverHold: false
     };
     
     $.fn.tipsy.revalidate = function() {
