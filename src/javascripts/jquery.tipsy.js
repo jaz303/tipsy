@@ -95,6 +95,11 @@
             }
         },
         
+        restoreTitle: function() {
+            var $e = this.$element;
+            $e.attr('title', $e.attr('original-title') );
+        },
+
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
@@ -124,8 +129,19 @@
             }
         },
         
-        enable: function() { this.enabled = true; },
-        disable: function() { this.enabled = false; },
+        enable: function() {
+        	if( !this.enabled ) {
+	        	this.fixTitle();
+	        	this.enabled = true;
+        	}
+        },
+        disable: function() {
+        	if( this.enabled ) {
+	        	this.restoreTitle();
+	        	this.enabled = false;
+        	}
+        },
+
         toggleEnabled: function() { this.enabled = !this.enabled; }
     };
     
