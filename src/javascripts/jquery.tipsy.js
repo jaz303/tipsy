@@ -5,8 +5,8 @@
 
 (function($) {
     
-    function maybeCall(thing, ctx) {
-        return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
+    function maybeCall(thing, ctx, info) {
+        return (typeof thing == 'function') ? (thing.call(ctx, info)) : thing;
     };
     
     function isElementInDOM(ele) {
@@ -37,10 +37,13 @@
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
                 });
-                
                 var actualWidth = $tip[0].offsetWidth,
                     actualHeight = $tip[0].offsetHeight,
-                    gravity = maybeCall(this.options.gravity, this.$element[0]);
+                    gravity = maybeCall(
+                    	this.options.gravity, this.$element[0], {
+				                width: actualWidth,
+			                	height: actualHeight
+			                });
                 
                 var tp;
                 switch (gravity.charAt(0)) {
