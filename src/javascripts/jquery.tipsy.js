@@ -20,6 +20,7 @@
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
+        this.tipHover = false;
         this.fixTitle();
     };
     
@@ -31,7 +32,7 @@
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
-                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+                $tip.detach().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
                 var pos = $.extend({}, this.$element.offset(), {
                     width: this.$element[0].offsetWidth,
@@ -85,9 +86,9 @@
         
         hide: function() {
             if (this.options.fade) {
-                this.tip().stop().fadeOut(function() { $(this).remove(); });
+                this.tip().stop().fadeOut(function() { $(this).detach(); });
             } else {
-                this.tip().remove();
+                this.tip().detach();
             }
         },
         
@@ -117,9 +118,20 @@
         },
         
         tip: function() {
+        	var tipsy = this;
             if (!this.$tip) {
                 this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow"></div><div class="tipsy-inner"></div>');
                 this.$tip.data('tipsy-pointee', this.$element[0]);
+                if( this.options.hoverHold ) {
+	                this.$tip.
+	                	on( 'mouseenter', function() {
+	                		tipsy.tipHover = true;
+	                	} ).
+	                	on( 'mouseleave', function() {
+	                		tipsy.tipHover = false;
+				            	tipsy.$element.trigger( 'mouseleave' );
+	                	} );
+                }
             }
             return this.$tip;
         },
@@ -186,7 +198,12 @@
             if (options.delayOut == 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+                setTimeout(function() {
+				            if( !tipsy.tipHover && tipsy.hoverState == 'out' ) {
+				            	tipsy.hide();
+				            }
+                	},
+                	options.delayOut);
             }
         };
         
@@ -215,7 +232,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        hoverHold: false
     };
     
     $.fn.tipsy.revalidate = function() {
