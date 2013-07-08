@@ -77,7 +77,11 @@
                 }
                 
                 if (this.options.fade) {
-                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
+                    $tip.stop().
+                    	css({opacity: 0, display: 'block', visibility: 'visible'} ).
+                    	animate(
+                    		{opacity: this.options.opacity},
+	                    	typeof this.options.fade === 'number' ? this.options.fade : 300 );
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
@@ -86,7 +90,10 @@
         
         hide: function() {
             if (this.options.fade) {
-                this.tip().stop().fadeOut(function() { $(this).detach(); });
+                this.tip().stop().fadeOut( {
+                	duration: typeof this.options.fade === 'number' ? this.options.fade : 300,
+                	complete: function() { $(this).detach(); }
+                } );
             } else {
                 this.tip().detach();
             }
