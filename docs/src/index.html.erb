@@ -9,7 +9,7 @@
     $('#example-fade').tipsy({fade: true});
     
     $('#example-custom-attribute').tipsy({title: 'id'});
-    $('#example-callback').tipsy({title: function() { return this.getAttribute('original-title').toUpperCase(); } });
+    $('#example-callback').tipsy({title: function() { return this.getAttribute('data-title').toUpperCase(); } });
     $('#example-fallback').tipsy({fallback: "Where's my tooltip yo'?" });
     
     $('#example-html').tipsy({html: true });
@@ -132,7 +132,7 @@ an anchor tag's title attribute.</p>
 </p>
 
 <div class='caption'>Callback example:</div>
-<div class='code'><pre>$('#example-callback').tipsy({title: function() { return this.getAttribute('original-title').toUpperCase(); } });</pre></div>
+<div class='code'><pre>$('#example-callback').tipsy({title: function() { return this.getAttribute('data-title').toUpperCase(); } });</pre></div>
 
 <p>Finally, it is possible to specify a fallback tooltip for any element which does not
   have any tooltip text:</p>
@@ -195,7 +195,7 @@ an anchor tag's title attribute.</p>
 
   <p>Tipsy tooltips are 'live' - if the source attribute's value changes, the tooltip text will be
     updated the next time the tooltip is shown. There's one caveat - if you wish to remove the tooltip
-    by setting the <code>title</code> attribute to an empty string, set the <code>original-title</code>
+    by setting the <code>title</code> attribute to an empty string, set the <code>data-title</code>
     attribute instead (this only applies if you're using the <code>title</code> attribute).
   </p>
   
@@ -204,7 +204,7 @@ an anchor tag's title attribute.</p>
     <a href='#' rel='tipsy' title=''>Hover over me</a> |
     New tooltip text:
     <input type='text' value='' size='10' />
-    <input type='button' onclick="$('#dynamic-example a')[0].setAttribute('original-title', $('#dynamic-example input').val())" value='Update' />
+    <input type='button' onclick="$('#dynamic-example a')[0].setAttribute('data-title', $('#dynamic-example input').val())" value='Update' />
   </div>
 
   <script type='text/javascript'>
@@ -215,7 +215,7 @@ an anchor tag's title attribute.</p>
   
   <h3>Using Tooltips on Form Inputs</h3>
   
-  <p>Tooltips can be bound to form inputs' focus/blur events using the option
+  <p>By default, tooltips are bound to both mouse and keyboard interactions - mouseenter/mouseleave and focus/blur. If you want to just bind the tooltip to focus/blur (for instance for form controls), you can set the option
     <code>{trigger: 'focus'}</code>:</p>
   
   <div class='caption'>Form input tooltips example:</div>
@@ -247,7 +247,7 @@ an anchor tag's title attribute.</p>
 
   <h3>Manually Triggering a Tooltip</h3>
   
-  <p>It's possible to disable hover events and instead trigger tooltips manually:</p>
+  <p>It's possible to disable hover/focus events and instead trigger tooltips manually:</p>
   
   <div class='caption'>Manual triggering example:</div>
   <div id='manual-example' class='example'>
@@ -301,6 +301,7 @@ an anchor tag's title attribute.</p>
   <p>Here is the default options declaration:
   <div class='code'><pre>$.fn.tipsy.defaults = {
     className: null,  // custom class to add to tooltip (string or function)
+    id: 'tipsy',      // specific id to give to the generated tooltip
     delayIn: 0,       // delay before showing tooltip (ms)
     delayOut: 0,      // delay before hiding tooltip (ms)
     fade: false,      // fade tooltips in/out?
@@ -311,7 +312,7 @@ an anchor tag's title attribute.</p>
     offset: 0,        // pixel offset of tooltip from element
     opacity: 0.8,     // opacity of tooltip
     title: 'title',   // attribute/callback containing tooltip text
-    trigger: 'hover'  // how tooltip is triggered - hover | focus | manual
+    trigger: 'interactive'  // how tooltip is triggered - 'interactive' for hover and focus | 'focus' for focus only | 'manual'
 };</pre></div>
   
   <!-- Notes -->
@@ -320,7 +321,7 @@ an anchor tag's title attribute.</p>
 
   <p>Tipsy needs to erase any existing value for an element's <code>title</code> attribute in
     order to suppress the browser's native tooltips. It is stashed in the element's
-    <code>original-title</code> attribute in case you need to retrieve it later.</p>
+    <code>data-title</code> attribute in case you need to retrieve it later.</p>
   
   <p>As of version 0.1.4, the tooltip text is recomputed on every hover event so updating the
     <code>title</code> attribute will have the expected effect.</p>
