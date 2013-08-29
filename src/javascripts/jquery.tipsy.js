@@ -167,7 +167,22 @@
             if (options.delayOut == 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+                var hideTimer = setTimeout(function() { if (tipsy.hoverState == 'out') tipsy.hide(); }, options.delayOut);
+		if(options.interactive) {	
+		    var $tip = tipsy.tip()	
+		    $tip.hover(
+			function(){
+			    clearTimeout(hideTimer)	
+			},
+			function(){
+			    hideTimer = setTimeout(function() {
+				if (tipsy.hoverState == 'out') {
+				    tipsy.hide()	
+				}	
+			    }, options.delayOut)	
+			}	
+		    );	
+		}
             }
         };
         
@@ -196,7 +211,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+	interactive: false
     };
     
     $.fn.tipsy.revalidate = function() {
