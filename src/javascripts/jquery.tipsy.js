@@ -104,6 +104,7 @@
 
                 $tip.css(tp).addClass('tipsy-' + gravity + this.options.theme);
                 $tip.find('.tipsy-arrow' + this.options.theme)[0].className = 'tipsy-arrow' + this.options.theme + ' tipsy-arrow-' + gravity.charAt(0) + this.options.theme;
+                $tip.css({width: (actualWidth - 10) + 'px'});
 
                 if (this.options.fade) {
                     if(this.options.shadow)
