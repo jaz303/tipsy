@@ -3,7 +3,7 @@
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
 // released under the MIT license
 
-(function($) {
+(function($, window, undefined) {
     
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
@@ -255,4 +255,4 @@
 		}
 	};
     
-})(jQuery);
+})(jQuery, window);
