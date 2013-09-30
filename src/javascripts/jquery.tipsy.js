@@ -91,7 +91,7 @@
                 $tip.find('.tipsy-arrow' + this.options.theme)[0].className = 'tipsy-arrow' + this.options.theme + ' tipsy-arrow-' + gravity.charAt(0) + this.options.theme;
 
                 if (this.options.fade) {
-                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
+                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity}, this.options.fadeInTime);
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
@@ -106,7 +106,7 @@
 
         hide: function() {
             if (this.options.fade) {
-                this.tip().stop().fadeOut(function() { $(this).remove(); });
+                this.tip().stop().fadeOut(this.options.fadeOutTime, function() { $(this).remove(); });
             } else {
                 this.tip().remove();
             }
@@ -236,6 +236,8 @@
         delayIn: 0,
         delayOut: 0,
         fade: false,
+        fadeInTime: 400,
+        fadeOutTime: 400, 
         fallback: '',
         gravity: 'n',
         html: false,
