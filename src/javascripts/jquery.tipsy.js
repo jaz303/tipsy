@@ -7,31 +7,46 @@
 
     function maybeCall(thing, ctx) {
         return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
-    };
+    }
 
     function isElementInDOM(ele) {
-      while (ele = ele.parentNode) {
-        if (ele == document) return true;
-      }
-      return false;
-    };
+        while (ele = ele.parentNode) {
+            if (ele == document) return true;
+        }
+        return false;
+    }
+
+	// Returns true if it is a DOM element
+	// http://stackoverflow.com/a/384380/999
+	function isElement(o){
+		return (
+			typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
+			o && typeof o === "object" && o.nodeType === 1 && typeof o.nodeName==="string"
+		);	
+	}
 
     var tipsyIDcounter = 0;
     function tipsyID() {
-        var tipsyID = tipsyIDcounter++;
-        return "tipsyuid" + tipsyID;
-    };
+        return "tipsyuid" + (tipsyIDcounter++);
+    }
 
     function Tipsy(element, options) {
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
         this.fixTitle();
-    };
+    }
 
     Tipsy.prototype = {
         show: function() {
-            if (!isElementInDOM(this.$element[0]) || !this.$element.is(':visible')) return;
+            if (!isElementInDOM(this.$element[0])) {
+                return;
+            }
+
+            if (isElement(this.$element) && !this.$element.is(':visible')) { 
+                return; 
+            }
+            
             var title;
             if (this.enabled && (title = this.getTitle())) {
                 var $tip = this.tip();
@@ -89,8 +104,11 @@
 
                 $tip.css(tp).addClass('tipsy-' + gravity + this.options.theme);
                 $tip.find('.tipsy-arrow' + this.options.theme)[0].className = 'tipsy-arrow' + this.options.theme + ' tipsy-arrow-' + gravity.charAt(0) + this.options.theme;
+                $tip.css({width: (actualWidth - 10) + 'px'});
 
                 if (this.options.fade) {
+                    if(this.options.shadow)
+                        $(".tipsy-inner").css({'box-shadow': '0px 0px '+this.options.shadowBlur+'px '+this.options.shadowSpread+'px rgba(0, 0, 0, '+this.options.shadowOpacity+')', '-webkit-box-shadow': '0px 0px '+this.options.shadowBlur+'px '+this.options.shadowSpread+'px rgba(0, 0, 0, '+this.options.shadowOpacity+')'});
                     $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity}, this.options.fadeInTime);
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
@@ -167,10 +185,10 @@
             return this;
         }
 
-        // Establish theme
-        options.theme = options.theme != '' ? '-' + options.theme : '';
-
         options = $.extend({}, $.fn.tipsy.defaults, options);
+
+        // Establish theme
+        options.theme = (options.theme && options.theme !== '') ? '-' + options.theme : '';
 
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
@@ -192,7 +210,7 @@
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() {
-                    if (tipsy.hoverState == 'in' && existsInDom(tipsy.$element)) {
+                    if (tipsy.hoverState == 'in' && isElementInDOM(tipsy.$element)) {
                         tipsy.show();
                     }
                 }, options.delayIn);
@@ -208,22 +226,24 @@
                 setTimeout(function() { if (tipsy.hoverState == 'out' || !tipsy.$element || !tipsy.$element.is(':visible')) tipsy.hide(); }, options.delayOut);
             }
         }
-<<<<<<< HEAD
 
-        function existsInDom(element) {
-          return element.closest('body').length > 0;
-        }       
-
-=======
-        
->>>>>>> dd1ac0604b8c8c3af60afcb3cff5b022f4fa7453
         if (!options.live) this.each(function() { get(this); });
 
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'on' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter mouseover' : 'focus',
+            var eventIn  = options.trigger == 'hover' ? 'mouseenter mouseover' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave mouseout' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+
+            if (options.live && options.live !== true) {
+                $(this).on(eventIn, options.live, enter);
+                $(this).on(eventOut, options.live, leave);
+            } else {
+                if (options.live && !$.live) {
+                    //live === true and using jQuery >= 1.9
+                    throw "Since jQuery 1.9, pass selector as live argument. eg. $(document).tipsy({live: 'a.live'});";
+                }
+                var binder = options.live ? 'live' : 'bind';
+                this[binder](eventIn, enter)[binder](eventOut, leave);
+            }
         }
 
         return this;
@@ -238,6 +258,10 @@
         fade: false,
         fadeInTime: 400,
         fadeOutTime: 400, 
+        shadow: false,
+        shadowBlur: 8,
+        shadowOpacity: 1,
+        shadowSpread: 0,
         fallback: '',
         gravity: 'n',
         html: false,
@@ -260,11 +284,11 @@
 
     $.fn.tipsy.enable = function() {
         $.fn.tipsy.enabled = true;
-    }
+    };
 
     $.fn.tipsy.disable = function() {
         $.fn.tipsy.enabled = false;
-    }
+    };
 
     // Overwrite this method to provide options on a per-element basis.
     // For example, you could store the gravity in a 'tipsy-gravity' attribute:
@@ -282,6 +306,14 @@
         return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
     };
 
+    $.fn.tipsy.autoNWNE = function() {
+        return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'ne' : 'nw';
+    };
+
+    $.fn.tipsy.autoSWSE = function() {
+        return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'se' : 'sw';
+    };
+
     /**
      * yields a closure of the supplied parameters, producing a function that takes
      * no arguments and is suitable for use as an autogravity function like so:
@@ -297,22 +329,6 @@
      *        that element's tooltip to be 'se', preserving the southern
      *        component.
      */
-     $.fn.tipsy.autoBounds = function(margin, prefer) {
-        return function() {
-            var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
-                boundTop = $(document).scrollTop() + margin,
-                boundLeft = $(document).scrollLeft() + margin,
-                $this = $(this);
-
-            if ($this.offset().top < boundTop) dir.ns = 'n';
-            if ($this.offset().left < boundLeft) dir.ew = 'w';
-            if ($(window).width() + $(document).scrollLeft() - $this.offset().left < margin) dir.ew = 'e';
-            if ($(window).height() + $(document).scrollTop() - $this.offset().top < margin) dir.ns = 's';
-
-            return dir.ns + (dir.ew ? dir.ew : '');
-        }
-    };
-
     $.fn.tipsy.autoBounds = function(marginNorth, marginEast, prefer) {
         return function() {
             var dir = {ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false)},
@@ -326,7 +342,7 @@
             if ($(window).height() + $(document).scrollTop() - $this.offset().top < marginNorth) dir.ns = 's';
 
             return dir.ns + (dir.ew ? dir.ew : '');
-        }
+        };
     };
 
 })(jQuery);
