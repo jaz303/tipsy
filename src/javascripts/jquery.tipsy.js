@@ -209,7 +209,7 @@
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() {
-                    if (tipsy.hoverState == 'in' && isElementInDOM(tipsy.$element)) {
+                    if (tipsy.hoverState == 'in') {
                         tipsy.show();
                     }
                 }, options.delayIn);
