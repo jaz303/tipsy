@@ -10,10 +10,7 @@
     }
 
     function isElementInDOM(ele) {
-        while (ele = ele.parentNode) {
-            if (ele == document) return true;
-        }
-        return false;
+        return $.contains(window.document.documentElement, ele);
     }
 
 	// Returns true if it is a DOM element
