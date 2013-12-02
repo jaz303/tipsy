@@ -55,7 +55,10 @@
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
 
-                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+                $tip.remove()
+                    .css({top: 0, left: 0, visibility: 'hidden', display: 'block'})
+                    .prependTo(document.body)
+                    .data('tipsy-pointee', this.$element[0]);
 
                 var pos = $.extend({}, this.$element.offset());
 
@@ -152,7 +155,6 @@
         tip: function() {
             if (!this.$tip) {
                 this.$tip = $('<div class="tipsy' + this.options.theme + '"></div>').html('<div class="tipsy-arrow' + this.options.theme + '"></div><div class="tipsy-inner' + this.options.theme + '"></div>').attr("role","tooltip");
-                this.$tip.data('tipsy-pointee', this.$element[0]);
             }
             return this.$tip;
         },
