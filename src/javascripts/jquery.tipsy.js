@@ -96,13 +96,13 @@
         },
         
         getTitle: function() {
-            var title, $e = this.$element, o = this.options;
+            var title, $e = this.$element, o = this.options, e = $e[0];
             this.fixTitle();
             var title, o = this.options;
             if (typeof o.title == 'string') {
                 title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
             } else if (typeof o.title == 'function') {
-                title = o.title.call($e[0]);
+                title = o.title.call(e, e);
             }
             title = ('' + title).replace(/(^\s*|\s*$)/, "");
             return title || o.fallback;
