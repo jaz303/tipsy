@@ -72,8 +72,8 @@
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
                 
-                if (this.options.fade) {
-                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
+                if (this.options.fadeIn) {
+                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity}, this.options.fadeIn);
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
                 }
@@ -81,8 +81,8 @@
         },
         
         hide: function() {
-            if (this.options.fade) {
-                this.tip().stop().fadeOut(function() { $(this).remove(); });
+            if (this.options.fadeOut) {
+                this.tip().stop().fadeOut(this.options.fadeOut, function() { $(this).remove(); });
             } else {
                 this.tip().remove();
             }
@@ -104,7 +104,8 @@
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
-            title = ('' + title).replace(/(^\s*|\s*$)/, "");
+
+            if (title) title = ('' + title).replace(/(^\s*|\s*$)/, "");
             return title || o.fallback;
         },
         
@@ -141,6 +142,9 @@
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
         
+        options.fadeIn = options.fadeIn || options.fade;
+        options.fadeOut = options.fadeOut || options.fade;
+        
         function get(ele) {
             var tipsy = $.data(ele, 'tipsy');
             if (!tipsy) {
@@ -174,7 +178,7 @@
         if (!options.live) this.each(function() { get(this); });
         
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
+            var binder   = options.live ? 'on' : 'bind',
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
@@ -189,6 +193,8 @@
         delayIn: 0,
         delayOut: 0,
         fade: false,
+        fadeIn: false,
+        fadeOut: false,
         fallback: '',
         gravity: 'n',
         html: false,
