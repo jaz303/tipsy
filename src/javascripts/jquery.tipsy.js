@@ -224,6 +224,13 @@
         return $(this).offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
     };
     
+    $.fn.tipsy.autoNESW = function() {
+    	var $elm = $(this);
+	var $ew = $elm.offset().left > ($(document).scrollLeft() + $(window).width() / 2) ? 'e' : 'w';
+	var $sn = $elm.offset().top > ($(document).scrollTop() + $(window).height() / 2) ? 's' : 'n';
+        return $sn+''+$ew;
+    };
+    
     /**
      * yields a closure of the supplied parameters, producing a function that takes
      * no arguments and is suitable for use as an autogravity function like so:
