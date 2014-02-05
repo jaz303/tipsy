@@ -56,6 +56,9 @@
                     case 'w':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
                         break;
+                    case 'c':
+                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        break;
                 }
                 
                 if (gravity.length == 2) {
@@ -150,8 +153,33 @@
             return tipsy;
         }
         
-        function enter() {
+        // When we have center gravity, we don't want to show/hide
+        // the tip when the user hovers over it. Detect whether
+        // the user moved from the element to the tip (on mouseleave)
+        // or whether/ the user moved from the tip to the element (on
+        // mouseenter).
+        function centerGravityMagic(e, tipsy) {
+            if (options.gravity !== 'c')
+                return false;
+
+            if (e.relatedTarget === null)
+                return false;
+
+            if (e.relatedTarget === tipsy.tip()[0])
+                return true;
+
+            if (tipsy.tip().has(e.relatedTarget).length)
+                return true;
+
+            return false;
+        }
+
+        function enter(e) {
             var tipsy = get(this);
+
+            if (centerGravityMagic(e, tipsy))
+                return false;
+
             tipsy.hoverState = 'in';
             if (options.delayIn == 0) {
                 tipsy.show();
@@ -161,8 +189,12 @@
             }
         };
         
-        function leave() {
+        function leave(e) {
             var tipsy = get(this);
+
+            if (centerGravityMagic(e, tipsy))
+                return false;
+
             tipsy.hoverState = 'out';
             if (options.delayOut == 0) {
                 tipsy.hide();
