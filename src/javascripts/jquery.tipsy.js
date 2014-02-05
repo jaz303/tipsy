@@ -59,9 +59,19 @@
                 }
                 
                 if (gravity.length == 2) {
+                    if (gravity.charAt(1) == 'a') {
+                        var autoDir = '';
+                        if (tp.left < 0) {
+                            autoDir = 'w';
+                        } else if ( tp.left + actualWidth > $(window).width() + $(document).scrollLeft() ) {
+                            autoDir = 'e';
+                        }
+                        gravity = gravity.charAt(0) + autoDir;
+                    }
+
                     if (gravity.charAt(1) == 'w') {
                         tp.left = pos.left + pos.width / 2 - 15;
-                    } else {
+                    } else if (gravity.charAt(1) == 'e') {
                         tp.left = pos.left + pos.width / 2 - actualWidth + 15;
                     }
                 }
