@@ -177,7 +177,16 @@
             var binder   = options.live ? 'live' : 'bind',
                 eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+
+			if (options.live) {
+				// title attribute will be removed on first time it sees the element (introduced in #2181b15) create selectors for original-title attribute too
+				var fixed_selector = this.selector.replace(/\[title(.*?\])/, '[original-title$1');
+				$('body').delegate(this.selector+', '+fixed_selector, eventIn, enter);
+				$('body').delegate(this.selector+', '+fixed_selector, eventOut, leave);
+			} else {
+				this.bind(eventIn, enter).bind(eventOut, leave);
+			}
+            
         }
         
         return this;
