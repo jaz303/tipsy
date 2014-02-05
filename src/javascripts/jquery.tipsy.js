@@ -27,9 +27,12 @@
         show: function() {
             var title = this.getTitle();
             if (title && this.enabled) {
-                var $tip = this.tip();
+                var $tip = this.tip(),
+                theme = this.options.theme[0] || 'black',
+                txt = this.options.theme[1] || 'white', 
+                ar;
                 
-                $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $tip.find('.tipsy-inner').css({background:theme,color:txt})[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
@@ -46,15 +49,19 @@
                 switch (gravity.charAt(0)) {
                     case 'n':
                         tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        ar = {'border-bottom-color':theme};
                         break;
                     case 's':
                         tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        ar = {'border-top-color':theme};
                         break;
                     case 'e':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
+                        ar = {'border-left-color':theme};
                         break;
                     case 'w':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
+                        ar = {'border-right-color':theme};
                         break;
                 }
                 
@@ -67,7 +74,7 @@
                 }
                 
                 $tip.css(tp).addClass('tipsy-' + gravity);
-                $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
+                $tip.find('.tipsy-arrow').css(ar)[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
                 if (this.options.className) {
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
@@ -196,6 +203,7 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
+        theme: ['black', 'white'],
         trigger: 'hover'
     };
     

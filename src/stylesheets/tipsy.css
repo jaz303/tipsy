@@ -9,7 +9,7 @@
   
   .tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
   
-  /* Rules to colour arrows */
+  /* Rules to colour arrows, modified by theme option */
   .tipsy-arrow-n { border-bottom-color: #000; }
   .tipsy-arrow-s { border-top-color: #000; }
   .tipsy-arrow-e { border-left-color: #000; }
