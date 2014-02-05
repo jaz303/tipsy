@@ -130,6 +130,8 @@
     };
     
     $.fn.tipsy = function(options) {
+
+        $.fn.tipsy.enable();
         
         if (options === true) {
             return this.data('tipsy');
@@ -151,6 +153,9 @@
         }
         
         function enter() {
+            if ($.fn.tipsy.enabled !== true) {
+                return;
+            }
             var tipsy = get(this);
             tipsy.hoverState = 'in';
             if (options.delayIn == 0) {
@@ -198,6 +203,14 @@
         title: 'title',
         trigger: 'hover'
     };
+
+    $.fn.tipsy.enable = function() {
+        $.fn.tipsy.enabled = true;
+    }
+
+    $.fn.tipsy.disable = function() {
+        $.fn.tipsy.enabled = false;
+    }
     
     $.fn.tipsy.revalidate = function() {
       $('.tipsy').each(function() {
