@@ -171,13 +171,17 @@
             }
         };
         
-        if (!options.live) this.each(function() { get(this); });
+        if (!options.live && !options.delegate) this.each(function() { get(this); });
         
         if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
+            var eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
+            if (options.delegate) {
+                this.delegate(options.delegate, eventIn, enter).delegate(options.delegate, eventOut, leave);
+            } else {
+                var binder = options.live ? 'live' : 'bind';
+                this[binder](eventIn, enter)[binder](eventOut, leave);
+            }
         }
         
         return this;
@@ -192,6 +196,7 @@
         fallback: '',
         gravity: 'n',
         html: false,
+        delegate: false,
         live: false,
         offset: 0,
         opacity: 0.8,
