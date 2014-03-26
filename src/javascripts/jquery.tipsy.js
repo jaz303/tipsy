@@ -89,9 +89,13 @@
         },
         
         visible: function() {
-        	return (typeof this.$tip != 'undefined')
-        			&& this.$tip.height() 
-        			&& this.$tip.width();
+        	if (typeof this.$tip == 'undefined') {
+	        	return false;
+        	}
+        	
+            return this.$tip.css('opacity') != 0
+                   && this.$tip.height()
+                   && this.$tip.width();
         },
         
         fixTitle: function() {
