@@ -88,6 +88,16 @@
             }
         },
         
+        visible: function() {
+        	if (typeof this.$tip == 'undefined') {
+	        	return false;
+        	}
+        	
+            return this.$tip.css('opacity') != 0
+                   && this.$tip.height()
+                   && this.$tip.width();
+        },
+        
         fixTitle: function() {
             var $e = this.$element;
             if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
@@ -131,10 +141,12 @@
     
     $.fn.tipsy = function(options) {
         
+        var tipsy = this.data('tipsy');
         if (options === true) {
-            return this.data('tipsy');
+            return tipsy;
+        } else if (options == ':visible') {
+        	return tipsy.visible();
         } else if (typeof options == 'string') {
-            var tipsy = this.data('tipsy');
             if (tipsy) tipsy[options]();
             return this;
         }
