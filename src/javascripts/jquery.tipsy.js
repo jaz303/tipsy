@@ -26,10 +26,76 @@
     Tipsy.prototype = {
         show: function() {
             var title = this.getTitle();
-            if (title && this.enabled) {
+            //only add url on tag, example: <a rel="tipsy" url="filetoload.html">
+            //Add remote html support by: napraga
+            //alexander@desarrollador.info
+            //get URL tag
+            var url = this.getUrl();
+
+            if (title && this.enabled && !url) {
                 var $tip = this.tip();
                 
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
+                $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
+                
+                var pos = $.extend({}, this.$element.offset(), {
+                    width: this.$element[0].offsetWidth,
+                    height: this.$element[0].offsetHeight
+                });
+                
+                var actualWidth = $tip[0].offsetWidth,
+                    actualHeight = $tip[0].offsetHeight,
+                    gravity = maybeCall(this.options.gravity, this.$element[0]);
+                
+                var tp;
+                switch (gravity.charAt(0)) {
+                    case 'n':
+                        tp = {top: pos.top + pos.height + this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        break;
+                    case 's':
+                        tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
+                        break;
+                    case 'e':
+                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
+                        break;
+                    case 'w':
+                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
+                        break;
+                }
+                
+                if (gravity.length == 2) {
+                    if (gravity.charAt(1) == 'w') {
+                        tp.left = pos.left + pos.width / 2 - 15;
+                    } else {
+                        tp.left = pos.left + pos.width / 2 - actualWidth + 15;
+                    }
+                }
+                
+                $tip.css(tp).addClass('tipsy-' + gravity);
+                $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
+                if (this.options.className) {
+                    $tip.addClass(maybeCall(this.options.className, this.$element[0]));
+                }
+                
+                if (this.options.fade) {
+                    $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity});
+                } else {
+                    $tip.css({visibility: 'visible', opacity: this.options.opacity});
+                }
+            }else if(!title && this.enabled && url){
+                var $tip = this.tip();
+                //GET FROM URL
+                $.get(url, function(data){
+                    $tip.find('.tipsy-inner')['html'](data);
+                }).fail(function() {
+                    //error 404, etc.
+                     $tip.find('.tipsy-inner')['html']("Error: the requested URL was not found");;
+                });
+
+            
+                //$tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](url);
+
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
                 
@@ -94,6 +160,13 @@
                 $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
             }
         },
+
+        fixUrl: function() {
+            var $e = this.$element;
+            if ($e.attr('url') || typeof($e.attr('original-url')) != 'string') {
+                $e.attr('original-url', $e.attr('url') || '').removeAttr('url');
+            }
+        },
         
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
@@ -106,6 +179,19 @@
             }
             title = ('' + title).replace(/(^\s*|\s*$)/, "");
             return title || o.fallback;
+        },
+
+        getUrl: function() {
+            var url, $e = this.$element, o = this.options;
+            this.fixUrl();
+            var url, o = this.options;
+            if (typeof o.url == 'string') {
+                url = $e.attr(o.url == 'url' ? 'original-url' : o.url);
+            } else if (typeof o.url == 'function') {
+                url = o.url.call($e[0]);
+            }
+            url = ('' + url).replace(/(^\s*|\s*$)/, "");
+            return url || o.fallback;
         },
         
         tip: function() {
@@ -196,7 +282,8 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        url: 'url'
     };
     
     $.fn.tipsy.revalidate = function() {
