@@ -6,7 +6,7 @@
 (function($, window, undefined) {
 
     function maybeCall(thing, ctx) {
-        return (typeof thing == 'function') ? (thing.call(ctx)) : thing;
+        return (typeof thing === 'function') ? (thing.call(ctx)) : thing;
     }
 
     function isElementInDOM(ele) {
@@ -15,16 +15,16 @@
 
 	// Returns true if it is a DOM element
 	// http://stackoverflow.com/a/384380/999
-	function isElement(o){
+	function isElement(o) {
 		return (
-			typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
-			o && typeof o === "object" && o.nodeType === 1 && typeof o.nodeName==="string"
+			typeof HTMLElement === 'object' ? o instanceof HTMLElement : //DOM2
+			o && typeof o === 'object' && o.nodeType === 1 && typeof o.nodeName === 'string'
 		);	
 	}
 
     var tipsyIDcounter = 0;
     function tipsyID() {
-        return "tipsyuid" + (tipsyIDcounter++);
+        return 'tipsyuid' + (tipsyIDcounter++);
     }
 
     function Tipsy(element, options) {
@@ -94,8 +94,8 @@
                         break;
                 }
 
-                if (gravity.length == 2) {
-                    if (gravity.charAt(1) == 'w') {
+                if (gravity.length === 2) {
+                    if (gravity.charAt(1) === 'w') {
                         tp.left = pos.left + pos.width / 2 - 15;
                     } else {
                         tp.left = pos.left + pos.width / 2 - actualWidth + 15;
@@ -107,8 +107,12 @@
                 $tip.css({width: (actualWidth - 10) + 'px'});
 
                 if (this.options.fade) {
-                    if(this.options.shadow)
-                        $(".tipsy-inner").css({'box-shadow': '0px 0px '+this.options.shadowBlur+'px '+this.options.shadowSpread+'px rgba(0, 0, 0, '+this.options.shadowOpacity+')', '-webkit-box-shadow': '0px 0px '+this.options.shadowBlur+'px '+this.options.shadowSpread+'px rgba(0, 0, 0, '+this.options.shadowOpacity+')'});
+                    if (this.options.shadow) {
+                        $tip.find('.tipsy-inner').css({
+                            'box-shadow': '0 0 ' + this.options.shadowBlur + 'px ' + this.options.shadowSpread + 'px rgba(0, 0, 0, ' + this.options.shadowOpacity + ')',
+                            '-webkit-box-shadow': '0 0 ' + this.options.shadowBlur + 'px ' + this.options.shadowSpread + 'px rgba(0, 0, 0, ' + this.options.shadowOpacity + ')'
+                        });
+                    }
                     $tip.stop().css({opacity: 0, display: 'block', visibility: 'visible'}).animate({opacity: this.options.opacity}, this.options.fadeInTime);
                 } else {
                     $tip.css({visibility: 'visible', opacity: this.options.opacity});
@@ -116,8 +120,8 @@
 
                 if (this.options.aria) {
                     var $tipID = tipsyID();
-                    $tip.attr("id", $tipID);
-                    this.$element.attr("aria-describedby", $tipID);
+                    $tip.attr('id', $tipID);
+                    this.$element.attr('aria-describedby', $tipID);
                 }
             }
         },
@@ -129,13 +133,13 @@
                 this.tip().remove();
             }
             if (this.options.aria) {
-                this.$element.removeAttr("aria-describedby");
+                this.$element.removeAttr('aria-describedby');
             }
         },
 
         fixTitle: function() {
             var $e = this.$element;
-            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
+            if ($e.attr('title') || typeof($e.attr('original-title')) !== 'string') {
                 $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
             }
         },
@@ -143,18 +147,20 @@
         getTitle: function() {
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
-            if (typeof o.title == 'string') {
-                title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
-            } else if (typeof o.title == 'function') {
+            if (typeof o.title === 'string') {
+                title = $e.attr(o.title === 'title' ? 'original-title' : o.title);
+            } else if (typeof o.title === 'function') {
                 title = o.title.call($e[0]);
             }
-            title = ('' + title).replace(/(^\s*|\s*$)/, "");
+            title = ('' + title).replace(/(^\s*|\s*$)/, '');
             return title || o.fallback;
         },
 
         tip: function() {
             if (!this.$tip) {
-                this.$tip = $('<div class="tipsy' + this.options.theme + '"></div>').html('<div class="tipsy-arrow' + this.options.theme + '"></div><div class="tipsy-inner' + this.options.theme + '"></div>').attr("role","tooltip");
+                this.$tip = $('<div class="tipsy' + this.options.theme + '"></div>')
+                    .html('<div class="tipsy-arrow' + this.options.theme + '"></div><div class="tipsy-inner' + this.options.theme + '"></div>')
+                    .attr('role', 'tooltip');
             }
             return this.$tip;
         },
@@ -167,9 +173,17 @@
             }
         },
 
-        enable: function() { this.enabled = true; },
-        disable: function() { this.enabled = false; },
-        toggleEnabled: function() { this.enabled = !this.enabled; }
+        enable: function() {
+            this.enabled = true;
+        },
+
+        disable: function() {
+            this.enabled = false;
+        },
+
+        toggleEnabled: function() {
+            this.enabled = !this.enabled;
+        }
     };
 
     $.fn.tipsy = function(options) {
@@ -178,7 +192,7 @@
 
         if (options === true) {
             return this.data('tipsy');
-        } else if (typeof options == 'string') {
+        } else if (typeof options === 'string') {
             var tipsy = this.data('tipsy');
             if (tipsy) tipsy[options]();
             return this;
@@ -209,7 +223,7 @@
             } else {
                 tipsy.fixTitle();
                 setTimeout(function() {
-                    if (tipsy.hoverState == 'in') {
+                    if (tipsy.hoverState === 'in') {
                         tipsy.show();
                     }
                 }, options.delayIn);
@@ -222,15 +236,17 @@
             if (options.delayOut === 0) {
                 tipsy.hide();
             } else {
-                setTimeout(function() { if (tipsy.hoverState == 'out' || !tipsy.$element || !tipsy.$element.is(':visible')) tipsy.hide(); }, options.delayOut);
+                setTimeout(function() { if (tipsy.hoverState === 'out' || !tipsy.$element || !tipsy.$element.is(':visible')) tipsy.hide(); }, options.delayOut);
             }
         }
 
-        if (!options.live) this.each(function() { get(this); });
+        if (!options.live) {
+            this.each(function() { get(this); });
+        }
 
-        if (options.trigger != 'manual') {
-            var eventIn  = options.trigger == 'hover' ? 'mouseenter mouseover' : 'focus',
-                eventOut = options.trigger == 'hover' ? 'mouseleave mouseout' : 'blur';
+        if (options.trigger !== 'manual') {
+            var eventIn  = options.trigger === 'hover' ? 'mouseenter mouseover' : 'focus',
+                eventOut = options.trigger === 'hover' ? 'mouseleave mouseout' : 'blur';
 
             if (options.live && options.live !== true) {
                 $(this).on(eventIn, options.live, enter);
@@ -246,7 +262,6 @@
         }
 
         return this;
-
     };
 
     $.fn.tipsy.defaults = {
@@ -273,12 +288,12 @@
     };
 
     $.fn.tipsy.revalidate = function() {
-      $('.tipsy').each(function() {
-        var pointee = $.data(this, 'tipsy-pointee');
-        if (!pointee || !isElementInDOM(pointee)) {
-          $(this).remove();
-        }
-      });
+        $('.tipsy').each(function() {
+            var pointee = $.data(this, 'tipsy-pointee');
+            if (!pointee || !isElementInDOM(pointee)) {
+                $(this).remove();
+            }
+        });
     };
 
     $.fn.tipsy.enable = function() {
@@ -364,7 +379,7 @@
                 dir.ew = prefer[1];
             } else {
                 // single direction string (e, w, n or s)
-                if (prefer[0] == 'e' || prefer[0] == 'w') {
+                if (prefer[0] === 'e' || prefer[0] === 'w') {
                     dir.ew = prefer[0];
                 } else {
                     dir.ns = prefer[0];
