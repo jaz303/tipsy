@@ -55,9 +55,9 @@
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
 
-                $tip.remove()
+                $tip.detach()
                     .css({top: 0, left: 0, visibility: 'hidden', display: 'block'})
-                    .prependTo(document.body)
+                    .prependTo(this.options.prependTo)
                     .data('tipsy-pointee', this.$element[0]);
 
                 var pos = $.extend({}, this.$element.offset());
@@ -66,10 +66,17 @@
                 if (this.$element.parents('svg').size() > 0) {
                     pos = $.extend(pos, this.$element[0].getBBox());
                 } else {
-                    pos = $.extend(pos, {
-                        width: this.$element[0].offsetWidth || 0,
-                        height: this.$element[0].offsetHeight || 0
-                    });
+                    if (this.options.prependTo !== document.body) {
+                        pos = $.extend(this.$element.position(), {
+                            width: this.$element.width(),
+                            height: this.$element.height()
+                        });
+                    } else {
+                        pos = $.extend(pos, {
+                            width: this.$element[0].offsetWidth || 0,
+                            height: this.$element[0].offsetHeight || 0
+                        });
+                    }
                 }
 
                 var actualWidth = $tip[0].offsetWidth,
@@ -128,9 +135,9 @@
 
         hide: function() {
             if (this.options.fade) {
-                this.tip().stop().fadeOut(this.options.fadeOutTime, function() { $(this).remove(); });
+                this.tip().stop().fadeOut(this.options.fadeOutTime, function() { $(this).detach(); });
             } else {
-                this.tip().remove();
+                this.tip().detach();
             }
             if (this.options.aria) {
                 this.$element.removeAttr('aria-describedby');
@@ -284,7 +291,8 @@
         opacity: 0.8,
         title: 'title',
         trigger: 'hover',
-        theme: ''
+        theme: '',
+        prependTo: document.body
     };
 
     $.fn.tipsy.revalidate = function() {
