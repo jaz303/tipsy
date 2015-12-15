@@ -1,0 +1,29 @@
+{
+  "name": "tipsy",
+  "description": "Tipsy is a jQuery plugin for creating a Facebook-like tooltips effect based on an anchor tag's title attribute.",
+  "homepage": "https://github.com/jaz303/tipsy",
+  "version": "0.1.7",
+  "main" : [
+    "src/stylesheets/tipsy.css",
+    "src/javascript/jquery.tipsy.js"
+  ],
+  "license": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jaz303/tipsy/blob/master/LICENSE"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Jason Frame",
+      "url": "https://github.com/jaz303"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaz303/tipsy"
+  },
+  "dependencies": {
+    "jquery": ">=1.4.1"
+  }
+}
