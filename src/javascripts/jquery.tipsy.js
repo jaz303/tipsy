@@ -90,8 +90,8 @@
         
         fixTitle: function() {
             var $e = this.$element;
-            if ($e.attr('title') || typeof($e.attr('original-title')) != 'string') {
-                $e.attr('original-title', $e.attr('title') || '').removeAttr('title');
+            if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {
+                $e.attr('data-original-title', $e.attr('title') || '').removeAttr('title');
             }
         },
         
@@ -100,7 +100,7 @@
             this.fixTitle();
             var title, o = this.options;
             if (typeof o.title == 'string') {
-                title = $e.attr(o.title == 'title' ? 'original-title' : o.title);
+                title = $e.attr(o.title == 'title' ? 'data-original-title' : o.title);
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
