@@ -304,6 +304,10 @@
         });
     };
 
+    $.fn.tipsy.clear = function() {
+        $('.tipsy').remove();
+    };
+
     $.fn.tipsy.enable = function() {
         $.fn.tipsy.enabled = true;
     };
