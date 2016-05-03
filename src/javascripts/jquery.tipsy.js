@@ -309,6 +309,11 @@
             if (!pointee || !isElementInDOM(pointee)) {
                 $(this).remove();
             }
+
+            var tip = $.data(pointee, 'tipsy');
+            if (tip) {
+                tip.show();
+            }
         });
     };
 
