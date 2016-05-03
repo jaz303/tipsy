@@ -56,7 +56,14 @@
                 }
 
                 $tip.detach()
-                    .css({top: 0, left: 0, visibility: 'hidden', display: 'block'})
+                    .css({
+                        top: 0,
+                        left: 0,
+                        width: '',
+                        height: '',
+                        visibility: 'hidden',
+                        display: 'block'
+                    })
                     .prependTo(this.options.prependTo)
                     .data('tipsy-pointee', this.$element[0]);
 
