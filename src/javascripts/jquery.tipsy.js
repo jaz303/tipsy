@@ -79,8 +79,9 @@
                     }
                 }
 
-                var actualWidth = $tip[0].offsetWidth,
-                    actualHeight = $tip[0].offsetHeight,
+                var bbox = $tip[0].getBoundingClientRect(),
+                    actualWidth = Math.ceil(bbox.width),
+                    actualHeight = Math.ceil(bbox.height),
                     gravity = maybeCall(this.options.gravity, this.$element[0]);
 
                 var tp;
