@@ -56,7 +56,14 @@
                 }
 
                 $tip.detach()
-                    .css({top: 0, left: 0, visibility: 'hidden', display: 'block'})
+                    .css({
+                        top: 0,
+                        left: 0,
+                        width: '',
+                        height: '',
+                        visibility: 'hidden',
+                        display: 'block'
+                    })
                     .prependTo(this.options.prependTo)
                     .data('tipsy-pointee', this.$element[0]);
 
@@ -79,8 +86,9 @@
                     }
                 }
 
-                var actualWidth = $tip[0].offsetWidth,
-                    actualHeight = $tip[0].offsetHeight,
+                var bbox = $tip[0].getBoundingClientRect(),
+                    actualWidth = Math.ceil(bbox.width),
+                    actualHeight = Math.ceil(bbox.height),
                     gravity = maybeCall(this.options.gravity, this.$element[0]);
 
                 var tp;
@@ -301,7 +309,16 @@
             if (!pointee || !isElementInDOM(pointee)) {
                 $(this).remove();
             }
+
+            var tip = $.data(pointee, 'tipsy');
+            if (tip) {
+                tip.show();
+            }
         });
+    };
+
+    $.fn.tipsy.clear = function() {
+        $('.tipsy').remove();
     };
 
     $.fn.tipsy.enable = function() {
