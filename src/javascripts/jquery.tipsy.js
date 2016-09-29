@@ -19,7 +19,7 @@
 		return (
 			typeof HTMLElement === 'object' ? o instanceof HTMLElement : //DOM2
 			o && typeof o === 'object' && o.nodeType === 1 && typeof o.nodeName === 'string'
-		);	
+		);
 	}
 
     var tipsyIDcounter = 0;
@@ -40,10 +40,10 @@
                 return;
             }
 
-            if (isElement(this.$element) && !this.$element.is(':visible')) { 
-                return; 
+            if (isElement(this.$element) && !this.$element.is(':visible')) {
+                return;
             }
-            
+
             var title;
             if (this.enabled && (title = this.getTitle())) {
                 var $tip = this.tip();
@@ -70,7 +70,7 @@
                 var pos = $.extend({}, this.$element.offset());
 
                 // If the element is contained in a SVG object, use getBBox
-                if (this.$element.parents('svg').size() > 0) {
+                if (this.$element.parents('svg').length > 0) {
                     pos = $.extend(pos, this.$element[0].getBBox());
                 } else {
                     if (this.options.prependTo !== document.body) {
@@ -286,7 +286,7 @@
         delayOut: 0,
         fade: false,
         fadeInTime: 400,
-        fadeOutTime: 400, 
+        fadeOutTime: 400,
         shadow: false,
         shadowBlur: 8,
         shadowOpacity: 1,
@@ -422,5 +422,5 @@
             return dir.ew;
         }
     };
-    
+
 })(jQuery, window);
