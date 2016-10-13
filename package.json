@@ -1,0 +1,25 @@
+{
+  "name": "tipsy-clockwerx",
+  "description": "Facebook-style tooltip plugin for jQuery",
+  "version": "1.0.0a",
+  "author": "CloCkWeRX",
+  "bugs": {
+    "url": "https://github.com/CloCkWeRX/tipsy/issues"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "files": [
+    "src"
+  ],
+  "homepage": "https://github.com/CloCkWeRX/tipsy#readme",
+  "license": "MIT",
+  "main": "src/javascripts/jquery.tipsy.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CloCkWeRX/tipsy.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
