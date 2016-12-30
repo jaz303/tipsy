@@ -172,14 +172,17 @@
         };
         
         if (!options.live) this.each(function() { get(this); });
-        
-        if (options.trigger != 'manual') {
-            var binder   = options.live ? 'live' : 'bind',
-                eventIn  = options.trigger == 'hover' ? 'mouseenter' : 'focus',
-                eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
-            this[binder](eventIn, enter)[binder](eventOut, leave);
-        }
-        
+
+        var triggerIn  = options.triggerIn || options.trigger,
+            triggerOut = options.triggerOut || options.trigger,
+            binder     = options.live ? 'live' : 'bind';
+
+        if (triggerIn != 'manual') 
+            this[binder]( $.inArray(triggerIn, ['hover', 'auto']) ? 'mouseenter' : 'focus', enter)
+
+        if (triggerOut != 'manual')
+            this[binder]( $.inArray(triggerOut, ['hover', 'auto']) ? 'mouseleave' : 'blur', leave);
+
         return this;
         
     };
@@ -196,7 +199,9 @@
         offset: 0,
         opacity: 0.8,
         title: 'title',
-        trigger: 'hover'
+        trigger: 'hover',
+        triggerIn: 'auto',
+        triggerOut: 'auto'
     };
     
     $.fn.tipsy.revalidate = function() {
